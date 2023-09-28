@@ -1,78 +1,115 @@
-import { Request, Response, NextFunction } from 'express'
-
-import { UserRepository } from '../repositorios/user.repository.js'
+import { Request, Response } from 'express'
+import bcrypt from 'bcrypt'
 import { User } from '../entidades/user.entity.js'
+import jwt from 'jsonwebtoken';
 
-const repository = new UserRepository()
 
-function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
-  req.body.sanitizedInput = {
-    nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    dni: req.body.dni,
-    telefono: req.body.telefono,
-    contraseña: req.body.contraseña,
-    contraseña2: req.body.contraseña2,
-  }
+export const newUser = async (req: Request, res: Response) => {
+
+  const { nombre, apellido, userName, dni, telefono, contraseña } = req.body;
+
+
+  const user = await User.findOne({ where: { userName: userName } });
+
+  if(user) {
+     return res.status(400).json({
+          msg: `Ya existe un usuario con ese nombre de usuario registrado`
+      })
+  } 
+
+  const hashedPassword = await bcrypt.hash(contraseña, 10);
   
+  try {
+      await User.create({
+        nombre: nombre,
+        apellido: apellido,
+        userName: userName,
+        dni: dni,
+        telefono: telefono,
+        contraseña: hashedPassword,
+      })
+  
+      res.json({
+          msg: `Usuario ${userName} creado exitosamente!`
+      })
+  } catch (error) {
+      res.status(400).json({
+          msg: 'Upps ocurrio un error',
+          error
+      })
+  }
+}
 
-  Object.keys(req.body.sanitizedInput).forEach((key) => {
-    if (req.body.sanitizedInput[key] === undefined) {
-      delete req.body.sanitizedInput[key]
-    }
+export const loginUser = async (req: Request, res: Response) => {
+
+  const { username, password } = req.body;
+
+ const user: any = await User.findOne({ where: { username: username } });
+
+ if(!user) {
+      return res.status(400).json({
+          msg: `No existe un usuario con el nombre ${username} en la base datos`
+      })
+ }
+
+ 
+ const passwordValid = await bcrypt.compare(password, user.password)
+ if(!passwordValid) {
+  return res.status(400).json({
+      msg: `Password Incorrecta`
   })
-  next()
+ }
+ const token = jwt.sign({
+  username: username
+ }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+ 
+ res.json(token);
 }
 
-function findAll(req: Request, res: Response) {
-  res.json({ data: repository.findAll() })
-}
 
-function findOne(req: Request, res: Response) {
-  const id = req.params.id
-  const user = repository.findOne({ id })
-  if (!user) {
-    return res.status(404).send({ message: 'User not found' })
-  }
-  res.json({ data: user })
-}
+ export const editUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
 
-function add(req: Request, res: Response) {
-  const input = req.body.sanitizedInput
+    const user: any = await User.findByPk({ where: { id: id } });
 
-  const userInput = new User(
-    input.nombre,
-    input.apellido,
-    input.dni,
-    input.telefono,
-    input.contraseña,
-    input.contraseña2
-  )
+    const { username, telefono, contraseña } = req.body;
 
-  const user = repository.add(userInput)
-  return res.status(201).send({ message: 'User registered', data: user })
-}
+    if(!user) {
+        return res.status(400).json({
+            msg: `No existe el usuario`
+        })
+    }
 
-function update(req: Request, res: Response) {
-  req.body.sanitizedInput.id = req.params.id
-  const user = repository.update(req.body.sanitizedInput)
+    const hashedPassword = await bcrypt.hash(contraseña, 10);
 
-  if (!user) {
-    return res.status(404).send({ message: 'User not found' })
-  }
+    try {
 
-  return res.status(200).send({ message: 'User updated successfully', data: user })
-}
+        user.userName = username;
+        user.telefono = telefono;
+        user.contraseña = hashedPassword;
 
-function remove(req: Request, res: Response) {
-  const id = req.params.id
-  const user = repository.delete({ id })
+        await User.save();
+    
+        res.json({
+            msg: `Usuario ${username} actualizado exitosamente!`
+        })
+    } catch (error) {
+        res.status(400).json({
+            msg: 'Upps ocurrio un error',
+            error
+        })
+    }
 
-  if (!user) {
-    res.status(404).send({ message: 'User not found' })
-  } else {
-    res.status(200).send({ message: 'User deleted successfully' })
-  }
-}
+ }
 
-export { sanitizeUserInput, findAll, findOne, add, update, remove }
+ export const deleteUser = async (req: Request, res: Response) => {
+
+    const { id } = req.params;
+
+    const user = await User.findByPk({ where: { id: id } })
+
+    await user.destroy();
+
+ }
+
+ 

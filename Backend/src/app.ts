@@ -1,15 +1,6 @@
-import express from 'express'
-import { userRouter } from './routes/user.routes.js'
+import dotenv from 'dotenv';
+import Server from "./entidades/server.js";
 
-const app = express()
-app.use(express.json())
+dotenv.config();
 
-// app.use('/api/?', ?)
-
-app.use((_, res) => {
-  return res.status(404).send({ message: 'Resource not found' })
-})
-
-app.listen(3000, () => {
-  console.log('Server runnning on http://localhost:3000/')
-})
+const server = new Server();
