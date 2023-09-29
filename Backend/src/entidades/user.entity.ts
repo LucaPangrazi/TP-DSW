@@ -2,19 +2,6 @@ import { Roles } from '../constants.js'
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
-//export class User {
- // constructor(
-   // public nombre: string,
-   // public apellido: string,
-   // public dni: number,
-   // public telefono: number,
-   // public contraseña: string,
-   // public id = crypto.randomUUID()
-  //) {}
-//}
-
-
-
 export const User = sequelize.define('User', {
   nombre: {
     type: DataTypes.STRING,
