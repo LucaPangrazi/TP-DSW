@@ -9,5 +9,11 @@ export enum Formatos {
 }
 
 export enum clasificaiones {
-  
+  Everyone = "EVERYONE",
+  Pegi3 = "PEGI3",
+  Pegi7 = "PEGI7",
+  Pegi13 = "PEGI13",
+  Teen = "TEEN",
+  Mature = "MATURE",
+  RRated = "RRATED",
 }
