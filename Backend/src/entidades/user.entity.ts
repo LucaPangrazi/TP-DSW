@@ -16,11 +16,11 @@ export const User = sequelize.define('User', {
     allowNull: false
   },
   dni: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   telefono: {
-    type: DataTypes.NUMBER
+    type: DataTypes.STRING
   },
   contraseña: {
     type: DataTypes.STRING,
