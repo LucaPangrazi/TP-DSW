@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const sala_1 = __importDefault(require("../routes/sala"));
+const movie_1 = __importDefault(require("../routes/movie"));
 const connection_1 = __importDefault(require("../db/connection"));
 class Server {
     constructor() {
@@ -36,7 +36,7 @@ class Server {
                 msg: 'API Working'
             });
         });
-        this.app.use('/api/salas/', sala_1.default);
+        this.app.use('/api/movies', movie_1.default);
     }
     midlewares() {
         //parseamos el body

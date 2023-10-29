@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = __importDefault(require("./models/server"));
 const dotenv_1 = __importDefault(require("dotenv"));
 //configuramos las variables de ambiente
-dotenv_1.default.config;
-const server = new server_1.default();
+dotenv_1.default.config();
+const server = new server_1.default(); //crea instancia del servidor

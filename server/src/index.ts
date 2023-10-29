@@ -2,6 +2,6 @@ import Server from "./models/server";
 
 import dotenv from 'dotenv'
 //configuramos las variables de ambiente
-dotenv.config;
+dotenv.config();
 
-const server = new Server();
+const server = new Server(); //crea instancia del servidor

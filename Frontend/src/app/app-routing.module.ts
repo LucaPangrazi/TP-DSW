@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //Componentes
-import { ListSalasComponent } from './components/list-salas/list-salas.component';
-import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
+import { ListMoviesComponent } from './components/list-movies/list-movies.component';
+import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
 
 const routes: Routes = [
-{ path:'', component:ListSalasComponent}, 
-{ path:'add', component:AddEditSalaComponent },
-{ path:'edit/:id', component:AddEditSalaComponent},
-{ path:'**', redirectTo:'', pathMatch:'full'}
+  {path: '', component: ListMoviesComponent},
+  {path: 'add', component: AddEditMovieComponent},
+  {path: 'edit/:id', component: AddEditMovieComponent},
+  {path: '**', redirectTo:'', pathMatch: 'full'}
 
 ];
 

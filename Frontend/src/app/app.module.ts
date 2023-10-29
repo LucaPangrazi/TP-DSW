@@ -12,16 +12,16 @@ import { ToastrModule } from 'ngx-toastr';
 
 //Components
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ListSalasComponent } from './components/list-salas/list-salas.component';
-import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
+import { ListMoviesComponent } from './components/list-movies/list-movies.component';
+import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    ListSalasComponent,
-    AddEditSalaComponent,
+    ListMoviesComponent,
+    AddEditMovieComponent,
     ProgressBarComponent
   ],
   imports: [

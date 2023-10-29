@@ -1,7 +1,7 @@
 
 import express, { Application , Request, Response } from 'express';
 import cors from 'cors';
-import routesSala from '../routes/sala';
+import routeMovie from '../routes/movie';
 import db from '../db/connection';
 
 class Server {
@@ -30,7 +30,7 @@ routes() {
 
   })
 
-  this.app.use('/api/salas/',routesSala)
+  this.app.use('/api/movies', routeMovie)
 }
 
 midlewares() {

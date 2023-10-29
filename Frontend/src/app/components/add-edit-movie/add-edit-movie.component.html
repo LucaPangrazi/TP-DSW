@@ -1,0 +1,41 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading" class="row mt-1">
+  <div class="col-lg-4 offset-lg-4">
+    <div class="card bg-light mb-3" style="max-width: 25rem;">
+      <div class="card-header text-center">{{operacion}} Pelicula</div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="addMovie()">
+          <!-- <input formControlName="id" type="number" class="form-control" placeholder="ingrese id">
+          <span *ngIf="form.get('id')?.hasError('required') && form.get('id')?.touched">
+            El campo id es <strong> requerido </strong>
+          </span> -->
+          <input formControlName="title" type="text", class="form-control" placeholder="Ingrese titulo"> 
+          <div *ngIf="form.get('title')?.hasError('required') && form.get('title')?.touched">
+              Todos los campos son <strong>requeridos</strong>
+          </div>                           
+          <input formControlName="genre" type="text", class="form-control mt-2" placeholder="Ingrese genero">
+          <input formControlName="clasification" type="text", class="form-control mt-2" placeholder="Ingrese clasificacion">
+          <input formControlName="format" type="text", class="form-control mt-2" placeholder="Ingrese fromato">
+          <input formControlName="description" type="text", class="form-control mt-2" placeholder="Ingrese descripcion">
+          <input formControlName="duration" type="text", class="form-control mt-2" placeholder="Ingrese duracion">
+          <input formControlName="image" type="text", class="form-control mt-2" placeholder="Ingrese imagen"> 
+          <div *ngIf="form.get('image')?.hasError('required') && form.get('image')?.touched">
+              Todos los campos son <strong>requeridos</strong>
+            </div>               
+          <div class="row mt-2 text-center">
+            <div class="col-lg-6">
+              <button routerLink="/" type="button" class="btn btn-light">VOLVER</button>
+            </div>
+            <div class="col-lg-6">
+              <button [disabled]="form.invalid" type="submit" class="btn btn-dark">ACEPTAR</button>
+            </div>
+
+          </div>
+
+
+        </form>
+
+
+      </div>
+    </div>
+  </div>
