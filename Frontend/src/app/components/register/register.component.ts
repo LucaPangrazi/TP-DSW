@@ -6,6 +6,10 @@ import { User } from 'src/app/interfaces/user';
 import { ErrorService } from 'src/app/services/error.service';
 import { UserService } from 'src/app/services/user.service';
 
+interface Identical<T extends number | string> {
+  id: T;
+}
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,16 +22,17 @@ export class RegisterComponent implements OnInit {
   dni: string = '';
   telefono: string = '';
   userName: string = '';
-  contraseña: string = '';
-  confirmarContraseña: string = '';
+  password: string = '';
+  confirmarPassword: string = '';
   role: string = '';
-  id: number = ;
+  id: string = '';
   loading: boolean = false;
 
   constructor(private toastr: ToastrService,
     private _userService: UserService,
     private router: Router,
-    private _errorService: ErrorService) { }
+    private _errorService: ErrorService) { 
+    }
 
   ngOnInit(): void {
   }
@@ -35,13 +40,13 @@ export class RegisterComponent implements OnInit {
   addUser() {
 
     // Validamos que el usuario ingrese valores
-    if (this.userName == '' || this.contraseña == '' || this.confirmarContraseña == '') {
+    if (this.userName == '' || this.password == '' || this.confirmarPassword == '') {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
 
     // Validamos que las password sean iguales
-    if (this.contraseña != this.confirmarContraseña) {
+    if (this.password != this.confirmarPassword) {
       this.toastr.error('Las passwords ingresadas son distintas', 'Error');
       return;
     }
@@ -53,7 +58,7 @@ export class RegisterComponent implements OnInit {
       userName: this.userName,
       dni: this.dni,
       telefono: this.telefono,
-      contraseña: this.contraseña,
+      contraseña: this.password,
       role: this.role,
       id: this.id
     }

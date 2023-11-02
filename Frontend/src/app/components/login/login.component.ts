@@ -19,15 +19,15 @@ export class LoginComponent implements OnInit {
   telefono:  string = '';
   contraseña: string = '';
   role: string = '';
-  id: number;
+  id: string = '';
   loading: boolean = false;
 
   constructor(private toastr: ToastrService,
     private _userService: UserService,
     private router: Router,
-    private _errorService: ErrorService,
-    id: number) { 
-      this.id = id;
+    private _errorService: ErrorService
+    ) { 
+      
     }
 
   ngOnInit(): void {

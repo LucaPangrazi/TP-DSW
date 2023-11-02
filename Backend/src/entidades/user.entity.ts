@@ -32,9 +32,10 @@ export const User = sequelize.define('User', {
     default: Roles.User
   },
   id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true
 }
 }, {
   
