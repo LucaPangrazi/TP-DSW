@@ -33,6 +33,9 @@ const Movie = connection_1.default.define('Movie', {
     },
     durationMin: {
         type: sequelize_1.DataTypes.STRING //min : si pido que el usuario me ingrese hora y min puedo convertirlo desde angular a min
+    },
+    imageUri: {
+        type: sequelize_1.DataTypes.STRING
     }
 }, {
     createdAt: false,

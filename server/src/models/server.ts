@@ -33,6 +33,7 @@ routes() {
   this.app.use('/api/movies', routeMovie)
 }
 
+
 midlewares() {
   //parseamos el body
   this.app.use(express.json());

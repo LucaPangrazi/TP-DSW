@@ -19,6 +19,13 @@
           <input formControlName="description" type="text", class="form-control mt-2" placeholder="Ingrese descripcion">
           <input formControlName="duration" type="text", class="form-control mt-2" placeholder="Ingrese duracion">
           <input formControlName="image" type="text", class="form-control mt-2" placeholder="Ingrese imagen"> 
+          <form action="/public/images" method="POST" enctype="multipart/form-data", class="form-control mt-2">
+            <input type="file" name="image">
+            <button class="btn btn-light" type="submit">Upload</button>
+        </form>
+          <input formControlName="imageUri" type="file" name="image", class="form-control mt-2" placeholder="Ingrese imagen">
+            <button class="btn btn-light" type="submit">Upload</button>
+          
           <div *ngIf="form.get('image')?.hasError('required') && form.get('image')?.touched">
               Todos los campos son <strong>requeridos</strong>
             </div>               

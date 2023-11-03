@@ -6,10 +6,10 @@ import { ListMoviesComponent } from './components/list-movies/list-movies.compon
 import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
 
 const routes: Routes = [
-  {path: '', component: ListMoviesComponent},
-  {path: 'add', component: AddEditMovieComponent},
-  {path: 'edit/:id', component: AddEditMovieComponent},
-  {path: '**', redirectTo:'', pathMatch: 'full'}
+  { path: '', component: ListMoviesComponent },
+  { path: 'add', component: AddEditMovieComponent },
+  { path: 'edit/:id', component: AddEditMovieComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 
 ];
 

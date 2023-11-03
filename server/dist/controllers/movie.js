@@ -32,7 +32,29 @@ const getMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getMovie = getMovie;
-const deleteMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteMovie = async (req, res) => {
+    try {
+      const { id_movie } = req.params;
+      const film = await movie_1.default.findByPk(id_movie);
+  
+      if (!film) {
+        res.status(404).json({
+            msg: `Error al eliminar la pelicula ${id_movie}`
+        });}
+        else{
+      await movie_1.default.destroy();
+      res.json({
+        msg: `La pelicula fue eliminada`
+    });
+        }
+      
+    } catch (error) {
+        res.json({
+            msg: `ERROR`
+        });
+    }
+  };
+   /* => __awaiter(void 0, void 0, void 0, function* () {
     const { id_movie } = req.params;
     const film = yield movie_1.default.findByPk(id_movie);
     if (!film) {
@@ -46,7 +68,7 @@ const deleteMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             msg: `La pelicula fue eliminada`
         });
     }
-});
+});*/
 exports.deleteMovie = deleteMovie;
 const saveMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;

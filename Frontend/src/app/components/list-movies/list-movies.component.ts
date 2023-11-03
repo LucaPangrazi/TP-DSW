@@ -9,10 +9,7 @@ import { MovieService } from 'src/app/services/movie.service';
   styleUrls: ['./list-movies.component.css']
 })
 export class ListMoviesComponent implements OnInit {
-  listMovies: Movie[] = [
-    {title: 'Rapido y Furioso 5', description: 'blabla', genre: 'apt', clasification: '+16', format: '2D', durationMin: 150, imageUri: 'url'}
-    
-  ]
+  listMovies: Movie[] = []
   loading: boolean = false;
 
  
