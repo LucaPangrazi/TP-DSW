@@ -1,0 +1,31 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading" class="row mt-1">
+  <div class="col-lg-4 offset-lg-4">
+
+<div class="container mt-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-4 offset-lg-4 mt-4 " *ngFor="let item of listMovies">
+        <div class="movies-card">
+          <a [routerLink]="['../interfaces', movies.id_movie]" class="no-underline">
+            <div class="card">
+              <img class="card-img-top" [src]="'http://localhost:3000/' + movies.imageUri"  alt="{{ movies.title }}">
+              <div class="card-body">
+                <h5 class="card-title truncate">{{ item.title }}</h5>
+                <p class="card-text truncate">{{ item.description }}</p>
+                <p class="card-text">{{ item.genre }}</p>
+                <p class="card-text">{{ item.clasification }}</p>
+                <p class="card-text">Formato: {{ item.format }}</p>
+                <p class="card-text">Duracion: {{ item.durationMin }}</p>
+                <button class="btn btn-dark">Comprar entrada</button>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-4"></div>
+  <app-footer></app-footer>
+</div>

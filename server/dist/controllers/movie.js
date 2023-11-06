@@ -16,10 +16,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateMovie = exports.saveMovie = exports.deleteMovie = exports.getMovie = exports.getMovies = void 0;
 const movie_1 = require('../models/movie');
+const { request } = require('https');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploadsProductsImages/'); 
+      cb(null, 'public/images'); 
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + '-' + file.originalname); 
@@ -95,16 +96,19 @@ const deleteMovie = async (req, res) => {
 });*/
 exports.deleteMovie = deleteMovie;
 
-const saveMovie = async (req, res) => {
-    const { title, genre, format, description, clasification, durationMin } = req;
+const saveMovie =  upload.single('imageUri') = async (req, res) => {
+    // const imagePath = req.file.path;
+    //  Movie.ImageUri = imagePath; se pone en la pantalla de inicio cuando muestro las peliculas en la cartelera
+    const {  newtitle, newgenre, newformat, newdescription, newclasification, newdurationMin } = req;
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No se ha adjuntado una imagen' });
           }
+       
         const imageFileName = req.file.filename; // Nombre de la imagen
-        const image = '../public/images/' + imageFileName; // Ruta de la imagen
-        const newMovie = new Movie({ title, genre, format, description, clasification, durationMin, image });  
-        await newProduct.save(newMovie);
+        const newimage = 'public/images' + imageFileName; // Ruta de la imagen
+        const newMovie = new Movie({ newtitle, newgenre, newformat, newdescription, newclasification, newdurationMin, newimage });  
+       // await newMovie.save();
         await movie_1.default.create(newMovie);
         res.json({
             msg: 'La pelicula fue agregada correctamente'
@@ -137,7 +141,7 @@ exports.saveMovie = saveMovie;
 */
 const updateMovie = async (req, res) => {
     try {
-        const { body } = req.body.orderData;
+        const { body } = req;
         const  id  = parseInt(req.params.id);
         const film_id = await movie_1.default.findByPk(id);
         if (!film_id) {
