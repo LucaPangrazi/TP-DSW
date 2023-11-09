@@ -1,0 +1,36 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading"class="row mt-1">
+    <div class="col-lg-4 offset-lg-4">
+        <div class="card bg-light mb-3" style="max-width: 25rem;">
+            <div class="card-header text-center">{{ operacion }} Sucursal</div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="addSucursal()">
+                    <input formControlName="nombre" type="text" class="form-control" placeholder="Ingrese nombre">
+                    <span *ngIf="form.get('nombre')?.hasError('required')&& form.get('nombre')?.touched">
+                        El campo nombre es <strong> requerido</strong>
+                    </span>
+                    <input formControlName="localidad" type="text" class="form-control mt-2" placeholder="Ingrese localidad">
+                    <span *ngIf="form.get('nombre')?.hasError('required') && form.get('localidad')?.touched">
+                        El campo localidad es <strong> requerido</strong>
+                    </span>
+                    <input formControlName="email" type="text" class="form-control mt-2" placeholder="Ingrese email">
+                    <span *ngIf="form.get('nombre')?.hasError('required')&& form.get('email')?.touched">
+                        El campo email es <strong> requerido</strong>
+                    </span>
+                    <div class="row mt-2 text-center">
+                        <div class="col-lg-6">
+                            <button routerLink="/" type="button" class="btn btn-secondary">Volver</button>
+                        </div>
+                        <div class="col-lg-6">
+                            <button [disabled]= "form.invalid" type="submit" class="btn btn-primary">Aceptar</button>
+                        </div>
+                    </div>
+                  
+                    
+                </form>
+              
+            </div>
+    </div>
+</div>
+
+
