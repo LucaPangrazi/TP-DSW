@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   userName: string = '';
   dni:  string = '';
   telefono:  string = '';
-  contraseña: string = '';
+  password: string = '';
   role: string = '';
   id: string = '';
   loading: boolean = false;
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-    if (this.userName == '' || this.contraseña == '') {
+    if (this.userName == '' || this.password == '') {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return
     }
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       userName: this.userName,
       dni: this.dni,
       telefono: this.telefono,
-      contraseña: this.contraseña,
+      password: this.password,
       role: this.role,
       id: this.id
     }

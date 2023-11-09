@@ -58,13 +58,13 @@ export class RegisterComponent implements OnInit {
       userName: this.userName,
       dni: this.dni,
       telefono: this.telefono,
-      contraseña: this.password,
+      password: this.password,
       role: this.role,
       id: this.id
     }
 
     this.loading = true;
-    this._userService.signIn(user).subscribe({
+    this._userService.register(user).subscribe({
       next: (v) => {
         this.loading = false;
         this.toastr.success(`El usuario ${this.userName} fue registrado con exito`, 'Usuario registrado');

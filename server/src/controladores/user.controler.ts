@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { User } from '../entidades/user.entity.js'
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
+import { Roles } from '../constants.js'
 
 
 export const newUser = async (req: Request, res: Response) => {
 
-  const { nombre, apellido, userName, dni, telefono, contraseña } = req.body;
+  const { nombre, apellido, userName, dni, telefono, password } = req.body;
 
 
   const user = await User.findOne({ where: { userName: userName } });
@@ -17,7 +18,7 @@ export const newUser = async (req: Request, res: Response) => {
       })
   } 
 
-  const hashedPassword = await bcrypt.hash(contraseña, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
   
   try {
       await User.create({
@@ -26,7 +27,7 @@ export const newUser = async (req: Request, res: Response) => {
         userName: userName,
         dni: dni,
         telefono: telefono,
-        contraseña: hashedPassword,
+        password: hashedPassword
       })
   
       res.json({
@@ -70,9 +71,9 @@ export const loginUser = async (req: Request, res: Response) => {
  export const editUser = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const user: any = await User.findByPk({ where: { id: id } });
+    const user: any = await User.findOne({ where: { id: id } });
 
-    const { username, telefono, contraseña } = req.body;
+    const { username, telefono, password } = req.body;
 
     if(!user) {
         return res.status(400).json({
@@ -80,15 +81,15 @@ export const loginUser = async (req: Request, res: Response) => {
         })
     }
 
-    const hashedPassword = await bcrypt.hash(contraseña, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
 
         user.userName = username;
         user.telefono = telefono;
-        user.contraseña = hashedPassword;
+        user.password = hashedPassword;
 
-        await User.save();
+        await user.save();
     
         res.json({
             msg: `Usuario ${username} actualizado exitosamente!`
@@ -102,14 +103,14 @@ export const loginUser = async (req: Request, res: Response) => {
 
  }
 
- export const deleteUser = async (req: Request, res: Response) => {
+ //export const deleteUser = async (req: Request, res: Response) => {
 
-    const { id } = req.params;
+  //  const { id } = req.params;
 
-    const user = await User.findByPk({ where: { id: id } })
+  //  const user = await User.findOne({ where: { id: id } })
 
-    await user.destroy();
+  //  await user.destroy();
 
- }
+ // }
 
  

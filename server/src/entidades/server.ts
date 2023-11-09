@@ -1,7 +1,8 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import userRouter from '../routes/user.routes.js';
-import { User } from '../entidades/user.entity.js'
+import routesUser from '../routes/user.routes.js';
+import sequelize from '../conexiones/db.js'
+import { User } from './user.entity.js';
 
 class Server {
     private app: Application;
@@ -24,7 +25,7 @@ class Server {
     }
 
     routes() {
-        this.app.use('/api/users', userRouter);
+        this.app.use('/api/users', routesUser);
     }
 
     midlewares() {
@@ -37,7 +38,8 @@ class Server {
 
     async dbConnect() {
         try {
-            await User.sync();
+           await sequelize.authenticate();
+           console.log('base de datos supuestamente conectada');
         } catch (error) {
             console.error('Unable to connect to the database:', error);
         }

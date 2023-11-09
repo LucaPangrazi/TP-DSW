@@ -4,7 +4,7 @@ export interface User {
         userName: string,
         dni: string,
         telefono: string,
-        contraseña: string,
+        password: string,
         role: string,
         id: string
 }

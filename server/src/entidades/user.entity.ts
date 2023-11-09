@@ -1,6 +1,6 @@
-import { Roles } from '../constants.js'
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+
+import sequelize from '../conexiones/db.js'
+import { Sequelize, DataTypes } from 'sequelize';
 
 export const User = sequelize.define('User', {
   nombre: {
@@ -27,13 +27,13 @@ export const User = sequelize.define('User', {
     allowNull: false
   },
   role:{
-    type: DataTypes.ENUM,
+    type: DataTypes.ENUM('User', 'Admin'),
     allowNull: false,
-    default: Roles.User
+    defaultValue: 'User'
   },
   id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     allowNull: false,
     primaryKey: true
 }
