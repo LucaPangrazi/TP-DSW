@@ -14,7 +14,8 @@ export class ListMoviesComponent implements OnInit {
 
  
   constructor(private _movieService: MovieService, private toastr: ToastrService) {}
-    ngOnInit(): void {
+
+  ngOnInit(): void {
       this.getListMovies();
     }
 
@@ -27,11 +28,16 @@ export class ListMoviesComponent implements OnInit {
     }
 
     deleteMovie(id_movie: number) {
+      console.log(id_movie);
    this.loading = true;
    this._movieService.deleteMovie(id_movie).subscribe(() => {
     this.getListMovies();
     this.toastr.warning('La pelicula fue eiminada correctamente', 'Pelicula eliminada');
-  })
+  },
+  error => {
+    console.error('Error al eliminar la película', error);
+  }
+  );}
 }
 
-}
+
