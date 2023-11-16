@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
-import bcrypt from 'bcrypt'
 import { User } from '../entidades/user.entity.js'
-//import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 export const allUsers = async (req:Request, res:Response) => {
     const users = await User.findAll();
@@ -16,15 +15,15 @@ export const newUser = async (req: Request, res: Response) => {
   const { nombre, apellido, userName, dni, telefono, password } = req.body;
 
 
-  //const user = await User.findOne({ where: { userName: userName } });
+  const user = await User.findOne({ where: { userName: userName } });
 
- // if(user) {
-  //   return res.status(400).json({
-  //        msg: `Ya existe un usuario con ese nombre de usuario registrado`
-   //   })
- // } 
+  if(user) {
+    return res.status(400).json({
+         msg: `Ya existe un usuario con ese nombre de usuario registrado`
+   })
+     } 
 
-  //const hashedPassword = await bcrypt.hash(password, 10);
+  
   
   try {
       await User.create({
@@ -58,19 +57,20 @@ export const loginUser = async (req: Request, res: Response) => {
           msg: `No existe un usuario con el nombre ${username} en la base datos`
       })
  }
-
- 
- const passwordValid = true //await bcrypt.compare(password, user.password)
+var passwordValid = false;
+ if (user.password === password){
+    passwordValid = true;
+ }
  if(!passwordValid) {
   return res.status(400).json({
       msg: `Password Incorrecta`
   })
  }
-// const token = jwt.sign({
- // username: username
- //}, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+const token = jwt.sign({
+ username: username
+ }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
  
- //res.json(token);
+ res.json(token);
 }
 
 
@@ -86,8 +86,6 @@ export const loginUser = async (req: Request, res: Response) => {
             msg: `No existe el usuario`
         })
     }
-
-    //const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
 
@@ -109,14 +107,22 @@ export const loginUser = async (req: Request, res: Response) => {
 
  }
 
- //export const deleteUser = async (req: Request, res: Response) => {
+ export const deleteUser = async (req: Request, res: Response) => {
 
-  //  const { id } = req.params;
+const { id } = req.params;
 
-  //  const user = await User.findOne({ where: { id: id } })
+   const user = await User.findOne({ where: { id: id } })
+   
+   if(!user) {
+    return res.status(400).json({
+        msg: `No existe el usuario`
+    })
+    }
+    else{
+        await user.destroy();
+    }
+   
 
-  //  await user.destroy();
-
- // }
+  }
 
  
