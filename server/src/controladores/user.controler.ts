@@ -66,11 +66,11 @@ var passwordValid = false;
       msg: `Password Incorrecta`
   })
  }
-const token = jwt.sign({
- username: username
- }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+//const token = jwt.sign({ //
+ // username: username //
+ //}, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234'); //
  
- res.json(token);
+ // res.json(token); //
 }
 
 
