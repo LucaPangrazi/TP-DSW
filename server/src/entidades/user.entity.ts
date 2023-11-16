@@ -22,7 +22,7 @@ export const User = sequelize.define('User', {
   telefono: {
     type: DataTypes.STRING
   },
-  contraseña: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false
   },

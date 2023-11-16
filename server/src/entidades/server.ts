@@ -1,8 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import routesUser from '../routes/user.routes.js';
+import userRouter from '../routes/user.routes.js';
 import sequelize from '../conexiones/db.js'
-import { User } from './user.entity.js';
 
 class Server {
     private app: Application;
@@ -25,7 +24,7 @@ class Server {
     }
 
     routes() {
-        this.app.use('/api/users', routesUser);
+        this.app.use('/api/users', userRouter);
     }
 
     midlewares() {

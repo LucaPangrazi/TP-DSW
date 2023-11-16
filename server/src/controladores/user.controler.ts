@@ -1,24 +1,30 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { User } from '../entidades/user.entity.js'
-import jwt from 'jsonwebtoken'
-import { Roles } from '../constants.js'
+//import jwt from 'jsonwebtoken'
 
+export const allUsers = async (req:Request, res:Response) => {
+    const users = await User.findAll();
+    res.json({
+        msg: `get funciona`,
+        return: users
+    })
+}
 
 export const newUser = async (req: Request, res: Response) => {
 
   const { nombre, apellido, userName, dni, telefono, password } = req.body;
 
 
-  const user = await User.findOne({ where: { userName: userName } });
+  //const user = await User.findOne({ where: { userName: userName } });
 
-  if(user) {
-     return res.status(400).json({
-          msg: `Ya existe un usuario con ese nombre de usuario registrado`
-      })
-  } 
+ // if(user) {
+  //   return res.status(400).json({
+  //        msg: `Ya existe un usuario con ese nombre de usuario registrado`
+   //   })
+ // } 
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  //const hashedPassword = await bcrypt.hash(password, 10);
   
   try {
       await User.create({
@@ -27,7 +33,7 @@ export const newUser = async (req: Request, res: Response) => {
         userName: userName,
         dni: dni,
         telefono: telefono,
-        password: hashedPassword
+        password: password
       })
   
       res.json({
@@ -35,7 +41,7 @@ export const newUser = async (req: Request, res: Response) => {
       })
   } catch (error) {
       res.status(400).json({
-          msg: 'Upps ocurrio un error',
+          msg: `Upps ocurrio un error`,
           error
       })
   }
@@ -54,17 +60,17 @@ export const loginUser = async (req: Request, res: Response) => {
  }
 
  
- const passwordValid = await bcrypt.compare(password, user.password)
+ const passwordValid = true //await bcrypt.compare(password, user.password)
  if(!passwordValid) {
   return res.status(400).json({
       msg: `Password Incorrecta`
   })
  }
- const token = jwt.sign({
-  username: username
- }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+// const token = jwt.sign({
+ // username: username
+ //}, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
  
- res.json(token);
+ //res.json(token);
 }
 
 
@@ -81,13 +87,13 @@ export const loginUser = async (req: Request, res: Response) => {
         })
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
 
         user.userName = username;
         user.telefono = telefono;
-        user.password = hashedPassword;
+        user.password = password;
 
         await user.save();
     
