@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 
 
-const sequelize = new Sequelize('rrhh', 'root', 'root', {
+const db = new Sequelize('cine', 'cine', 'cine', {
     host: 'localhost',
     dialect: 'mysql',   
 });
 
-export default sequelize;
+export default db;

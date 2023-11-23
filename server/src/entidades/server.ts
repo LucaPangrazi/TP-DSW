@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import userRouter from '../routes/user.routes.js';
-import { User } from '../entidades/user.entity.js'
+import sequelize from '../db/connection.js'
 
 class Server {
     private app: Application;
@@ -37,7 +37,8 @@ class Server {
 
     async dbConnect() {
         try {
-            await User.sync();
+           await sequelize.authenticate();
+           console.log('base de datos supuestamente conectada');
         } catch (error) {
             console.error('Unable to connect to the database:', error);
         }

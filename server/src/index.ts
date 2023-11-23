@@ -1,7 +1,7 @@
-import Server from "./models/server";
+import dotenv from 'dotenv';
+import Server from "./models/server.js";
 
-import dotenv from 'dotenv'
-//configuramos las variables de ambiente
-dotenv.config;
+dotenv.config();
+
 
 const server = new Server();

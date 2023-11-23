@@ -2,6 +2,7 @@
 import express, { Application , Request, Response } from 'express';
 import cors from 'cors';
 import routesSala from '../routes/sala';
+import userRouter from '../routes/user.routes.js';
 import db from '../db/connection';
 
 class Server {
@@ -30,7 +31,8 @@ routes() {
 
   })
 
-  this.app.use('/api/salas/',routesSala)
+  this.app.use('/api/salas/',routesSala);
+  this.app.use('/api/users', userRouter);
 }
 
 midlewares() {
