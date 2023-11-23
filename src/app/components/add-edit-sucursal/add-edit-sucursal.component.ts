@@ -76,11 +76,11 @@ export class AddEditSucursalComponent {
      
       this._sucursalService.saveSucursal(sucursal).subscribe(() => {
       this.toastr.success(`La sucursal ${sucursal.nombre} fue registrada con exito`, 'Sucursal registrada');
-       
+      this.router.navigate(['/']);
       })
     }
     this.loading = false;
-    this.router.navigate(['/']);
+  
    
   }
 
