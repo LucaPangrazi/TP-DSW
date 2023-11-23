@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User } from '../entidades/user.entity.js'
+import { User } from '../models/user.entity.js'
 import jwt from 'jsonwebtoken'
 
 export const allUsers = async (req:Request, res:Response) => {

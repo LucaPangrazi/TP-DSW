@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import userRouter from '../routes/user.routes.js';
-import sequelize from '../conexiones/db.js'
+import sequelize from '../conexiones/connection.js'
 
 class Server {
     private app: Application;
