@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import Sucursal from '../models/sucursal';
+import Sucursal from '../models/producto';
 
 
 export const getSucursales = async(req: Request, res:Response) => {
