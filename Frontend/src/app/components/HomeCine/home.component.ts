@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     <div>
       <button (click)="navigateToMovies()">Películas</button>
       <button (click)="navigateToSalas()">Salas</button>
-       <button (click)="navigateToSalas()">Sucursales</button>
+       <button (click)="navigateToSucursales()">Sucursales</button>
     </div>
   `,
   styles: [

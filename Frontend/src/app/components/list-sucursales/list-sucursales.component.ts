@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Sucursal } from 'src/app/interfaces/sucursal';
 import { SucursalService } from 'src/app/services/sucursal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-sucursales',
@@ -12,9 +13,11 @@ export class ListSucursalesComponent {
   listSucursales:Sucursal[] = []
   loading: boolean = false;
 
-  constructor(private _sucursalService: SucursalService, private toastr: ToastrService) {
-
-  }
+  constructor(
+    private _sucursalService: SucursalService, 
+    private toastr: ToastrService,
+    private router: Router)
+     {}
 
   ngOnInit(): void {
     this.getListSucursales();
@@ -34,6 +37,10 @@ export class ListSucursalesComponent {
       this.getListSucursales();
       this.toastr.warning('La sucursal fue eliminada con exito', 'Sucursal eliminada');
     })
+  }
+
+  navigateToAddSucursal() {
+    this.router.navigate(['/sucursales/add']);  // Navegamos hacia la ruta de agregar sucursal
   }
 
 }

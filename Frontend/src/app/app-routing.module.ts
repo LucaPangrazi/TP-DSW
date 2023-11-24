@@ -1,6 +1,8 @@
 // app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+//Componentes
 import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
 import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
 import { ListMoviesComponent } from './components/list-movies/list-movies.component';
@@ -17,10 +19,10 @@ const routes: Routes = [
   { path: 'salas', component: ListSalasComponent },
   { path: 'salas/add', component: AddEditSalaComponent },
   { path: 'salas/edit/:id', component: AddEditSalaComponent },
-  { path:'', component: ListSucursalesComponent},
-  { path: 'add', component:AddEditSucursalComponent},
-  { path: 'edit/:id', component: AddEditSucursalComponent},
-  { path: '**', redirectTo: 'movies', pathMatch: 'full' }
+  { path:'sucursales', component: ListSucursalesComponent},
+  { path: 'sucursales/add', component:AddEditSucursalComponent},
+  { path: 'sucursales/edit/:id', component: AddEditSucursalComponent},
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

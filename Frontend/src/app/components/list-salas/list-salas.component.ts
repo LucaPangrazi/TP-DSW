@@ -53,6 +53,6 @@ export class ListSalasComponent implements OnInit {
   }
 
   navigateToAddSala() {
-    this.router.navigate(['/salas/add']);
+    this.router.navigate(['/salas/add']); // Navegamos hacia la ruta de agregar sala
   }
 }

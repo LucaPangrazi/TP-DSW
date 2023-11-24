@@ -5,10 +5,7 @@
       <div class="card-header text-center">{{operacion}}Agregar sala</div>
       <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="addSala()">
-          <!-- <input formControlName="id" type="number" class="form-control" placeholder="ingrese id">
-          <span *ngIf="form.get('id')?.hasError('required') && form.get('id')?.touched">
-            El campo id es <strong> requerido </strong>
-          </span> -->
+
           <input formControlName="name" type="text" class="form-control mt-2" placeholder="ingrese nombre">
           <span *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">
             El campo nombre es <strong> requerido </strong>
