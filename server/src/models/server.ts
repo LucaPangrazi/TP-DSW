@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import userRouter from '../routes/user.routes.js';
-import sequelize from '../db/connection.js'
+import db from '../db/connection.js'
 
 class Server {
     private app: Application;
@@ -9,7 +9,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || '3000';
+        this.port = process.env.PORT || '3001';
         this.listen();
         this.midlewares();
         this.routes();
@@ -37,7 +37,7 @@ class Server {
 
     async dbConnect() {
         try {
-           await sequelize.authenticate();
+           await db.authenticate();
            console.log('base de datos supuestamente conectada');
         } catch (error) {
             console.error('Unable to connect to the database:', error);
