@@ -1,0 +1,36 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading" class="row mt-1">
+  <div class="col-lg-4 offset-lg-4">
+    <div class="card bg-light mb-3" style="max-width: 25rem;">
+      <div class="card-header text-center">{{operacion}} Pelicula</div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="addMovie()">
+          <input formControlName="title" type="text" class="form-control" placeholder="Ingrese titulo">
+          <div *ngIf="form.get('title')?.hasError('required') && form.get('title')?.touched">
+            Todos los campos son <strong>requeridos</strong>
+          </div>
+          <input formControlName="genre" type="text" class="form-control mt-2" placeholder="Ingrese genero">
+          <input formControlName="clasification" type="text" class="form-control mt-2"
+            placeholder="Ingrese clasificacion">
+          <input formControlName="format" type="text" class="form-control mt-2" placeholder="Ingrese formato">
+          <input formControlName="description" type="text" class="form-control mt-2" placeholder="Ingrese descripcion">
+          <input formControlName="durationMin" type="text" class="form-control mt-2" placeholder="Ingrese duracion">
+
+          <div class="form-group">
+            <label for="imageUri">Portada de la pelicula:</label>
+            <input type="file" class="form-control-file mt-4" id="imageUri" name="imageUri" accept="image/*">
+          </div>
+
+          <div class="row mt-2 text-center">
+            <div class="col-lg-6">
+              <button routerLink="/" type="button" class="btn btn-light" style="width: 82%;">VOLVER</button>
+            </div>
+            <div class="col-lg-6">
+              <button type="submit" class="btn btn-dark" style="width: 100%;">ACEPTAR</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

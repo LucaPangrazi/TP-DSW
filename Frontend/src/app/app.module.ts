@@ -5,28 +5,32 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
-
-
-
 //Modulos
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
-//Componentes
+//Components
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ListMoviesComponent } from './components/list-movies/list-movies.component';
+import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
+import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+import { ListSalasComponent } from './components/list-salas/list-salas.component';
+import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
 import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
 import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
-import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    ListSucursalesComponent,
+    ListMoviesComponent,
+    AddEditMovieComponent,
+    ProgressBarComponent,
+        ListSalasComponent,
+    AddEditSalaComponent,
+        ListSucursalesComponent,
     AddEditSucursalComponent,
-    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
