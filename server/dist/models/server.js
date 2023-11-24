@@ -10,6 +10,7 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const movieRoutes = require('../routes/movie').default;
 const salaRoutes = require('../routes/sala').default;
+const sucursalRoutes = require('../routes/sucursal').default;
 const dbConnection = require('../db/connection');
 
 class Server {
@@ -37,7 +38,7 @@ class Server {
 
     this.app.use('/api/movies', movieRoutes());
     this.app.use('/api/salas', salaRoutes());
-    this.app.use('/api/sucursales', sucursal_1.default);
+    this.app.use('/api/sucursales', sucursalRoutes());
 
     // Servir archivos estáticos (imágenes, etc.)
     this.app.use(express.static(path.join(__dirname, '../public')));
