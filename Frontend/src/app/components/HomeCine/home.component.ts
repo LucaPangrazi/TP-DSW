@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
     <div>
       <button (click)="navigateToMovies()">Películas</button>
       <button (click)="navigateToSalas()">Salas</button>
+       <button (click)="navigateToSalas()">Sucursales</button>
     </div>
   `,
   styles: [
@@ -31,5 +32,9 @@ export class HomeComponent {
 
   navigateToSalas() {
     this.router.navigate(['/salas']);
+  }
+
+   navigateToSucursales() {
+    this.router.navigate(['/sucursales']);
   }
 }
