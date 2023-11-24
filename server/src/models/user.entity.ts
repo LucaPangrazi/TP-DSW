@@ -1,8 +1,8 @@
 
-import sequelize from '../db/connection.js'
+import db from '../db/connection.js'
 import { Sequelize, DataTypes } from 'sequelize';
 
-export const User = sequelize.define('User', {
+export const User = db.define('User', {
   nombre: {
     type: DataTypes.STRING,
     allowNull: false
@@ -41,4 +41,4 @@ export const User = sequelize.define('User', {
   
 });
 
-console.log(User === sequelize.models.User);
+console.log(User === db.models.User);
