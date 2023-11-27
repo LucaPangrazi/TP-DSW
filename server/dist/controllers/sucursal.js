@@ -13,15 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateSucursal = exports.postSucursal = exports.deleteSucursal = exports.getSucursal = exports.getSucursales = void 0;
-const producto_1 = __importDefault(require("../models/producto"));
+const sucursal_1 = __importDefault(require("../models/sucursal"));
 const getSucursales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const listSucursales = yield producto_1.default.findAll();
+    const listSucursales = yield sucursal_1.default.findAll();
     res.json(listSucursales);
 });
 exports.getSucursales = getSucursales;
 const getSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const sucursal = yield producto_1.default.findByPk(id);
+    const sucursal = yield sucursal_1.default.findByPk(id);
     if (sucursal) {
         res.json(sucursal);
     }
@@ -34,7 +34,7 @@ const getSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getSucursal = getSucursal;
 const deleteSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const sucursal = yield producto_1.default.findByPk(id);
+    const sucursal = yield sucursal_1.default.findByPk(id);
     if (!sucursal) {
         res.status(404).json({
             msg: `No existe una sucursal con el id ${id}`
@@ -51,7 +51,7 @@ exports.deleteSucursal = deleteSucursal;
 const postSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
-        yield producto_1.default.create(body);
+        yield sucursal_1.default.create(body);
         res.json({
             msg: `La sucursal fue agregada con exito!`
         });
@@ -68,7 +68,7 @@ const updateSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const { body } = req;
     const { id } = req.params;
     try {
-        const sucursal = yield producto_1.default.findByPk(id);
+        const sucursal = yield sucursal_1.default.findByPk(id);
         if (sucursal) {
             yield sucursal.update(body);
             res.json({

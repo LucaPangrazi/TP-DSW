@@ -45,7 +45,7 @@ export const postSala = async (req:Request, res:Response) => {
     await Sala.create(body);
 
   res.json({
-    msg:'El producto fue agregado con éxito!'
+    msg:'La sala fue agregada con éxito!'
   })
   } catch (error) {
     console.log(error);
