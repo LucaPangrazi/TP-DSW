@@ -29,8 +29,12 @@
     "@types/cors": "^2.8.14",
     "@types/express": "^4.17.18",
     "@types/multer": "^1.4.9",
+<<<<<<< HEAD
     "esm": "^3.2.25",
     "nodemon": "^3.0.1",
     "ts-node": "^10.4.0"
+=======
+    "esm": "^3.2.25"
+>>>>>>> parent of 26672dc3 (.)
   }
 }

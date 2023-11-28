@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD:server/dist/models/server.mjs
 
 import express from 'express';
 import cors from 'cors';
@@ -11,6 +12,21 @@ import sucursalRoutes from '../routes/sucursal.mjs';
 // Construye la ruta absoluta al módulo db/connection.mjs
 const dbConnectionPath = path.resolve(__dirname, 'db/connection.mjs');
 import dbConnection from dbConnectionPath;
+=======
+const express_1 = require("express");
+const cors_1 = require("cors");
+const sucursal_1 = require("../routes/sucursal");
+const connection_1 = require("../db/connection");
+
+const express = require('express');
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
+const path = require('path');
+const movieRoutes = require('../routes/movie').default;
+const salaRoutes = require('../routes/sala').default;
+const sucursalRoutes = require('../routes/sucursal').default;
+const dbConnection = require('../db/connection');
+>>>>>>> parent of 26672dc3 (.):server/dist/models/server.js
 
 class Server {
   constructor() {
