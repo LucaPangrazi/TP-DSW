@@ -1,16 +1,16 @@
 "use strict";
 const express_1 = require("express");
 const cors_1 = require("cors");
-const sucursal_1 = require("../routes/sucursal");
+const sucursal_1 = require("../routes/sucursal.mjs");
 const connection_1 = require("../db/connection");
 
 const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const path = require('path');
-const movieRoutes = require('../routes/movie').default;
-const salaRoutes = require('../routes/sala').default;
-const sucursalRoutes = require('../routes/sucursal').default;
+const movieRoutes = require('../routes/movie.mjs').default;
+const salaRoutes = require('../routes/sala.mjs').default;
+const sucursalRoutes = require('../routes/sucursal.mjs').default;
 const dbConnection = require('../db/connection');
 
 class Server {

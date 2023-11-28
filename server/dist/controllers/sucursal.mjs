@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateSucursal = exports.postSucursal = exports.deleteSucursal = exports.getSucursal = exports.getSucursales = void 0;
-const sucursal_1 = __importDefault(require("../models/sucursal"));
+const sucursal_1 = __importDefault(require("../models/sucursal.mjs"));
 const getSucursales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listSucursales = yield sucursal_1.default.findAll();
     res.json(listSucursales);
