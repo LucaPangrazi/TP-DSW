@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "commonjs",
+  "main": "dist/index.mjs", 
+  "type": "module",
   "scripts": {
-    "start": "nodemon -r esm dist/index.js",
+    "start": "nodemon --experimental-specifier-resolution=node --loader ts-node/esm --exec ts-node ./dist/index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -29,6 +29,8 @@
     "@types/cors": "^2.8.14",
     "@types/express": "^4.17.18",
     "@types/multer": "^1.4.9",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.4.0"
   }
 }
