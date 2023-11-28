@@ -1,4 +1,4 @@
-/*"use strict";
+"use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -8,15 +8,3 @@ const dotenv_1 = __importDefault(require("dotenv"));
 //configuramos las variables de ambiente
 dotenv_1.default.config();
 const server = new server_1.default(); //crea instancia del servidor
-
-eso era en .js*/
-
-"use strict";
-
-import Server from "./models/server.mjs";
-import dotenv from "dotenv";
-
-// Configuramos las variables de ambiente
-dotenv.config();
-
-const server = new Server(); // Crea instancia del servidor

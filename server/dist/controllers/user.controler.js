@@ -1,4 +1,4 @@
-import { User } from '../models/user.entity.mjs';
+import { User } from '../models/user.entity.js';
 export const allUsers = async (req, res) => {
     const users = await User.findAll();
     res.json({

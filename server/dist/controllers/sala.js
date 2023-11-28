@@ -1,4 +1,4 @@
-const SalaModel = require('../models/sala.mjs');
+const SalaModel = require('../models/sala');
 
 module.exports.getSalas = async (req, res) => {
   const listSalas = await SalaModel.findAll();
