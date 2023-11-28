@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Modulos
-import {ReactiveFormsModule, HTTP_INTERCEPTORS } from '@angular/forms';
+import {ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -19,11 +19,6 @@ import { ListSalasComponent } from './components/list-salas/list-salas.component
 import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
 import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
 import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { AddTokenInterceptor } from './util/add-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,10 +31,6 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
     AddEditSalaComponent,
         ListSucursalesComponent,
     AddEditSucursalComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +44,7 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
       preventDuplicates: true,
     }), 
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

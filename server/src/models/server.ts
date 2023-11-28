@@ -2,8 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import routeMovie from '../routes/movie';
 import routesSala from '../routes/sala';
-import sequelize from '../db/connection';
-import userRouter from '../routes/user.routes.js';
+import db from '../db/connection';
 
 class Server {
   private app: Application;
@@ -33,7 +32,6 @@ class Server {
 
     this.app.use('/api/movies', routeMovie);
     this.app.use('/api/salas', routesSala);
-    this.app.use('/api/users', userRouter);
   }
 
   middlewares() {
@@ -46,7 +44,7 @@ class Server {
 
   async dbConnect() {
     try {
-      await sequelize.authenticate();
+      await db.authenticate();
       console.log('Base de Datos conectada');
     } catch (error) {
       console.log(error);

@@ -10,10 +10,6 @@ import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movi
 import { ListSalasComponent } from './components/list-salas/list-salas.component';
 import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
 import { HomeComponent } from './components/HomeCine/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,11 +22,7 @@ const routes: Routes = [
   { path:'sucursales', component: ListSucursalesComponent},
   { path: 'sucursales/add', component:AddEditSucursalComponent},
   { path: 'sucursales/edit/:id', component: AddEditSucursalComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
-  
 ];
 
 @NgModule({
