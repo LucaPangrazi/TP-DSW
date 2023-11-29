@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Movie } from '../interfaces/movies';
+import { environment } from '../../environments/environment';
+import { Movie } from '../interfaces/movie';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -16,7 +16,6 @@ private myApiUrl:string;
     this.myAppUrl = environment.endpoint;
     this.myApiUrl =  'api/movies/' //'http://localhost:3000/api/movies/';
    }
-
    getListMovies(): Observable <Movie[]> {
     return this.http.get<Movie[]>(this.myAppUrl + this.myApiUrl);
     // return this.http.get<Movie[]>(`${this.myAppUrl}${this.myApiUrl}`);
@@ -33,16 +32,7 @@ private myApiUrl:string;
    getMovie(id_movie: number): Observable <Movie>{
     return this.http.get <Movie>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`)
    }
-
    updateMovie(id_movie: number, movie: Movie): Observable <void>{
     return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`, movie);
    }
-// una idea de filtro
-   filterByGenre(genre: string): Observable <void> {
-      return this.http.get<void>(`${this.myAppUrl}${this.myApiUrl}${genre}`);
   }
-}
-
-
-
-

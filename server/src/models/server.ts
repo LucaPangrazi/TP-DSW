@@ -1,4 +1,3 @@
-
 import express, { Application , Request, Response } from 'express';
 import cors from 'cors';
 import routeMovie from '../routes/movie';
@@ -6,7 +5,7 @@ import db from '../db/connection';
 
 class Server {
 private app: Application;
-private port:string;
+private port: string;
 
 constructor(){
   this.app = express();
@@ -23,24 +22,20 @@ console.log(`Aplicación corriendo en el puerto ${this.port}`)
 }
 
 routes() {
-  this.app.get('/', (req:Request , res:Response ) => {
-    res.json({
-      msg: 'API Working'
+    this.app.get('/', (req:Request , res:Response ) => {
+      res.json({
+        msg: 'API Working'
+      })
     })
-
-  })
-
-  this.app.use('/api/movies', routeMovie)
-}
-
-
-midlewares() {
-  //parseamos el body
-  this.app.use(express.json());
-
-  //Cors
-this.app.use(cors());
-}
+    this.app.use('/api/movies', routeMovie)
+  }
+  
+  midlewares() {
+    //parseamos el body
+    this.app.use(express.json());
+    //Cors
+    this.app.use(cors());
+  }
 
  async dbConnect() {
 
@@ -53,8 +48,5 @@ this.app.use(cors());
   console.log('Error al conectarse a la base de datos')
  }
  }
-
-
-
 }
  export default Server;

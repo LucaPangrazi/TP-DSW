@@ -29,11 +29,11 @@ import { ProgressBarComponent } from './shared/progress-bar/progress-bar.compone
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot({
-       timeOut: 10000,
-      positionClass: 'toast-bottom-right'
-    }),
+     BrowserAnimationsModule,
+     ToastrModule.forRoot({
+        timeOut: 10000,
+       positionClass: 'toast-bottom-right'
+     }),
   ],
   providers: [],
   bootstrap: [AppComponent]

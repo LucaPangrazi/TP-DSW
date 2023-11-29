@@ -8,15 +8,13 @@ import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movi
 const routes: Routes = [
   { path: '', component: ListMoviesComponent },
   { path: 'add', component: AddEditMovieComponent },
-  { path: 'edit/:id', component: AddEditMovieComponent },
+  { path: 'edit/:id_movie', component: AddEditMovieComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 
 ];
 
-
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+  })
+  export class AppRoutingModule { }

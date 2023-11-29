@@ -1,5 +1,4 @@
 "use strict";
-
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -18,33 +17,22 @@ const Movie = connection_1.default.define('Movie', {
         autoIncrement: true
     },
     title: {
-        type: sequelize_1.DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     genre: {
-        type: sequelize_1.DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     format: {
-        type: sequelize_1.DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     description: {
-        type: sequelize_1.DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     clasification: {
-        type: sequelize_1.DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     durationMin: {
-        type: sequelize_1.DataTypes.STRING, //min : si pido que el usuario me ingrese hora y min puedo convertirlo desde angular a min
-        trim: true
-    },
-    imageUri: {
-        type: sequelize_1.DataTypes.STRING,
-       // type: sequelize_1.DataTypes.JSON, // Utiliza JSONB para almacenar objetos JSON en PostgreSQL
-        allowNull: false,
+        type: sequelize_1.DataTypes.STRING //min : si pido que el usuario me ingrese hora y min puedo convertirlo desde angular a min
     }
 }, {
     createdAt: false,

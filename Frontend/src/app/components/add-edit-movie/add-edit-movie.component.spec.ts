@@ -6,10 +6,12 @@ describe('AddEditMovieComponent', () => {
   let component: AddEditMovieComponent;
   let fixture: ComponentFixture<AddEditMovieComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AddEditMovieComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AddEditMovieComponent]
+    })
+    .compileComponents();
+    
     fixture = TestBed.createComponent(AddEditMovieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
