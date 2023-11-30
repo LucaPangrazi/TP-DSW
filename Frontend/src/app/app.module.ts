@@ -1,72 +1,61 @@
-// Importa NgModule desde '@angular/core'
-import { NgModule } from '@angular/core';
-
-// Importa BrowserModule, BrowserAnimationsModule desde '@angular/platform-browser'
+ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// Importa ReactiveFormsModule, HTTP_INTERCEPTORS desde '@angular/forms' y '@angular/common/http' respectivamente
-import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-// Importa HttpClientModule desde '@angular/common/http'
+//Modulos
+import {ReactiveFormsModule, HTTP_INTERCEPTORS } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-// Importa ToastrModule desde 'ngx-toastr'
 import { ToastrModule } from 'ngx-toastr';
 
-// Importa AppRoutingModule desde './app-routing.module'
-import { AppRoutingModule } from './app-routing.module';
-
-// Importa AppComponent y otros componentes desde sus respectivas rutas
-import { AppComponent } from './app.component';
-import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
-import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
-import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ListMoviesComponent } from './components/list-movies/list-movies.component';
-import { ListSalasComponent } from './components/list-salas/list-salas.component';
-import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
-import { LoginComponent } from './components/login/login.component';
+//Components
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ListMoviesComponent } from './components/list-movies/list-movies.component';
+import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+import { ListSalasComponent } from './components/list-salas/list-salas.component';
+import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
+import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
+import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
+import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-
-// Importa AddTokenInterceptor desde './util/add-token.interceptor'
 import { AddTokenInterceptor } from './util/add-token.interceptor';
 
 @NgModule({
   declarations: [
-    AddEditMovieComponent,
-    AddEditSalaComponent,
-    AddEditSucursalComponent,
     AppComponent,
-    DashboardComponent,
-    ListMoviesComponent,
-    ListSalasComponent,
-    ListSucursalesComponent,
-    LoginComponent,
     NavbarComponent,
+    ListMoviesComponent,
+    AddEditMovieComponent,
     ProgressBarComponent,
+        ListSalasComponent,
+    AddEditSalaComponent,
+        ListSucursalesComponent,
+    AddEditSucursalComponent,
+    LoginComponent,
     RegisterComponent,
-    SpinnerComponent,
+    DashboardComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule, 
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    }),
+    }), 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
