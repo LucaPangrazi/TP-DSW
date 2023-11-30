@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { CommonModule } from '@angular/common';
+import { SearchService } from './shared/search.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Modulos
-import {ReactiveFormsModule, HTTP_INTERCEPTORS } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 //Components
@@ -15,6 +16,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListMoviesComponent } from './components/list-movies/list-movies.component';
 import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+import { SecondNavbarComponent } from './components/second-navbar/second-navbar.component';
 import { ListSalasComponent } from './components/list-salas/list-salas.component';
 import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
 import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
@@ -29,6 +31,7 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
   declarations: [
     AppComponent,
     NavbarComponent,
+    SecondNavbarComponent,
     ListMoviesComponent,
     AddEditMovieComponent,
     ProgressBarComponent,
@@ -46,6 +49,8 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CommonModule,
+    FormsModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot({
       timeOut: 10000,
@@ -53,7 +58,7 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
       preventDuplicates: true,
     }), 
   ],
-  providers: [
+  providers: [SearchService, 
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

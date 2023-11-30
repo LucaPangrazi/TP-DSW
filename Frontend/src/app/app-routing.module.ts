@@ -16,18 +16,18 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, data: { showSecondNavbar: true } },
   { path: 'movies', component: ListMoviesComponent },
-  { path: 'movies/add', component: AddEditMovieComponent },
-  { path: 'movies/edit/:id_movie', component: AddEditMovieComponent },
+  { path: 'movies/add', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
+  { path: 'movies/edit/:id_movie', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
   { path: 'salas', component: ListSalasComponent },
-  { path: 'salas/add', component: AddEditSalaComponent },
-  { path: 'salas/edit/:id', component: AddEditSalaComponent },
+  { path: 'salas/add', component: AddEditSalaComponent, data: { showSecondNavbar: true }  },
+  { path: 'salas/edit/:id', component: AddEditSalaComponent, data: { showSecondNavbar: true }  },
   { path:'sucursales', component: ListSucursalesComponent},
-  { path: 'sucursales/add', component:AddEditSucursalComponent},
-  { path: 'sucursales/edit/:id', component: AddEditSucursalComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'sucursales/add', component:AddEditSucursalComponent, data: { showSecondNavbar: true } },
+  { path: 'sucursales/edit/:id', component: AddEditSucursalComponent, data: { showSecondNavbar: true } },
+  { path: 'login', component: LoginComponent, data: { showSecondNavbar: true }  },
+  { path: 'register', component: RegisterComponent, data: { showSecondNavbar: true }  },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
   

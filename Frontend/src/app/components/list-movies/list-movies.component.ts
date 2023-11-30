@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Movie } from '../../interfaces/movie';
 import { MovieService } from '../../services/movie.service';
+import { SearchService } from '../../shared/search.service';
 
 @Component({
   selector: 'app-list-movies',
@@ -9,14 +10,23 @@ import { MovieService } from '../../services/movie.service';
   styleUrls: ['./list-movies.component.css']
 })
 export class ListMoviesComponent  implements OnInit {
+  searchTerm: string = '';
   listMovies: Movie[] = []
   loading: boolean = false;
-
+  filteredMovies: Movie[] = [];
  
-  constructor(private _movieService: MovieService, private toastr: ToastrService) {}
+  constructor(private _movieService: MovieService,
+    private toastr: ToastrService,
+    private searchService: SearchService) {}
 
   ngOnInit(): void {
       this.getListMovies();
+
+      this.searchService.searchTerm$.subscribe((term: string) => {
+        console.log('Término de búsqueda recibido:', term);
+        this.searchTerm = term;
+        this.searchMovies();
+      });
     }
 
     getListMovies(){
@@ -24,7 +34,15 @@ export class ListMoviesComponent  implements OnInit {
       this._movieService.getListMovies().subscribe((data: Movie[]) => { 
       this.listMovies = data;
       this.loading = false;
+      this.searchMovies();
       })
+    }
+ 
+    searchMovies(): void {
+      // Filtrar la lista de películas según el término de búsqueda
+      this.filteredMovies = this.listMovies.filter((movie) =>
+        movie.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
     }
 
     deleteMovie(id_movie: number) {

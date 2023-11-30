@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Sucursal } from 'src/app/interfaces/sucursal';
-import { SucursalService } from 'src/app/services/sucursal.service';
+import { Sucursal } from '../../interfaces/sucursal';
+import { SucursalService } from '../../services/sucursal.service';
 
 @Component({
   selector: 'app-add-edit-sucursal',

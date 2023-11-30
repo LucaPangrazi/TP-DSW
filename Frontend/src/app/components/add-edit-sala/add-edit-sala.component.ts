@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Sala } from 'src/app/interfaces/sala';
-import { SalaService } from 'src/app/services/sala.service';
+import { Sala } from '../../interfaces/sala';
+import { SalaService } from '../../services/sala.service';
 
 @Component({
   selector: 'app-add-edit-sala',
