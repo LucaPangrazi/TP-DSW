@@ -1,50 +1,41 @@
-// En models/movie.js
-
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db/connection');
-
-const MovieFormat = {
-    f2D: '2D',
-    f3D: '3D',
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-
-const Movie = sequelize.define('Movie', {
+Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
+const connection_1 = __importDefault(require("../db/connection"));
+var MovieFormat;
+(function (MovieFormat) {
+    MovieFormat["f2D"] = "2D";
+    MovieFormat["f3D"] = "3D"; //varchar(10) en bd 
+})(MovieFormat || (MovieFormat = {}));
+const Movie = connection_1.default.define('Movie', {
     id_movie: {
-        type: DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     title: {
-        type: DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     genre: {
-        type: DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     format: {
-        type: DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     description: {
-        type: DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     clasification: {
-        type: DataTypes.STRING,
-        trim: true
+        type: sequelize_1.DataTypes.STRING
     },
     durationMin: {
-        type: DataTypes.STRING,
-        trim: true
-    },
-    imageUri: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: sequelize_1.DataTypes.STRING //min : si pido que el usuario me ingrese hora y min puedo convertirlo desde angular a min
     }
 }, {
     createdAt: false,
     updatedAt: false
 });
-
-module.exports = Movie;
+exports.default = Movie;

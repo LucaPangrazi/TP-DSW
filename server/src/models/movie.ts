@@ -29,14 +29,9 @@ const Movie = db.define('Movie', {
   },
   durationMin:{
       type: DataTypes.STRING //min : si pido que el usuario me ingrese hora y min puedo convertirlo desde angular a min
-  },
-  imageUri:{
-    type: DataTypes.STRING
-}
-}, {
+  }, {
  createdAt: false,
  updatedAt: false
 }
 );
-
 export default Movie;

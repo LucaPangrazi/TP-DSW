@@ -1,4 +1,4 @@
- import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -32,9 +32,9 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
     ListMoviesComponent,
     AddEditMovieComponent,
     ProgressBarComponent,
-        ListSalasComponent,
+    ListSalasComponent,
     AddEditSalaComponent,
-        ListSucursalesComponent,
+    ListSucursalesComponent,
     AddEditSucursalComponent,
     LoginComponent,
     RegisterComponent,

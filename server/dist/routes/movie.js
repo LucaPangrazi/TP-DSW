@@ -1,18 +1,11 @@
 "use strict";
-const { Router } = require("express");
-const { getMovies, getMovie, deleteMovie, saveMovie, updateMovie } = require("../controllers/movie");
-const fileUpload = require('express-fileupload');
-const router = Router();
-
-router.get('/movies', getMovies);
-router.get('/movies/:id', getMovie);
-router.delete('/movies/:id', deleteMovie);
-
-router.post('/movies', fileUpload({
-    useTempFiles: true,
-    tempFileDir: "./uploads",
-}), saveMovie);
-
-router.put('/movies/:id', updateMovie);
-
-module.exports = router;
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const movie_1 = require("../controllers/movie");
+const router = (0, express_1.Router)();
+router.get('/', movie_1.getMovies);
+router.get('/:id', movie_1.getMovie);
+router.delete('/:id', movie_1.deleteMovie);
+router.post('/', movie_1.saveMovie);
+router.put('/:id', movie_1.updateMovie);
+exports.default = router;
