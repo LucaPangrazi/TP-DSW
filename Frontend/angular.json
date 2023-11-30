@@ -35,7 +35,9 @@
               "outputHashing": "all"
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -46,14 +48,29 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+<<<<<<< HEAD
             "production": { "browserTarget": "Frontend:build:production" },
             "development": { "browserTarget": "Frontend:build:development" }
+=======
+            "production": {
+              "browserTarget": "Frontend:build:production"
+            },
+            "development": {
+              "browserTarget": "Frontend:build:development"
+            }
+>>>>>>> parent of f4216cb2 (Merge branch 'ariana-caro' into develop2)
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
+<<<<<<< HEAD
           "options": { "browserTarget": "Frontend:build" }
+=======
+          "options": {
+            "browserTarget": "Frontend:build"
+          }
+>>>>>>> parent of f4216cb2 (Merge branch 'ariana-caro' into develop2)
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",

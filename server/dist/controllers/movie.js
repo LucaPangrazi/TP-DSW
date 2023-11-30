@@ -1,91 +1,95 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
+const MovieModel = require('../models/movie');
+const { getMovies: getMoviesService, getMovie: getMovieService } = require('../services/movie.service');
+
+module.exports.getMovies = async (req, res) => {
+  const listMovies = await MovieModel.findAll();
+  res.json(listMovies);
+};
+
+module.exports.getMovie = async (req, res) => {
+  const id = req.params.id;
+  const film_id = await MovieModel.findByPk(id);
+  if (!film_id) {
+    res.status(404).json({
+      msg: `No existe una pelicula con el id ${id}`
     });
+  }
+  res.json(film_id);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+
+module.exports.deleteMovie = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const film_id = await MovieModel.findByPk(id);
+    if (!film_id) {
+      return res.status(404).json({
+        msg: `Error al eliminar la pelicula ${id}`
+      });
+    }
+    // Agregar lógica para eliminar la imagen de Cloudinary si es necesario
+    await MovieModel.destroy({
+      where: { id_movie: id }
+    }).then(() => {
+      return res.status(200).json({ message: 'Pelicula eliminada' });
+    });
+  } catch (error) {
+    return res.json({
+      msg: `UPS! HUBO UN ERROR`
+    });
+  }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMovie = exports.saveMovie = exports.deleteMovie = exports.getMovie = exports.getMovies = void 0;
-const movie_1 = __importDefault(require("../models/movie"));
-const getMovies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const listMovies = yield movie_1.default.findAll();
-    res.json(listMovies);
-});
-exports.getMovies = getMovies;
-const getMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id_movie = req.params.id;
-    const film = yield movie_1.default.findByPk(id_movie);
-    if (film) {
-        res.json(film);
+
+module.exports.saveMovie = async (req, res) => {
+  const { newtitle, newgenre, newformat, newdescription, newclasification, newdurationMin } = req.body;
+
+  if (!req.files || !req.files.imageUri) {
+    return res.status(400).json({ error: 'No se ha adjuntado una imagen' });
+  }
+
+  try {
+    const imageFileName = req.files.imageUri.name;
+    const newimage = 'uploads/' + imageFileName;
+
+    const newMovie = new MovieModel({
+      newtitle,
+      newgenre,
+      newformat,
+      newdescription,
+      newclasification,
+      newdurationMin,
+      newimage
+    });
+
+    await newMovie.save();
+    await fs.unlink(req.files.imageUri.tempFilePath);
+
+    res.json({
+      msg: 'La pelicula fue agregada correctamente',
+      newMovie
+    });
+  } catch (error) {
+    if (req.files?.imageUri) {
+      await fs.unlink(req.files.imageUri.tempFilePath);
     }
-    else {
-        res.status(404).json({
-            msg: `No existe una pelicula con el id ${id_movie}`
-        });
-    }
-});
-exports.getMovie = getMovie;
-const deleteMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id_movie = parseInt(req.params.id);
-    const film = yield movie_1.default.findByPk(id_movie);
-    if (!film) {
-        res.status(404).json({
-            msg: `Error al eliminar la pelicula ${id_movie}`
-        });
-    }
-    else {
-        yield film.destroy();
-        res.json({
-            msg: `La pelicula fue eliminada`
-        });
-    }
-});
-exports.deleteMovie = deleteMovie;
-const saveMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.updateMovie = async (req, res) => {
+  try {
     const { body } = req;
-    try {
-        yield movie_1.default.create(body);
-        res.json({
-            msg: 'La pelicula fue agregada correctamente'
-        });
+    const id = parseInt(req.params.id);
+    const film_id = await MovieModel.findByPk(id);
+    if (!film_id) {
+      return res.status(404).json({
+        msg: `Error al actualizar la pelicula ${id}`
+      });
     }
-    catch (error) {
-        console.log(error);
-        res.json({
-            msg: 'Error al cargar la pelicula'
-        });
-    }
-});
-exports.saveMovie = saveMovie;
-const updateMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { body } = req;
-    const id_movie = parseInt(req.params.id);
-    try {
-        const film = yield movie_1.default.findByPk(id_movie);
-        if (film) {
-            yield film.update(body);
-            res.json({
-                msg: `La pelicula fue actualizada`
-            });
-        }
-        else {
-            res.status(404).json({
-                msg: `Error al actualizar la pelicula ${id_movie}`
-            });
-        }
-    }
-    catch (error) {
-        console.log(error);
-        res.json({
-            msg: 'Hubo un error al actualizar la pelicula'
-        });
-    }
-});
-exports.updateMovie = updateMovie;
+    await film_id.update(body);
+  } catch (error) {
+    console.log(error);
+    res.json({
+      msg: 'Hubo un error al actualizar la pelicula'
+    });
+  }
+};

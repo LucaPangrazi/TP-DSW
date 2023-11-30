@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'movies', component: ListMoviesComponent },
   { path: 'movies/add', component: AddEditMovieComponent },
-  { path: 'movies/edit/:id_movie', component: AddEditMovieComponent },
+  { path: 'movies/edit/:id', component: AddEditMovieComponent },
   { path: 'salas', component: ListSalasComponent },
   { path: 'salas/add', component: AddEditSalaComponent },
   { path: 'salas/edit/:id', component: AddEditSalaComponent },
@@ -38,3 +38,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
