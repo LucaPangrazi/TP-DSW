@@ -6,10 +6,11 @@ describe('ProgressBarComponent', () => {
   let component: ProgressBarComponent;
   let fixture: ComponentFixture<ProgressBarComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ProgressBarComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ProgressBarComponent]
+    })
+    .compileComponents();
     fixture = TestBed.createComponent(ProgressBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -18,4 +19,5 @@ describe('ProgressBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

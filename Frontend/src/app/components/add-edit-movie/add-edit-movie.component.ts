@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Movie } from 'src/app/interfaces/movies';
-import { MovieService } from 'src/app/services/movie.service';
+import { Movie } from '../../interfaces/movie';
+import { MovieService } from '../../services/movie.service';
 
 @Component({
   selector: 'app-add-edit-movie',
   templateUrl: './add-edit-movie.component.html',
   styleUrls: ['./add-edit-movie.component.css']
 })
-export class AddEditMovieComponent {
+export class AddEditMovieComponent implements OnInit{
   form: FormGroup;
   loading: boolean = false;
   id_movie: number;
@@ -24,16 +24,15 @@ export class AddEditMovieComponent {
     private aRouter: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      id_movie: [''],
       title: ['', Validators.required],
       genre: ['', Validators.required],
-      clasification: ['', Validators.required],
       format: ['', Validators.required],
       description: ['', Validators.required],
+      clasification: ['', Validators.required],
       durationMin: [''],
-      imageUri: [null as File | null, Validators.required]
     });
     this.id_movie = Number(aRouter.snapshot.paramMap.get('id_movie'));
+    console.log(this.id_movie);
   }
 
   ngOnInit(): void {
@@ -51,32 +50,25 @@ export class AddEditMovieComponent {
         id_movie: data.id_movie,
         title: data.title,
         genre: data.genre,
-        clasification: data.clasification,
         format: data.format,
         description: data.description,
-        durationMin: data.durationMin,
-        imageUri: data.imageUri
+        clasification: data.clasification,
+        durationMin: data.durationMin
       });
     });
   }
 
-  onImageSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files[0]) {
-      this.form.get('imageUri')?.setValue(inputElement.files[0]);
-    }
-  }
 
   addMovie() {
-    if (this.form) {
+    console.log(this.form);
+    if (this.form.valid) {
       const newMovie: Movie = {
         title: this.form.get('title')?.value || '',
         genre: this.form.get('genre')?.value || '',
-        clasification: this.form.get('clasification')?.value || '',
         format: this.form.get('format')?.value || '',
         description: this.form.get('description')?.value || '',
-        durationMin: this.form.get('durationMin')?.value || '',
-        imageUri: this.form.get('imageUri')?.value || null
+        clasification: this.form.get('clasification')?.value || '',
+        durationMin: this.form.get('durationMin')?.value || 0 
       };
 
       this.loading = true;
@@ -89,11 +81,12 @@ export class AddEditMovieComponent {
         });
       } else {
         this._movieService.saveMovie(newMovie).subscribe(() => {
-          this.toastr.success(`La película ${newMovie.title} fue registrada correctamente`, 'Película registrada');
+          this.toastr.success(`La película ${newMovie.title} fue registrada correctamente`, 'Película registrada'); //msj,titulo
           this.loading = false;
           this.router.navigate(['/']);
         });
-      }
-    }
-  }
+      }
+      console.log(newMovie);
+    }
+  } 
 }
