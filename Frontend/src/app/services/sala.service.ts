@@ -17,7 +17,8 @@ export class SalaService {
   }
 
   getListSalas(): Observable<Sala[]> {
-    return this.http.get<Sala[]>(`${this.myAppUrl}${this.myApiUrl}`);
+   // return this.http.get<Sala[]>(`${this.myAppUrl}${this.myApiUrl}`);
+   return this.http.get<Sala[]>(this.myAppUrl + this.myApiUrl);
   }
 
   deleteSala(id: number): Observable<void> {

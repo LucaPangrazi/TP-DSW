@@ -4,9 +4,8 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
 
-      <form class="d-flex ms-auto">
-        <input [(ngModel)]="searchTerm" class="form-control me-sm-2" type="text" placeholder="Search">
-        <button type="button" class="btn btn-primary" (click)="searchMovies()">Buscar</button>
+      <form class="d-flex ms-auto" *ngIf="searchForm" [formGroup]="searchForm">
+        <input formControlName="search" class="form-control me-sm-2" type="text" placeholder="Search">
       </form>
     </div>
   </div>

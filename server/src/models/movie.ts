@@ -6,7 +6,7 @@ enum MovieFormat {
   f2D='2D',
   f3D='3D'//varchar(10) en bd 
 }
-const Movie = db.define('Movie', {
+const Movie = db.define('Movie',{
   id_movie:{
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -29,7 +29,9 @@ const Movie = db.define('Movie', {
   },
   durationMin:{
       type: DataTypes.STRING //min : si pido que el usuario me ingrese hora y min puedo convertirlo desde angular a min
-  }, {
+    }
+
+}, {
  createdAt: false,
  updatedAt: false
 }

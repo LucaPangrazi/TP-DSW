@@ -3,7 +3,7 @@ import db from '../db/connection';
 
 
 
-const Sucursal = db.define('Sucursales', {
+const Sucursal = db.define('Sucursal', {
 
     nombre: {
      type: DataTypes.STRING

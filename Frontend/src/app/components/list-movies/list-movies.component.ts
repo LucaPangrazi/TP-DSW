@@ -33,11 +33,12 @@ export class ListMoviesComponent  implements OnInit {
       this.loading = true;
       this._movieService.getListMovies().subscribe((data: Movie[]) => { 
       this.listMovies = data;
+      this.filteredMovies = [...this.listMovies];
       this.loading = false;
-      this.searchMovies();
       })
     }
  
+  
     searchMovies(): void {
       // Filtrar la lista de películas según el término de búsqueda
       this.filteredMovies = this.listMovies.filter((movie) =>

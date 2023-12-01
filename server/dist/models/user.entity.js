@@ -1,40 +1,45 @@
-import db from '../db/connection.js';
-import { DataTypes } from 'sequelize';
-export const User = db.define('User', {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
+const connection_js_1 = __importDefault(require("../db/connection.js"));
+const sequelize_1 = require("sequelize");
+exports.User = connection_js_1.default.define('User', {
     nombre: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     apellido: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     userName: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     dni: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     telefono: {
-        type: DataTypes.STRING
+        type: sequelize_1.DataTypes.STRING
     },
     password: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     role: {
-        type: DataTypes.ENUM('User', 'Admin'),
+        type: sequelize_1.DataTypes.ENUM('User', 'Admin'),
         allowNull: false,
         defaultValue: 'User'
     },
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true
     }
 }, {});
-console.log(User === db.models.User);
-//# sourceMappingURL=user.entity.js.map
+console.log(exports.User === connection_js_1.default.models.User);

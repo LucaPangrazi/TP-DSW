@@ -1,12 +1,11 @@
 "use strict";
-const { Router } = require("express");
-const { getSalas, getSala, deleteSala, postSala, updateSala } = require("../controllers/sala");
-const router = Router();
-
-router.get('/salas', getSalas);
-router.get('/salas/:id', getSala);
-router.delete('/salas/:id', deleteSala);
-router.post('/salas', postSala);
-router.put('/salas/:id', updateSala);
-
-module.exports = router;
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const sala_1 = require("../controllers/sala");
+const router = (0, express_1.Router)();
+router.get('/', sala_1.getSalas);
+router.get('/:id', sala_1.getSala);
+router.delete('/:id', sala_1.deleteSala);
+router.post('/', sala_1.postSala);
+router.put('/:id', sala_1.updateSala);
+exports.default = router;
