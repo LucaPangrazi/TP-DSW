@@ -16,7 +16,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, data: { showSecondNavbar: true } },
+  { path: '', component: LoginComponent, data: { showSecondNavbar: true } },
+  { path: 'home', component: HomeComponent, data: { showSecondNavbar: true } },
   { path: 'movies', component: ListMoviesComponent },
   { path: 'movies/add', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
   { path: 'movies/edit/:id_movie', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
