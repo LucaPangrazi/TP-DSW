@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "nodemon -r esm dist/index.js",
+    "run": "nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
