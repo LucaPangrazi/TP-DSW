@@ -50,7 +50,7 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.newUser = newUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    const user = yield user_entity_js_1.User.findOne({ where: { username: username } });
+    const user = yield user_entity_js_1.User.findOne({ where: { userName: username } });
     if (!user) {
         return res.status(400).json({
             msg: `No existe un usuario con el nombre ${username} en la base datos`
