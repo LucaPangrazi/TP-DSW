@@ -6,24 +6,21 @@
       <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="addSala()">
 
-          <input formControlName="name" type="text" class="form-control mt-2" placeholder="ingrese nombre">
+          <input formControlName="name" type="text" class="form-control mt-2" placeholder="Ingrese nombre">
           <span *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">
             El campo nombre es <strong> requerido </strong>
           </span>
           <div class="row mt-2 text-center">
             <div class="col-lg-6">
-              <button routerLink="/" type="button" class="btn btn-light">Volver</button>
+              <button (click)="navigateToSalas()" type="button" class="btn btn-light">Volver</button>
             </div>
             <div class="col-lg-6">
               <button [disabled]="form.invalid" type="submit" class="btn btn-dark">Aceptar</button>
             </div>
-
           </div>
 
-
         </form>
-
-
       </div>
     </div>
   </div>
+</div>
