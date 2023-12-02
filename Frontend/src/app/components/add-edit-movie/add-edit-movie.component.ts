@@ -47,7 +47,7 @@ export class AddEditMovieComponent implements OnInit{
     this._movieService.getMovie(id_movie).subscribe((data: Movie) => {
       this.loading = false;
       this.form.setValue({
-        id_movie: data.id_movie,
+     //   id_movie: data.id_movie,
         title: data.title,
         genre: data.genre,
         format: data.format,
@@ -77,16 +77,20 @@ export class AddEditMovieComponent implements OnInit{
         this._movieService.updateMovie(this.id_movie, newMovie).subscribe(() => {
           this.toastr.info(`La película ${newMovie.title} fue actualizada correctamente`, 'Película actualizada');
           this.loading = false;
-          this.router.navigate(['/']);
+          this.navigateToMovies();
         });
       } else {
         this._movieService.saveMovie(newMovie).subscribe(() => {
           this.toastr.success(`La película ${newMovie.title} fue registrada correctamente`, 'Película registrada'); //msj,titulo
           this.loading = false;
-          this.router.navigate(['/']);
+          this.navigateToMovies();
         });
       }
       console.log(newMovie);
     }
+
   } 
+  navigateToMovies() {
+    this.router.navigate(['/movies']);
+  }
 }
