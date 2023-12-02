@@ -12,7 +12,7 @@ export const allUsers = async (req:Request, res:Response) => {
 
 export const newUser = async (req: Request, res: Response) => {
 
-  const { nombre, apellido, userName, dni, telefono, password, id } = req.body;
+  const { nombre, apellido, userName, dni, telefono, password } = req.body;
 
 
   const user = await User.findOne({ where: { userName: userName } });
@@ -32,8 +32,7 @@ export const newUser = async (req: Request, res: Response) => {
         userName: userName,
         dni: dni,
         telefono: telefono,
-        password: password,
-        id: id
+        password: password
       })
   
       res.json({
@@ -49,13 +48,13 @@ export const newUser = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
 
-  const { userName, password } = req.body;
+  const { username, password } = req.body;
 
- const user: any = await User.findOne({ where: { userName: userName } });
+ const user: any = await User.findOne({ where: { username: username } });
 
  if(!user) {
       return res.status(400).json({
-          msg: `No existe un usuario con el nombre ${userName} en la base datos`
+          msg: `No existe un usuario con el nombre ${username} en la base datos`
       })
  }
 var passwordValid = false;
@@ -80,7 +79,7 @@ var passwordValid = false;
 
     const user: any = await User.findOne({ where: { id: id } });
 
-    const { userName, telefono, password } = req.body;
+    const { username, telefono, password } = req.body;
 
     if(!user) {
         return res.status(400).json({
@@ -90,14 +89,14 @@ var passwordValid = false;
 
     try {
 
-        user.userName = userName;
+        user.userName = username;
         user.telefono = telefono;
         user.password = password;
 
         await user.save();
     
         res.json({
-            msg: `Usuario ${userName} actualizado exitosamente!`
+            msg: `Usuario ${username} actualizado exitosamente!`
         })
     } catch (error) {
         res.status(400).json({
