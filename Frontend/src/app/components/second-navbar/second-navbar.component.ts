@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-second-navbar',
   templateUrl: './second-navbar.component.html',
-  styleUrl: './second-navbar.component.css'
+  styleUrls: ['./second-navbar.component.css'],
 })
 export class SecondNavbarComponent implements OnInit{
   constructor() { }
