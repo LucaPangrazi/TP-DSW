@@ -1,13 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../interfaces/user';
 import { ErrorService } from '../../services/error.service';
 import { UserService } from '../../services/user.service';
 
-interface Identical<T extends number | string> {
-  id: T;
+function getUniqueId(parts: number): string{
+  const stringArr = [];
+  for (let i=0; i< parts; i++){
+    const S4 = (((1+Math.random())*0x10000) | 0).toString(16).substring(1);
+    stringArr.push(S4);
+  }
+  return stringArr.join('-');
 }
 
 @Component({
@@ -28,10 +34,15 @@ export class RegisterComponent implements OnInit {
   id: string = '';
   loading: boolean = false;
 
-  constructor(private toastr: ToastrService,
+  constructor(
+    private toastr: ToastrService,
+    private fb: FormBuilder,
     private _userService: UserService,
     private router: Router,
-    private _errorService: ErrorService) { 
+    private _errorService: ErrorService,
+    private aRouter: ActivatedRoute
+    ) { 
+     
     }
 
   ngOnInit(): void {
@@ -60,7 +71,7 @@ export class RegisterComponent implements OnInit {
       telefono: this.telefono,
       password: this.password,
       role: this.role,
-      id: this.id
+      id: getUniqueId(5)
     }
 
     this.loading = true;

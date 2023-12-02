@@ -20,7 +20,7 @@ const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.allUsers = allUsers;
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nombre, apellido, userName, dni, telefono, password } = req.body;
+    const { nombre, apellido, userName, dni, telefono, password, id } = req.body;
     const user = yield user_entity_js_1.User.findOne({ where: { userName: userName } });
     if (user) {
         return res.status(400).json({
@@ -34,7 +34,8 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             userName: userName,
             dni: dni,
             telefono: telefono,
-            password: password
+            password: password,
+            id: id
         });
         res.json({
             msg: `Usuario ${userName} creado exitosamente!`
@@ -49,11 +50,11 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.newUser = newUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, password } = req.body;
-    const user = yield user_entity_js_1.User.findOne({ where: { username: username } });
+    const { userName, password } = req.body;
+    const user = yield user_entity_js_1.User.findOne({ where: { userName: userName } });
     if (!user) {
         return res.status(400).json({
-            msg: `No existe un usuario con el nombre ${username} en la base datos`
+            msg: `No existe un usuario con el nombre ${userName} en la base datos`
         });
     }
     var passwordValid = false;
@@ -86,7 +87,7 @@ const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         user.password = password;
         yield user.save();
         res.json({
-            msg: `Usuario ${username} actualizado exitosamente!`
+            msg: `Usuario ${userName} actualizado exitosamente!`
         });
     }
     catch (error) {
