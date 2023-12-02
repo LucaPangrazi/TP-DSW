@@ -16,7 +16,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent, data: { showSecondNavbar: true } },
+  { path: '', component: LoginComponent, data: { showSecondNavbar: true }  },
   { path: 'home', component: HomeComponent, data: { showSecondNavbar: true } },
   { path: 'movies', component: ListMoviesComponent },
   { path: 'movies/add', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
@@ -33,6 +33,8 @@ const routes: Routes = [
   { path: '**', redirectTo: '', pathMatch: 'full' }
   
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

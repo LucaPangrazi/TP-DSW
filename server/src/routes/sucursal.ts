@@ -2,12 +2,12 @@ import {Router} from 'express';
 import { deleteSucursal, getSucursal, getSucursales, postSucursal, updateSucursal } from '../controllers/sucursal';
 
 
-const router = Router();
+const routerS = Router();
 
-router.get('/', getSucursales)
-router.get('/:id', getSucursal)
-router.delete('/:id', deleteSucursal)
-router.post('/', postSucursal)
-router.put('/:id', updateSucursal)
+routerS.get('/', getSucursales)
+routerS.get('/:id', getSucursal)
+routerS.delete('/:id', deleteSucursal)
+routerS.post('/', postSucursal)
+routerS.put('/:id', updateSucursal)
 
-export default router;
+export default routerS;

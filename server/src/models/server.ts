@@ -1,6 +1,9 @@
 import express, { Application , Request, Response } from 'express';
 import cors from 'cors';
 import routeMovie from '../routes/movie';
+import router from '../routes/sala';
+import routerS from '../routes/sucursal';
+import userRouter from '../routes/user.routes';
 import db from '../db/connection';
 
 class Server {
@@ -28,6 +31,9 @@ routes() {
       })
     })
     this.app.use('/api/movies', routeMovie)
+    this.app.use('/api/salas', router)
+    this.app.use('/api/sucursal', routerS)
+    this.app.use('/api/users', userRouter)
   }
   
   midlewares() {
