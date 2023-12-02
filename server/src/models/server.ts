@@ -46,7 +46,7 @@ routes() {
  async dbConnect() {
 
   try{
- await db.authenticate();
+ await db.sync();
   console.log('Base de Datos conectada')
   }
  catch (error) {
