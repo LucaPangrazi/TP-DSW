@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,18 +10,20 @@ import { SucursalService } from '../../services/sucursal.service';
   templateUrl: './add-edit-sucursal.component.html',
   styleUrls: ['./add-edit-sucursal.component.css']
 })
-export class AddEditSucursalComponent {
+export class AddEditSucursalComponent implements OnInit {
   form: FormGroup;
   loading: boolean = false;
   id: number;
   operacion: string = 'Agregar ';
 
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private _sucursalService: SucursalService,
     private router: Router,
     private toastr: ToastrService,
-    private aRouter: ActivatedRoute) {
+    private aRouter: ActivatedRoute
+    ) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       localidad: ['', Validators.required],
@@ -40,6 +42,8 @@ export class AddEditSucursalComponent {
         this.getSucursal(this.id);
         
       }
+
+      
     }
 
     getSucursal(id:number){
@@ -63,25 +67,27 @@ export class AddEditSucursalComponent {
       email:this.form.value.email,
     } 
     this.loading = true;
-    if(this.id!==0) {
-      //Es editar
-      
+    if(this.id!==0) {  
       sucursal.id = this.id;
       this._sucursalService.updateSucursal(this.id,sucursal).subscribe(() =>{
       this.toastr.info(`La sucursal ${sucursal.nombre} fue actualizada con exito`, 'Sucursal actualizada');
-   
-      })
+      this.loading=false;
+      this.navigateToSucursales();
+      });
     } else {
-      //Es agregar 
+  
      
       this._sucursalService.saveSucursal(sucursal).subscribe(() => {
       this.toastr.success(`La sucursal ${sucursal.nombre} fue registrada con exito`, 'Sucursal registrada');
-      this.router.navigate(['/']);
-      })
+      this.loading=false;
+      this.navigateToSucursales();
+      });
     }
-    this.loading = false;
-  
-   
+    }
+
+    navigateToSucursales() {
+      this.router.navigate(['/sucursales']); 
+    }
   }
 
-}
+

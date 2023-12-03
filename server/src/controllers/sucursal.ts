@@ -3,9 +3,13 @@ import Sucursal from '../models/sucursal';
 
 
 export const getSucursales = async(req: Request, res:Response) => {
-
+try {
   const listSucursales = await Sucursal.findAll()
-res.json(listSucursales)
+res.json(listSucursales);
+} catch (error) {
+    console.error('Error al obtener sucursales:', error);
+    res.status(500).json({ msg: 'Error interno del servidor' });
+  }
 
 }
 
