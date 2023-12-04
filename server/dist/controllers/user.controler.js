@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.editUser = exports.loginUser = exports.newUser = exports.allUsers = void 0;
 const user_entity_js_1 = require("../models/user.entity.js");
+const jwt = require('jsonwebtoken');
 const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield user_entity_js_1.User.findAll();
     res.json({
@@ -49,6 +50,7 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.newUser = newUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const { userName, password } = req.body;
     const user = yield user_entity_js_1.User.findOne({ where: { userName: userName } });
     if (!user) {
@@ -65,10 +67,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: `Password Incorrecta`
         });
     }
-    //const token = jwt.sign({ //
-    // username: username //
-    //}, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234'); //
-    // res.json(token); //
+    const token = jwt.sign({
+        userName: userName
+    }, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : 'ClaveSuperSegura1234');
+    res.json(token);
 });
 exports.loginUser = loginUser;
 const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -15,8 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateSucursal = exports.postSucursal = exports.deleteSucursal = exports.getSucursal = exports.getSucursales = void 0;
 const sucursal_1 = __importDefault(require("../models/sucursal"));
 const getSucursales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const listSucursales = yield sucursal_1.default.findAll();
-    res.json(listSucursales);
+    try {
+        const listSucursales = yield sucursal_1.default.findAll();
+        res.json(listSucursales);
+    }
+    catch (error) {
+        console.error('Error al obtener sucursales:', error);
+        res.status(500).json({ msg: 'Error interno del servidor' });
+    }
 });
 exports.getSucursales = getSucursales;
 const getSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

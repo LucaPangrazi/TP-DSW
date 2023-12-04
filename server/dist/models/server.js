@@ -53,7 +53,7 @@ class Server {
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield connection_1.default.authenticate();
+                yield connection_1.default.sync();
                 console.log('Base de Datos conectada');
             }
             catch (error) {
