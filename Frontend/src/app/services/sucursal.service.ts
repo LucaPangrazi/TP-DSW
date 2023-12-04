@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Sucursal } from '../interfaces/sucursal';
 import { Router } from '@angular/router';
 
@@ -21,8 +21,11 @@ export class SucursalService {
 
   getListSucursales(): Observable<Sucursal[]> {
     //return this.http.get<Sucursal[]>('http://localhost:3000/api/sucursales/')
-  return this.http.get<Sucursal[]>(this.myAppUrl + this.myApiUrl);
-  }
+  //return this.http.get<Sucursal[]>(this.myAppUrl + this.myApiUrl);
+  const apiUrl = `${this.myAppUrl}${this.myApiUrl}`;
+  console.log('URL de la solicitud:', apiUrl);
+  return this.http.get<Sucursal[]>(apiUrl);
+}
 
   deleteSucursal(id:number): Observable<void>{
   return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`)

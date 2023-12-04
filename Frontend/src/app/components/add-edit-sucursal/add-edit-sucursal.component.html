@@ -2,10 +2,9 @@
 <div *ngIf="!loading"class="row mt-1">
     <div class="col-lg-4 offset-lg-4">
         <div class="card bg-light mb-3" style="max-width: 25rem;">
-            <div class="card-header text-center">{{ operacion }} Agregar Sucursal</div>
+            <div class="card-header text-center">{{ operacion }} Sucursal</div>
             <div class="card-body">
                 <form [formGroup]="form" (ngSubmit)="addSucursal()">
-                   
                     <input formControlName="nombre" type="text" class="form-control" placeholder="Ingrese nombre">
                     <span *ngIf="form.get('nombre')?.hasError('required')&& form.get('nombre')?.touched">
                         El campo nombre es <strong> requerido</strong>
@@ -31,8 +30,5 @@
                 </form>
               
             </div>
-        </div>
     </div>
 </div>
-
-

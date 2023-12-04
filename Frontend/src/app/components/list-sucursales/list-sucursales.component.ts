@@ -12,25 +12,25 @@ import { Location } from '@angular/common';
   styleUrls: ['./list-sucursales.component.css']
 })
 export class ListSucursalesComponent implements OnInit {
-  searchTerm: string = '';
   listSucursales: Sucursal[] = [];
   loading: boolean = false;
+  searchTerm: string = '';
   filteredSucursales: Sucursal[] = [];
 
   constructor(
     private _sucursalService: SucursalService,
     private toastr: ToastrService,
     private searchService: SearchService,
-    private location: Location
-    // private router: Router
+    private location: Location,
+   // private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getListSucursales();
-    this.searchService.searchTerm$.subscribe((term: string) => {
-      console.log('Término de búsqueda recibido:', term);
-      this.searchTerm = term;
-      this.searchSucursales(); 
+        this.searchService.searchTerm$.subscribe((term: string) => {
+        console.log('Término de búsqueda recibido:', term);
+        this.searchTerm = term;
+        this.searchSucursales(); 
     });
   }
 
@@ -47,9 +47,11 @@ export class ListSucursalesComponent implements OnInit {
   console.error('Código de estado:', error.status);
   console.error('Mensaje del servidor:', error.message);
         this.loading = false;
-      }
+      } 
     );
   }
+
+
 
   getListSucursalesURL(): string {
     return this.location.path();
@@ -63,7 +65,7 @@ export class ListSucursalesComponent implements OnInit {
       sucursal.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     console.log('Lista de sucursales después del filtro:', this.filteredSucursales); // Agregar mensaje de registro aquí
-  }
+  } 
 
   deleteSucursal(id: number) {
     this.loading = true;

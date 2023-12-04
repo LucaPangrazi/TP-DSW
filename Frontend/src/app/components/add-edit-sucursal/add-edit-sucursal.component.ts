@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,13 +17,11 @@ export class AddEditSucursalComponent implements OnInit {
   operacion: string = 'Agregar ';
 
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private _sucursalService: SucursalService,
     private router: Router,
     private toastr: ToastrService,
-    private aRouter: ActivatedRoute
-    ) {
+    private aRouter: ActivatedRoute) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       localidad: ['', Validators.required],
@@ -42,8 +40,6 @@ export class AddEditSucursalComponent implements OnInit {
         this.getSucursal(this.id);
         
       }
-
-      
     }
 
     getSucursal(id:number){
@@ -65,29 +61,34 @@ export class AddEditSucursalComponent implements OnInit {
       nombre:this.form.value.nombre,
       localidad:this.form.value.localidad,
       email:this.form.value.email,
-    }; 
+    } 
     this.loading = true;
-    if(this.id!==0) {  
+    if(this.id!==0) {
+      //Es editar
+      
       sucursal.id = this.id;
-      this._sucursalService.updateSucursal(this.id, sucursal).subscribe(() =>{
+      this._sucursalService.updateSucursal(this.id,sucursal).subscribe(() =>{
       this.toastr.info(`La sucursal ${sucursal.nombre} fue actualizada con exito`, 'Sucursal actualizada');
       this.loading=false;
       this.navigateToSucursales();
-      });
+
+      })
     } else {
-  
+      //Es agregar 
      
       this._sucursalService.saveSucursal(sucursal).subscribe(() => {
       this.toastr.success(`La sucursal ${sucursal.nombre} fue registrada con exito`, 'Sucursal registrada');
       this.loading=false;
       this.navigateToSucursales();
-      });
+ 
+      })
     }
-    }
-
-    navigateToSucursales() {
-      this.router.navigate(['/sucursales']); 
-    }
+    this.loading = false;
+    this.router.navigate(['/']);
+   
   }
 
-
+  navigateToSucursales() {
+    this.router.navigate(['/sucursales']); 
+  }
+}
