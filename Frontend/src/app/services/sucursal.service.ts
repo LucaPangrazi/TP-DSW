@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Sucursal } from '../interfaces/sucursal';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class SucursalService {
   }
 
   getListSucursales(): Observable<Sucursal[]> {
+    //return this.http.get<Sucursal[]>('http://localhost:3000/api/sucursales/')
   return this.http.get<Sucursal[]>(this.myAppUrl + this.myApiUrl);
   }
 

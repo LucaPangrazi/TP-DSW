@@ -24,8 +24,11 @@
         <td>{{ item.apellido }}</td>
         <td>{{ item.userName }}</td>
         <td>{{ item.telefono }}</td>
+        <td>
+          <button (click)="deleteUser(item.id)" type="button" class="btn btn-danger btn-sm ms-2">Borrar</button>
+        </td>
       </tr>
-
+      
     </tbody>
   </table>
   <h5 *ngIf="listUsers.length == 0"> No hay usuarios registrados</h5>

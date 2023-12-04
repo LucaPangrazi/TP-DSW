@@ -48,4 +48,15 @@ export class ListUsersComponent implements OnInit {
       );
     }
 
+    deleteUser(id: string) {
+      console.log(id);
+      this.loading = true;
+      this._userService.deleteUser(id).subscribe(() => {
+        this.getListUsers();
+        this.toastr.warning('El usuario fue eiminada correctamente', 'Usuario eliminado');
+      },
+        (error: any) => {
+        console.error('Error al eliminar el usuario', error);
+      }
+  );}
 }
