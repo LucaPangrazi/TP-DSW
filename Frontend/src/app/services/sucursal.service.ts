@@ -19,7 +19,7 @@ export class SucursalService {
   }
 
   getListSucursales(): Observable<Sucursal[]> {
-  return this.http.get<Sucursal[]>(`${this.myAppUrl}${this.myApiUrl}`);
+  return this.http.get<Sucursal[]>(this.myAppUrl + this.myApiUrl);
   }
 
   deleteSucursal(id:number): Observable<void>{

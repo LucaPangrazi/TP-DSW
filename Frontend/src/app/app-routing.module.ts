@@ -13,12 +13,14 @@ import { HomeComponent } from './components/HomeCine/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ListUsersComponent } from './components/list-users/list-users.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { showSecondNavbar: true }  },
   { path: 'home', component: HomeComponent, data: { showSecondNavbar: true } },
   { path: 'movies', component: ListMoviesComponent },
+  { path: 'users', component: ListUsersComponent },
   { path: 'movies/add', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
   { path: 'movies/edit/:id_movie', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
   { path: 'salas', component: ListSalasComponent },
