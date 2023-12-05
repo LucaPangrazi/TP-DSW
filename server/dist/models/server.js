@@ -41,7 +41,7 @@ class Server {
         });
         this.app.use('/api/movies', movie_1.default);
         this.app.use('/api/salas', sala_1.default);
-        this.app.use('/api/sucursal', sucursal_1.default);
+        this.app.use('/api/sucursales', sucursal_1.default);
         this.app.use('/api/users', user_routes_1.default);
     }
     midlewares() {
