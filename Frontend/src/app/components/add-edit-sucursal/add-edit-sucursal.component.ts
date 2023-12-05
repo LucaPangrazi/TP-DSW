@@ -64,11 +64,11 @@ export class AddEditSucursalComponent implements OnInit {
       nombre:this.form.value.nombre,
       localidad:this.form.value.localidad,
       email:this.form.value.email,
-    } 
+    }; 
     this.loading = true;
     if(this.id!==0) {  
       sucursal.id = this.id;
-      this._sucursalService.updateSucursal(this.id,sucursal).subscribe(() =>{
+      this._sucursalService.updateSucursal(this.id, sucursal).subscribe(() =>{
       this.toastr.info(`La sucursal ${sucursal.nombre} fue actualizada con exito`, 'Sucursal actualizada');
       this.loading = false;
       this.navigateToSucursales();
