@@ -32,7 +32,7 @@ routes() {
     })
     this.app.use('/api/movies', routeMovie)
     this.app.use('/api/salas', router)
-    this.app.use('/api/sucursales', routerS)
+    this.app.use('/api/sucursal', routerS)
     this.app.use('/api/users', userRouter)
   }
   

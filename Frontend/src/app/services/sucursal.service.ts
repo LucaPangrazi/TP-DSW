@@ -22,8 +22,6 @@ export class SucursalService {
   return this.http.get<Sucursal[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
 
-
-  
   deleteSucursal(id:number): Observable<void>{
   return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`)
   }

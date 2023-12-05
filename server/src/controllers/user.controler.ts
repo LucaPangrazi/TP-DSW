@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { User } from '../models/user.entity.js'
-import jwt from 'jsonwebtoken'
+const jwt=require('jsonwebtoken');
 
 export const allUsers = async (req:Request, res:Response) => {
     const users = await User.findAll();
@@ -66,11 +66,11 @@ var passwordValid = false;
       msg: `Password Incorrecta`
   })
  }
-//const token = jwt.sign({ //
- // username: username //
- //}, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234'); //
+const token = jwt.sign({ 
+  userName: userName 
+ }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
  
- // res.json(token); //
+  res.json(token);
 }
 
 

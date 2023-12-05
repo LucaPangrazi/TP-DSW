@@ -49,6 +49,7 @@ export class AddEditSucursalComponent implements OnInit {
     getSucursal(id:number){
       this.loading = true;
       this._sucursalService.getSucursal(id).subscribe((data:Sucursal) =>{
+        console.log(data);
         this.loading = false;
         this.form.setValue({
           nombre: data.nombre,
@@ -70,7 +71,7 @@ export class AddEditSucursalComponent implements OnInit {
       sucursal.id = this.id;
       this._sucursalService.updateSucursal(this.id,sucursal).subscribe(() =>{
       this.toastr.info(`La sucursal ${sucursal.nombre} fue actualizada con exito`, 'Sucursal actualizada');
-      this.loading = false;
+      this.loading=false;
       this.navigateToSucursales();
       });
     } else {
@@ -78,7 +79,7 @@ export class AddEditSucursalComponent implements OnInit {
      
       this._sucursalService.saveSucursal(sucursal).subscribe(() => {
       this.toastr.success(`La sucursal ${sucursal.nombre} fue registrada con exito`, 'Sucursal registrada');
-      this.loading = false;
+      this.loading=false;
       this.navigateToSucursales();
       });
     }
