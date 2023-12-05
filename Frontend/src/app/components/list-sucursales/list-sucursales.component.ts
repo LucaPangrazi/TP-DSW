@@ -4,7 +4,7 @@ import { Sucursal } from '../../interfaces/sucursal';
 import { SucursalService } from '../../services/sucursal.service';
 import { SearchService } from '../../shared/search.service';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-list-sucursales',
@@ -20,13 +20,13 @@ export class ListSucursalesComponent implements OnInit {
   constructor(
     private _sucursalService: SucursalService,
     private toastr: ToastrService,
-    private searchService: SearchService,
-    private location: Location
+    private searchService: SearchService
     // private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getListSucursales();
+
     this.searchService.searchTerm$.subscribe((term: string) => {
       console.log('Término de búsqueda recibido:', term);
       this.searchTerm = term;
@@ -36,25 +36,19 @@ export class ListSucursalesComponent implements OnInit {
 
   getListSucursales() {
     this.loading = true;
-    console.log('URL de la solicitud:', this.getListSucursalesURL());
-    this._sucursalService.getListSucursales().subscribe( (data: Sucursal[]) => {
+    this._sucursalService.getListSucursales().subscribe(
+      (data: Sucursal[]) => {
         this.listSucursales = data;
         this.filteredSucursales = [...this.listSucursales];
         this.loading = false;
       },
       (error) => {
         console.error('Error al obtener la lista de sucursales', error);
-  console.error('Código de estado:', error.status);
-  console.error('Mensaje del servidor:', error.message);
+    
         this.loading = false;
       }
     );
   }
-
-  getListSucursalesURL(): string {
-    return this.location.path();
-  }
-
 
   searchSucursales(): void {
     console.log('Lista de sucursales antes del filtro:', this.listSucursales); // Agregar mensaje de registro aquí
@@ -73,7 +67,7 @@ export class ListSucursalesComponent implements OnInit {
     });
   }
 
- /* navigateToAddSucursal() {
+  /*navigateToAddSucursal() {
     this.router.navigate(['/sucursales/add']);  // Navegamos hacia la ruta de agregar sucursal
   }*/
 }
