@@ -31,4 +31,7 @@ export class UserService {
    getListUsers(): Observable <User[]> {
     return this.http.get<User[]>(this.myAppUrl + this.myApiUrl);
    }
+   updateUser(id: string, user: User): Observable <void>{
+    return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, user);
+   }
 }

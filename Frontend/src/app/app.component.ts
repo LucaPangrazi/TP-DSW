@@ -32,9 +32,6 @@ export class AppComponent implements OnInit{
         // Lea la propiedad 'data' de la ruta actual para mostrar la segunda barra de navegación
         this.showSecondNavbar = this.activatedRoute.snapshot.firstChild?.data['showSecondNavbar'] || false;
       }
-     // this._http.get('movies')?.subscribe((users: any) => this.usuarios = users);
     });
   }
-
-  //usuarios = []
 }
