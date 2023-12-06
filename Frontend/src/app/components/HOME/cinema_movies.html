@@ -9,7 +9,7 @@
             <div class="movies-card">
               <a [routerLink]="['../interfaces', movies.id_movie]" class="no-underline">
                 <div class="card">
-                  <img class="card-img-top" [src]="'http://localhost:3001/' + movies.imageUri" alt="{{ movies.title }}">
+                  <img class="card-img-top" [src]="'http://localhost:3000/' + movies.imageUri" alt="{{ movies.title }}">
                   <div class="card-body">
                     <h5 class="card-title truncate">{{ item.title }}</h5>
                     <p class="card-text truncate">{{ item.description }}</p>

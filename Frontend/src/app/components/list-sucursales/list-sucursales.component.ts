@@ -51,12 +51,11 @@ export class ListSucursalesComponent implements OnInit {
   }
 
   searchSucursales(): void {
-    console.log('Lista de sucursales antes del filtro:', this.listSucursales); // Agregar mensaje de registro aquí
     // Filtrar la lista de sucursales según el término de búsqueda
     this.filteredSucursales = this.listSucursales.filter((sucursal) =>
       sucursal.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Lista de sucursales después del filtro:', this.filteredSucursales); // Agregar mensaje de registro aquí
+    
   }
 
   deleteSucursal(id: number) {

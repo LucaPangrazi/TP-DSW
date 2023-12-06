@@ -1,12 +1,12 @@
 ### obtener usuarios
-GET http://localhost:3001/api/users/
+GET http://localhost:3000/api/users/
 
 ### obtener un usuario
-GET http://localhost:3001/api/users/:id
+GET http://localhost:3000/api/users/:id
 
 ### crear nuevo usuario
 # @name createUser
-POST http://localhost:3001/api/users/register
+POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
@@ -22,12 +22,12 @@ Content-Type: application/json
 
 
 ### modificar datos de usuario (PUT)
-PUT http://localhost:3001/api/users/:id
+PUT http://localhost:3000/api/users/:id
 Content-Type: application/json
 
 ### modificar datos de usuario (POST)
-PATCH http://localhost:3001/api/users/:id
+PATCH http://localhost:3000/api/users/:id
 Content-Type: application/json
 
 ### eliminar un usuario
-DELETE http://localhost:3001/api/users/:id
+DELETE http://localhost:3000s/api/users/:id
