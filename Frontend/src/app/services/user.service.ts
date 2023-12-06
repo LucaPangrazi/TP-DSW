@@ -23,4 +23,12 @@ export class UserService {
    login(user: User): Observable<string> {
     return this.http.post<string>(`${this.myAppUrl}${this.myApiUrl}/login`, user)
    }
+
+   deleteUser(id:string): Observable<void>{
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`)
+   }
+
+   getListUsers(): Observable <User[]> {
+    return this.http.get<User[]>(this.myAppUrl + this.myApiUrl);
+   }
 }
