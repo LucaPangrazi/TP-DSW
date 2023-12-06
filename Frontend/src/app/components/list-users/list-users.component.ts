@@ -12,7 +12,7 @@ import { SearchService } from '../../shared/search.service';
 export class ListUsersComponent implements OnInit {
 
   searchTerm: string = '';
-  listUsers: User[] = []
+  listUsers: User[] = [];
   loading: boolean = false;
   filteredUsers: User[] = [];
 
@@ -33,9 +33,9 @@ export class ListUsersComponent implements OnInit {
     getListUsers(){
       this.loading = true;
       this._userService.getListUsers().subscribe((data: User[]) => { 
-      this.listUsers = data;
-      this.filteredUsers = [...this.listUsers];
-      this.loading = false;
+        this.listUsers = data;
+        this.filteredUsers = [...this.listUsers];
+        this.loading = false;
       })
     }
  
