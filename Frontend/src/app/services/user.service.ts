@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/users';
+    this.myApiUrl = 'api/users/';
    }
 
    register(user: User): Observable<any> {

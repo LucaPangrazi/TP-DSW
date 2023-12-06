@@ -42,7 +42,6 @@ export class ListUsersComponent implements OnInit {
  
   
     searchUsers(): void {
-      // Filtrar la lista de películas según el término de búsqueda
       this.filteredUsers = this.listUsers.filter((user) =>
         user.userName.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
