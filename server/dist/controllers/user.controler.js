@@ -8,12 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.editUser = exports.loginUser = exports.newUser = exports.allUsers = void 0;
-const user_entity_js_1 = require("../models/user.entity.js");
+const user_entity_js_1 = __importDefault(require("../models/user.entity.js"));
 const jwt = require('jsonwebtoken');
 const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_entity_js_1.User.findAll();
+    const users = yield user_entity_js_1.default.findAll();
     res.json({
         msg: `get funciona`,
         return: users
@@ -22,14 +25,14 @@ const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.allUsers = allUsers;
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, apellido, userName, dni, telefono, password } = req.body;
-    const user = yield user_entity_js_1.User.findOne({ where: { userName: userName } });
+    const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (user) {
         return res.status(400).json({
             msg: `Ya existe un usuario con ese nombre de usuario registrado`
         });
     }
     try {
-        yield user_entity_js_1.User.create({
+        yield user_entity_js_1.default.create({
             nombre: nombre,
             apellido: apellido,
             userName: userName,
@@ -52,7 +55,7 @@ exports.newUser = newUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { userName, password } = req.body;
-    const user = yield user_entity_js_1.User.findOne({ where: { userName: userName } });
+    const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (!user) {
         return res.status(400).json({
             msg: `No existe un usuario con el nombre ${userName} en la base datos`
@@ -75,7 +78,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.loginUser = loginUser;
 const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const user = yield user_entity_js_1.User.findOne({ where: { id: id } });
+    const user = yield user_entity_js_1.default.findOne({ where: { id: id } });
     const { userName, telefono, password } = req.body;
     if (!user) {
         return res.status(400).json({
@@ -101,7 +104,7 @@ const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.editUser = editUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const user = yield user_entity_js_1.User.findOne({ where: { id: id } });
+    const user = yield user_entity_js_1.default.findOne({ where: { id: id } });
     if (!user) {
         return res.status(400).json({
             msg: `No existe el usuario`
