@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from '../../shared/search.service';
 import { User } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
-
+import { SearchService } from '../../shared/search.service';
 
 @Component({
   selector: 'app-list-users',

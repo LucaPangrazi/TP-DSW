@@ -4,6 +4,7 @@ import { loginUser, newUser, editUser, allUsers } from '../controllers/user.cont
 
 const userRouter = Router();
 
+
 userRouter.post('/register', newUser);
 userRouter.get('/', allUsers);
 userRouter.post('/login', loginUser);
