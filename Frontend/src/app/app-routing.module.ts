@@ -14,6 +14,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, data: { showSecondNavbar: true } },
   { path: 'movies', component: ListMoviesComponent },
   { path: 'users', component: ListUsersComponent },
+  { path: 'users/edit/:id', component: EditUserComponent, data: { showSecondNavbar: true }  },
   { path: 'movies/add', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
   { path: 'movies/edit/:id_movie', component: AddEditMovieComponent, data: { showSecondNavbar: true }  },
   { path: 'salas', component: ListSalasComponent },

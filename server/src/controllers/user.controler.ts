@@ -10,6 +10,21 @@ export const allUsers = async (req:Request, res:Response) => {
     })
 }
 
+export const getUser = async (req: Request, res:Response) => {
+
+    const {id} = req.params;
+    const user = await User.findByPk(id)
+
+    if(user) {
+        res.json(user)
+    } else {
+        res.status(404).json({
+            msg:`No existe un usuario con el id ${id}`
+        })
+    }
+
+}
+
 export const newUser = async (req: Request, res: Response) => {
 
   const { nombre, apellido, userName, dni, telefono, password } = req.body;
@@ -75,33 +90,27 @@ const token = jwt.sign({
 
 
  export const editUser = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
-    const user: any = await User.findOne({ where: { id: id } });
-
-    const { userName, telefono, password } = req.body;
-
-    if(!user) {
-        return res.status(400).json({
-            msg: `No existe el usuario`
-        })
-    }
+    const { body } = req;
+    const { id } =req.params
 
     try {
+        const user = await User.findByPk(id);
 
-        user.userName = userName;
-        user.telefono = telefono;
-        user.password = password;
-
-        await user.save();
-    
+    if(user) {
+     await user.update(body)
         res.json({
-            msg: `Usuario ${userName} actualizado exitosamente!`
-        })
+            msg:'El usuario fue actualizado con exito'
+        }) 
+    
+    } else {
+        res.status(404).json({
+            msg:`No existe un usuario con la id ${id}`
+    })
+    }
     } catch (error) {
-        res.status(400).json({
-            msg: 'Upps ocurrio un error',
-            error
+        console.log(error);
+        res.json({
+            msg:`Ups ocurrio un error comuniquese con soporte`
         })
     }
 
@@ -111,7 +120,7 @@ const token = jwt.sign({
 
 const { id } = req.params;
 
-   const user = await User.findOne({ where: { id: id } })
+   const user = await User.findByPk(id);
    
    if(!user) {
     return res.status(400).json({

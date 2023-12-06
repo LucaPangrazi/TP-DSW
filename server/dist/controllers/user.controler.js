@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.editUser = exports.loginUser = exports.newUser = exports.allUsers = void 0;
+exports.deleteUser = exports.editUser = exports.loginUser = exports.newUser = exports.getUser = exports.allUsers = void 0;
 const user_entity_js_1 = __importDefault(require("../models/user.entity.js"));
 const jwt = require('jsonwebtoken');
 const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -23,6 +23,19 @@ const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.allUsers = allUsers;
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const user = yield user_entity_js_1.default.findByPk(id);
+    if (user) {
+        res.json(user);
+    }
+    else {
+        res.status(404).json({
+            msg: `No existe un usuario con el id ${id}`
+        });
+    }
+});
+exports.getUser = getUser;
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, apellido, userName, dni, telefono, password } = req.body;
     const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
@@ -77,34 +90,33 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.loginUser = loginUser;
 const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
     const { id } = req.params;
-    const user = yield user_entity_js_1.default.findOne({ where: { id: id } });
-    const { userName, telefono, password } = req.body;
-    if (!user) {
-        return res.status(400).json({
-            msg: `No existe el usuario`
-        });
-    }
     try {
-        user.userName = userName;
-        user.telefono = telefono;
-        user.password = password;
-        yield user.save();
-        res.json({
-            msg: `Usuario ${userName} actualizado exitosamente!`
-        });
+        const user = yield user_entity_js_1.default.findByPk(id);
+        if (user) {
+            yield user.update(body);
+            res.json({
+                msg: 'El usuario fue actualizado con exito'
+            });
+        }
+        else {
+            res.status(404).json({
+                msg: `No existe un usuario con la id ${id}`
+            });
+        }
     }
     catch (error) {
-        res.status(400).json({
-            msg: 'Upps ocurrio un error',
-            error
+        console.log(error);
+        res.json({
+            msg: `Ups ocurrio un error comuniquese con soporte`
         });
     }
 });
 exports.editUser = editUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const user = yield user_entity_js_1.default.findOne({ where: { id: id } });
+    const user = yield user_entity_js_1.default.findByPk(id);
     if (!user) {
         return res.status(400).json({
             msg: `No existe el usuario`
