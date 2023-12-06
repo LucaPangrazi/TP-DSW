@@ -8,6 +8,7 @@
           
           <input formControlName="userName" type="text" class="form-control mt-2" placeholder="Ingrese nombre de usuario">
           <input formControlName="password" type="text" class="form-control mt-2" placeholder="Ingrese password">
+          <input formControlName="telefono" type="text" class="form-control mt-2" placeholder="Ingrese telefono">
           <span *ngIf="form.get('userName')?.hasError('required') || form.get('password')?.hasError('required') && form.get('password')?.touched && form.get('userName')?.touched">
            Todos los campos son <strong> obligatorios </strong>
           </span>
