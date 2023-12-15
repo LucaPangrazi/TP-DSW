@@ -11,16 +11,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-salas.component.css']
 })
 export class ListSalasComponent implements OnInit {
-  searchTerm: string = '';
+  searchTerm: string = '';      //Guarda el término de búsqueda para filtrar la lista de salas
   listSalas: Sala[] = [];
   loading: boolean = false;
-  filteredSalas: Sala[] = [];
+  filteredSalas: Sala[] = [];   //Guarda las salas que coinciden con el término de búsqueda
 
   constructor(
     private _salaService: SalaService,
     private toastr: ToastrService,
     private searchService: SearchService
-   // private router: Router
+   
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class ListSalasComponent implements OnInit {
   }
 
   searchSalas(): void {
-    // Filtrar la lista de películas según el término de búsqueda
+    // Filtrar la lista de salas según el término de búsqueda
     this.filteredSalas = this.listSalas.filter((sala) =>
       sala.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
@@ -68,7 +68,5 @@ export class ListSalasComponent implements OnInit {
     );
   }
 
- /* navigateToAddSala() {
-    this.router.navigate(['salas/add']); // Navegamos hacia la ruta de agregar sala
-  }*/
+ 
 }

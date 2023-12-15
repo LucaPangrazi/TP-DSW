@@ -5,7 +5,7 @@
     <button type="button" class="btn btn-light" routerLink="add">Agregar sala</button>
   </div>
   <br>
-  <!-- ... *ngIf="listSalas.length > 0"-->
+
   <table *ngIf="filteredSalas.length > 0" class="table table-primary">
     <thead>
       <tr>
@@ -16,7 +16,7 @@
 
     </thead>
     <tbody>
-      <!-- ... *ngFor="let item of listSalas"-->
+
       <tr *ngFor="let item of filteredSalas" class="table-light">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>

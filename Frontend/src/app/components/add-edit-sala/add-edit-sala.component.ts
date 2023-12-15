@@ -24,7 +24,7 @@ export class AddEditSalaComponent implements OnInit {
     private aRouter: ActivatedRoute,
   ) {
     this.form = this.fb.group({
-      //id:['',Validators.required], creo q este no va
+      
       name: ['', Validators.required]
     });
     this.id = Number(aRouter.snapshot.paramMap.get('id'));
@@ -59,13 +59,13 @@ export class AddEditSalaComponent implements OnInit {
       this._salaService.updateSala(this.id, sala).subscribe(() => {
         this.toastr.info(`La sala ${sala.name} fue actualizada con éxito`, 'Sala actualizada');
         this.loading = false;
-        this.navigateToSalas();  // Cambio aquí
+        this.navigateToSalas(); 
       });
     } else {
       this._salaService.saveSala(sala).subscribe(() => {
         this.toastr.success(`La sala ${sala.name} fue registrada con éxito`, 'Sala registrada');
         this.loading = false;
-        this.navigateToSalas();  // Cambio aquí
+        this.navigateToSalas();  
       });
     }
   }
