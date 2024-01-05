@@ -25,6 +25,19 @@ const getMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (film) {
         res.json(film);
     }
+    /*if(film){
+        const filmDet = {
+            id_movie: film.id_movie,
+            title:  film.title,
+            genre: film.genre,
+            format: film.format,
+            description: film.description,
+            clasification: film.clasification,
+            durationMin: film.durationMin,
+            image: `http://localhost:3000/${film.image}`
+        };
+        res.json(filmDet)
+    }*/
     else {
         res.status(404).json({
             msg: `No existe una pelicula con el id ${id_movie}`
@@ -49,7 +62,10 @@ const deleteMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.deleteMovie = deleteMovie;
 const saveMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const { body } = req;
+    const imageFileName = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
+    const image = '/public/images' + imageFileName;
     try {
         yield movie_1.default.create(body);
         res.json({

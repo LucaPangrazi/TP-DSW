@@ -18,11 +18,7 @@ export class AppComponent implements OnInit{
      private searchService: SearchService) {}
 
   handleSearch(value: string) {
-    // Puedes realizar alguna acción aquí, por ejemplo, imprimir el término de búsqueda en la consola.
     console.log(value);
-  
-    // También puedes emitir un evento para notificar a otros componentes.
-    // En este ejemplo, supongamos que tienes un servicio de búsqueda.
     this.searchService.setSearchTerm(value);
   }
   
