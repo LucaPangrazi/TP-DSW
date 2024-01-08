@@ -27,7 +27,23 @@ private myApiUrl:string;
 
     saveMovie(movie: Movie): Observable<void> {
       console.log('Movie object before save:', movie);
-     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`,movie)
+      const formData: FormData = new FormData();
+
+  formData.append('title', movie.title);
+  formData.append('genre', movie.genre);
+  formData.append('format', movie.format);
+  formData.append('description', movie.description);
+  formData.append('clasification', movie.clasification);
+  formData.append('durationMin', movie.durationMin.toString());
+
+  if (movie.image instanceof File) {
+    formData.append('image', movie.image, movie.image.name);
+  }
+  else {
+    formData.append('image', movie.image);
+  }
+
+     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`,formData)
    }
 
    getMovie(id_movie: number): Observable <Movie>{

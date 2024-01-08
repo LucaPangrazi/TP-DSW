@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Movie } from '../../interfaces/movie';
 import { MovieService } from '../../services/movie.service';
 
@@ -82,6 +85,7 @@ export class AddEditMovieComponent implements OnInit{
         clasification: this.form.get('clasification')?.value || '',
         durationMin: this.form.get('durationMin')?.value || 0 ,
         image: this.form.get('image')?.value || '',
+       // image: this.form.get('image')?.value?.name || '',
       };
 
       this.loading = true;
