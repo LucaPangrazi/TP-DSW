@@ -65,7 +65,13 @@ const saveMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { title, genre, format, description, clasification, durationMin } = req.body;
     const imageFileName = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
-    const image = '/uploads/' + imageFileName;
+    console.log('imageFileName:', imageFileName);
+    if (!imageFileName) {
+        return res.status(400).json({
+            msg: 'No se ha adjuntado una imagen'
+        });
+    }
+    const image = 'uploads/' + imageFileName;
     try {
         const newMovie = yield movie_1.default.create({
             title,

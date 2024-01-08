@@ -26,6 +26,7 @@ private myApiUrl:string;
   }
 
     saveMovie(movie: Movie): Observable<void> {
+      console.log('Movie object before save:', movie);
      return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`,movie)
    }
 
@@ -33,6 +34,7 @@ private myApiUrl:string;
     return this.http.get <Movie>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`)
    }
    updateMovie(id_movie: number, movie: Movie): Observable <void>{
+    console.log('Movie object before update:', movie);
     return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`, movie);
    }
   }

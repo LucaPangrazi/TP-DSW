@@ -61,7 +61,13 @@ export const deleteMovie = async (req: Request, res: Response) => {
 export const saveMovie = async (req: Request<{}, {}, MovieRequestBody>, res: Response) => {
     const { title, genre, format, description, clasification, durationMin } = req.body;
     const imageFileName = req.file?.filename;
-    const image = '/uploads/' + imageFileName;
+    console.log('imageFileName:', imageFileName);
+    if (!imageFileName) {
+        return res.status(400).json({
+            msg: 'No se ha adjuntado una imagen'
+        });
+    }
+    const image = 'uploads/' + imageFileName;
     try {
         const newMovie = await Movie.create({
             title,
