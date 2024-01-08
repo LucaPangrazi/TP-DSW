@@ -1,6 +1,16 @@
 import { Request, Response } from "express";
 import Movie from '../models/movie';
 
+interface MovieRequestBody {
+    title: string;
+    genre: string;
+    format: string;
+    description: string;
+    clasification: string;
+    durationMin: number;
+    image: string
+  }
+
 export const getMovies = async (req: Request, res: Response) => {
         const listMovies = await Movie.findAll()
     res.json(listMovies)
@@ -48,14 +58,23 @@ export const deleteMovie = async (req: Request, res: Response) => {
     }
 }
 
-export const saveMovie = async (req: Request, res: Response) => {
-    const { body } = req;
+export const saveMovie = async (req: Request<{}, {}, MovieRequestBody>, res: Response) => {
+    const { title, genre, format, description, clasification, durationMin } = req.body;
     const imageFileName = req.file?.filename;
-    const image = '/public/images' + imageFileName;
+    const image = '/uploads/' + imageFileName;
     try {
-        await Movie.create(body);
+        const newMovie = await Movie.create({
+            title,
+            genre,
+            format,
+            description,
+            clasification,
+            durationMin,
+            image,
+          });
         res.json({
-            msg: 'La pelicula fue agregada correctamente'
+            msg: 'La pelicula fue agregada correctamente',
+            data: newMovie,
         }) 
     } catch (error) {
         console.log(error);

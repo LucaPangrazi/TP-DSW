@@ -67,9 +67,15 @@ export class AddEditMovieComponent implements OnInit{
   onImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files[0]) {
+      const reader = new FileReader();
+       reader.readAsDataURL(inputElement.files[0]);
+       reader.onload = (event: any)=>{
+         this.imgURL = event.target.result;}
+   /* const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files[0]) {
       this.form.get('image')?.setValue(inputElement.files[0]);
-    }
-  }
+    }*/
+  }}
 
   addMovie() {
     console.log(this.form);

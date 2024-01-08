@@ -63,13 +63,22 @@ const deleteMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.deleteMovie = deleteMovie;
 const saveMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const { body } = req;
+    const { title, genre, format, description, clasification, durationMin } = req.body;
     const imageFileName = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
-    const image = '/public/images' + imageFileName;
+    const image = '/uploads/' + imageFileName;
     try {
-        yield movie_1.default.create(body);
+        const newMovie = yield movie_1.default.create({
+            title,
+            genre,
+            format,
+            description,
+            clasification,
+            durationMin,
+            image,
+        });
         res.json({
-            msg: 'La pelicula fue agregada correctamente'
+            msg: 'La pelicula fue agregada correctamente',
+            data: newMovie,
         });
     }
     catch (error) {
