@@ -27,7 +27,7 @@
         <td>
           <button [routerLink]="['edit', item.id]" type="button" class="btn btn-dark btn-sm ">Editar</button>
           <span style="margin-right: 10px;"></span>
-          <button (click)="deleteUser(item.id)" type="button" class="btn btn-danger btn-sm ms-2">Borrar</button>
+          <button (click)="deleteUser(item.id)" onClick= "window.location.reload()" type="button" class="btn btn-danger btn-sm ms-2">Borrar</button>
 
         </td>
       </tr>

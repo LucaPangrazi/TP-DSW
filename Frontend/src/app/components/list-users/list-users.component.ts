@@ -12,7 +12,7 @@ import { SearchService } from '../../shared/search.service';
 export class ListUsersComponent implements OnInit {
 
   searchTerm: string = '';
-  listUsers: User[] = []
+  listUsers: User[] = [];
   loading: boolean = false;
   filteredUsers: User[] = [];
 
