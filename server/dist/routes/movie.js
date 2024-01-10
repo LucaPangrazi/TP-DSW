@@ -20,5 +20,5 @@ router.get('/', movie_1.getMovies);
 router.get('/:id', movie_1.getMovie);
 router.delete('/:id', movie_1.deleteMovie);
 router.post('/', upload.single('image'), movie_1.saveMovie);
-router.put('/:id', movie_1.updateMovie);
+router.put('/:id', upload.single('image'), movie_1.updateMovie);
 exports.default = router;
