@@ -1,9 +1,10 @@
 export interface Movie {
-    id_movie?: number;//? porque es opcional
+    id_movie?: number,
     title: string,
     genre: string,
     format: string, 
     description: string,
     clasification: string,
-    durationMin: number
+    durationMin: number,
+    image: File
 }

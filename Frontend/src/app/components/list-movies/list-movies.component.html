@@ -16,6 +16,7 @@
           <th scope="col">DESCRIPCION</th>
           <th scope="col">CLASIFICACION</th>
           <th scope="col">DURACION</th>
+          <th scope="col">URL IMAGEN</th>
         </tr>
 
     </thead>
@@ -29,6 +30,7 @@
         <td>{{ item.description }}</td>
         <td>{{ item.clasification }}</td>
         <td>{{ item.durationMin }}</td>
+        <td>{{ item.image }}</td>
         <td>
           <!-- <button routerLink="/edit/{{ item.id_movie }}" type="button" class="btn btn-dark btn-sm">Editar</button> -->
           <button [routerLink]="['edit', item.id_movie]" type="button" class="btn btn-dark btn-sm ">Editar</button>

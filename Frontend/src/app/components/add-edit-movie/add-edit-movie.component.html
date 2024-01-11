@@ -4,7 +4,7 @@
     <div class="card text-white bg-light mb-3" style="max-width: 25rem;">
       <div class="card-header text-center">{{operacion}} Pelicula</div>
       <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="addMovie()">
+        <form [formGroup]="form" (ngSubmit)="addMovie()" enctype="multipart/form-data">
           <input formControlName="title" type="text" class="form-control" placeholder="Ingrese titulo">
           <input formControlName="genre" type="text" class="form-control mt-2" placeholder="Ingrese genero">
           <input formControlName="format" type="text" class="form-control mt-2" placeholder="Ingrese formato">
@@ -12,6 +12,10 @@
           <input formControlName="clasification" type="text" class="form-control mt-2"
             placeholder="Ingrese clasificacion">
           <input formControlName="durationMin" type="number" class="form-control mt-2" placeholder="Ingrese duracion">
+          <div class="form-group">
+            <label for="image">Imagen del Producto:</label>
+            <input type="file" class="form-control-file" id="image" name="image" formControlName="image" accept="image/*" (change)="onImageSelected($event)" required>
+          </div>
           <div *ngIf="form.get('title')?.hasError('required')  || form.get('genre')?.hasError('required') || form.get('clasification')?.hasError('required') || form.get('format')?.hasError('required') || form.get('description')?.hasError('required') || form.get('durationMin')?.hasError('required') && form.get('title')?.touched || form.get('genre')?.touched || form.get('clasification')?.touched || form.get('format')?.touched || form.get('description')?.touched || form.get('durationMin')?.touched">
             Todos los campos son <strong>requeridos</strong>
           </div>

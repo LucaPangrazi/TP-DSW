@@ -1,5 +1,6 @@
 import express, { Application , Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 import routeMovie from '../routes/movie';
 import router from '../routes/sala';
 import routerS from '../routes/sucursal';
@@ -41,6 +42,8 @@ routes() {
     this.app.use(express.json());
     //Cors
     this.app.use(cors());
+
+    this.app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
   }
 
  async dbConnect() {

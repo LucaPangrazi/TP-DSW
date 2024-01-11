@@ -26,13 +26,46 @@ private myApiUrl:string;
   }
 
     saveMovie(movie: Movie): Observable<void> {
-     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`,movie)
+      console.log('Movie object before save:', movie);
+      const formData: FormData = new FormData();
+
+  formData.append('title', movie.title);
+  formData.append('genre', movie.genre);
+  formData.append('format', movie.format);
+  formData.append('description', movie.description);
+  formData.append('clasification', movie.clasification);
+  formData.append('durationMin', movie.durationMin.toString());
+
+  if (movie.image instanceof File) {
+    formData.append('image', movie.image, movie.image.name);
+  }
+  else {
+    formData.append('image', movie.image);
+  }
+
+     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`,formData)
    }
 
    getMovie(id_movie: number): Observable <Movie>{
     return this.http.get <Movie>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`)
    }
    updateMovie(id_movie: number, movie: Movie): Observable <void>{
-    return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`, movie);
+    console.log('Movie object before update:', movie);
+    const formData: FormData = new FormData();
+
+  formData.append('title', movie.title);
+  formData.append('genre', movie.genre);
+  formData.append('format', movie.format);
+  formData.append('description', movie.description);
+  formData.append('clasification', movie.clasification);
+  formData.append('durationMin', movie.durationMin.toString());
+
+  if (movie.image instanceof File) {
+    formData.append('image', movie.image, movie.image.name);
+  }
+  else {
+    formData.append('image', movie.image);
+  }
+    return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`, formData);
    }
   }

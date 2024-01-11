@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Movie } from '../../interfaces/movie';
 import { MovieService } from '../../services/movie.service';
 
@@ -13,6 +16,10 @@ import { MovieService } from '../../services/movie.service';
 export class AddEditMovieComponent implements OnInit{
   form: FormGroup;
   loading: boolean = false;
+  images = '';
+  imgURL = '/assets/noimage.png';
+  multipleImages = [];
+  imagenes: any = [];
   id_movie: number;
   operacion: string = 'Agregar ';
 
@@ -30,6 +37,7 @@ export class AddEditMovieComponent implements OnInit{
       description: ['', Validators.required],
       clasification: ['', Validators.required],
       durationMin: [''],
+      image: null as File | null 
     });
     this.id_movie = Number(aRouter.snapshot.paramMap.get('id_movie'));
     console.log(this.id_movie);
@@ -53,11 +61,18 @@ export class AddEditMovieComponent implements OnInit{
         format: data.format,
         description: data.description,
         clasification: data.clasification,
-        durationMin: data.durationMin
+        durationMin: data.durationMin,
+        image: data.image
       });
     });
   }
-
+  
+  onImageSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files[0]) {
+      this.form.get('image')?.setValue(inputElement.files[0]);
+    }
+  }
 
   addMovie() {
     console.log(this.form);
@@ -68,7 +83,9 @@ export class AddEditMovieComponent implements OnInit{
         format: this.form.get('format')?.value || '',
         description: this.form.get('description')?.value || '',
         clasification: this.form.get('clasification')?.value || '',
-        durationMin: this.form.get('durationMin')?.value || 0 
+        durationMin: this.form.get('durationMin')?.value || 0 ,
+        image: this.form.get('image')?.value || '',
+       // image: this.form.get('image')?.value?.name || '',
       };
 
       this.loading = true;

@@ -72,7 +72,7 @@ export const loginUser = async (req: Request, res: Response) => {
           msg: `No existe un usuario con el nombre ${userName} en la base datos`
       })
  }
-var passwordValid = false;
+let passwordValid = false;
  if (user.password === password){
     passwordValid = true;
  }
