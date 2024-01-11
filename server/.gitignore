@@ -4,15 +4,9 @@ coverage
 # API keys and secrets
 .env
 
-# dependency directory
-node_modules
-
 # OS metadata
 .DS_Store
 thumbs.db
-
-# ignore built ts files
-dist/**/*
 
 # vscode
 .vscode/*

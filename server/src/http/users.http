@@ -30,4 +30,4 @@ PATCH http://localhost:3000/api/users/:id
 Content-Type: application/json
 
 ### eliminar un usuario
-DELETE http://localhost:3000/api/users/:id
+DELETE http://localhost:3000s/api/users/:id

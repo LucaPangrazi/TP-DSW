@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { User } from '../models/user.entity.js'
-import jwt from 'jsonwebtoken'
+import User from '../models/user.entity.js'
+const jwt=require('jsonwebtoken');
 
 export const allUsers = async (req:Request, res:Response) => {
     const users = await User.findAll();
@@ -8,6 +8,21 @@ export const allUsers = async (req:Request, res:Response) => {
         msg: `get funciona`,
         return: users
     })
+}
+
+export const getUser = async (req: Request, res:Response) => {
+
+    const {id} = req.params;
+    const user = await User.findByPk(id)
+
+    if(user) {
+        res.json(user)
+    } else {
+        res.status(404).json({
+            msg:`No existe un usuario con el id ${id}`
+        })
+    }
+
 }
 
 export const newUser = async (req: Request, res: Response) => {
@@ -48,13 +63,13 @@ export const newUser = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
 
-  const { username, password } = req.body;
+  const { userName, password } = req.body;
 
- const user: any = await User.findOne({ where: { username: username } });
+ const user: any = await User.findOne({ where: { userName: userName } });
 
  if(!user) {
       return res.status(400).json({
-          msg: `No existe un usuario con el nombre ${username} en la base datos`
+          msg: `No existe un usuario con el nombre ${userName} en la base datos`
       })
  }
 let passwordValid = false;
@@ -66,42 +81,36 @@ let passwordValid = false;
       msg: `Password Incorrecta`
   })
  }
-//const token = jwt.sign({ //
- // username: username //
- //}, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234'); //
+const token = jwt.sign({ 
+  userName: userName 
+ }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
  
- // res.json(token); //
+  res.json(token);
 }
 
 
  export const editUser = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
-    const user: any = await User.findOne({ where: { id: id } });
-
-    const { username, telefono, password } = req.body;
-
-    if(!user) {
-        return res.status(400).json({
-            msg: `No existe el usuario`
-        })
-    }
+    const { body } = req;
+    const { id } =req.params
 
     try {
+        const user = await User.findByPk(id);
 
-        user.userName = username;
-        user.telefono = telefono;
-        user.password = password;
-
-        await user.save();
-    
+    if(user) {
+     await user.update(body)
         res.json({
-            msg: `Usuario ${username} actualizado exitosamente!`
-        })
+            msg:'El usuario fue actualizado con exito'
+        }) 
+    
+    } else {
+        res.status(404).json({
+            msg:`No existe un usuario con la id ${id}`
+    })
+    }
     } catch (error) {
-        res.status(400).json({
-            msg: 'Upps ocurrio un error',
-            error
+        console.log(error);
+        res.json({
+            msg:`Ups ocurrio un error comuniquese con soporte`
         })
     }
 
@@ -111,7 +120,7 @@ let passwordValid = false;
 
 const { id } = req.params;
 
-   const user = await User.findOne({ where: { id: id } })
+   const user = await User.findByPk(id);
    
    if(!user) {
     return res.status(400).json({

@@ -1,30 +1,42 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { SearchService } from './shared/search.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Modulos
-import {ReactiveFormsModule , FormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 //Components
-
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ListMoviesComponent } from './components/list-movies/list-movies.component';
+import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
+import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+import { SecondNavbarComponent } from './components/second-navbar/second-navbar.component';
 import { ListSalasComponent } from './components/list-salas/list-salas.component';
 import { AddEditSalaComponent } from './components/add-edit-sala/add-edit-sala.component';
-import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
+import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { AddTokenInterceptor } from './util/add-token.interceptor';
+import { ListUsersComponent } from './components/list-users/list-users.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    SecondNavbarComponent,
+    ListMoviesComponent,
+    AddEditMovieComponent,
+    ProgressBarComponent,
     ListSalasComponent,
     AddEditSalaComponent,
     ProgressBarComponent,
@@ -32,21 +44,31 @@ import { AddTokenInterceptor } from './util/add-token.interceptor';
     RegisterComponent,
     DashboardComponent,
     NavbarComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ListSucursalesComponent,
+    AddEditSucursalComponent,
+    LoginComponent,
+    RegisterComponent,
+    DashboardComponent,
+    SpinnerComponent,
+    ListUsersComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    CommonModule,
     FormsModule,
-    BrowserAnimationsModule, // required animations module
+    BrowserAnimationsModule, 
     ToastrModule.forRoot({
-      timeOut: 4000,
+      timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    }), // ToastrModule added
+    }), 
   ],
-  providers: [
+  providers: [SearchService, 
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

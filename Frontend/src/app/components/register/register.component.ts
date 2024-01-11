@@ -2,12 +2,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/interfaces/user';
-import { ErrorService } from 'src/app/services/error.service';
-import { UserService } from 'src/app/services/user.service';
+import { User } from '../../interfaces/user';
+import { ErrorService } from '../../services/error.service';
+import { UserService } from '../../services/user.service';
 
-interface Identical<T extends number | string> {
-  id: T;
+function getUniqueId(parts: number): string{
+  const stringArr = [];
+  for (let i=0; i< parts; i++){
+    const S4 = (((1+Math.random())*0x10000) | 0).toString(16).substring(1);
+    stringArr.push(S4);
+  }
+  return stringArr.join('-');
 }
 
 @Component({
@@ -60,7 +65,7 @@ export class RegisterComponent implements OnInit {
       telefono: this.telefono,
       password: this.password,
       role: this.role,
-      id: this.id
+      id: getUniqueId(5)
     }
 
     this.loading = true;

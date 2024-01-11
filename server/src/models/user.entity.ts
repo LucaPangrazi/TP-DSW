@@ -1,8 +1,9 @@
 
-import sequelize from '../db/connection.js'
+import db from '../db/connection.js'
 import { Sequelize, DataTypes } from 'sequelize';
+import e from 'express';
 
-export const User = sequelize.define('User', {
+const User = db.define('User', {
   nombre: {
     type: DataTypes.STRING,
     allowNull: false
@@ -40,5 +41,5 @@ export const User = sequelize.define('User', {
 }, {
   
 });
-
-console.log(User === sequelize.models.User);
+export default User;
+console.log(User === db.models.User);
