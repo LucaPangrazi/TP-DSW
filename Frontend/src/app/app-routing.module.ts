@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //Componentes
+import { CarteleraComponent } from './components/cartelera/cartelera.component';
 import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
 import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
 import { ListMoviesComponent } from './components/list-movies/list-movies.component';
@@ -18,7 +19,9 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent, data: { showSecondNavbar: true }  },
+ // { path: '', component: LoginComponent, data: { showSecondNavbar: true }  },
+  { path: '', component: CarteleraComponent, data: { showSecondNavbar: true } },
+  { path: 'login', component: LoginComponent, data: { showSecondNavbar: true } },
   { path: 'home', component: HomeComponent, data: { showSecondNavbar: true } },
   { path: 'movies', component: ListMoviesComponent },
   { path: 'users', component: ListUsersComponent },

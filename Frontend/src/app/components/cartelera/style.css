@@ -1,0 +1,207 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    background-color: #030303;
+    font-family: 'Bebas Neue', sans-serif;
+    color: #FFFFFF;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    background-image: url(img/bg.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover; /* cubre toda la pagina para que no haya repeticiones*/
+    min-height: 70vh; /*altura minima */
+    display: flex;
+    align-items: center; /*centrar el contenido*/
+}
+
+.menu {
+    position: absolute;
+    top: 0; /* se coloca en la parte de arriba*/
+    left: 0;
+    right: 0;
+    display: flex; /*para que se coloque de forma horizontal */
+    align-items: center; /*centrar el contenido*/
+    justify-content: space-between; /*dejar espacio entre ellos*/
+}
+
+.logo {
+    font-size: 35px;
+    color: #FFFFFF;
+}
+
+.menu .navbar ul li {
+    position: relative;
+    float: left;
+} /*enlaces de forma horizontal*/
+
+.menu .navbar ul li a {
+        font-size: 22px;
+        padding: 20px; /*tamaño de enlace de nuestro menu*/
+        color: #FFFFFF;
+        display: block;
+    }
+
+.menu .navbar ul li a:hover {
+        color: #FF2F28; /*cada vez que paso el mouse cambia de color*/
+    }
+#menu {
+    display:none;
+}
+.menu-icono{
+    width: 25px;
+}
+
+.menu label {
+    cursor: pointer;/*para que aparezca la mano cuado selecciono el menu*/
+    display: none;
+}
+
+.header-content {
+    display:flex; /*colocar forma horiontal*/
+    width:100%;
+}
+
+.header-1 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-self: flex-end; /*para que la image a medida que agrando o achico la pestaña se mantenga en el lugar*/
+}
+
+.header-1 img {
+    width: 300px;
+    }
+
+.header-2 {
+    width: 50%;
+    margin-top: 80px;
+    text-align: end;
+    }
+
+.header-2 h1 {
+        color: #FFFFFF72;
+        font-size: 80px;
+        text-align: 80px;
+    }
+
+.header-2 img {
+    width: 70px;
+}
+
+.btn-1 {
+    display: inline-block;
+    padding: 7px 20px; /* 7 hacia arriba, y 20 izq y der*/
+    background-color: #FF2F28;
+    color: #FFFFFF;
+    font-size: 20px; /*le damos estilo(color, tamaño) al boton */
+}
+
+.btn-2 {
+    width: 110px;
+    display: inline-block;
+    padding: 7px 20px;
+    background-color: #FF2F28;
+    font-size: 20px; /*letra*/
+    margin-top: 30px;
+    color: #FFFFFF; /*color letra boton*/
+}
+
+.movies {
+    padding: 50px 0 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+hr { /*linea blanca*/
+    border: 1px solid #FF2F28;
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.box-container-1 ,
+.box-container-2 ,
+.box-container-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px; /*deja separacion*/
+}
+
+
+.box-1 ,
+.box-2 ,
+.box-3 {
+    border-radius: 5px;
+    z-index: 1000; /*evita que un elemento se ponga detras de otro*/
+    display: none;
+}
+
+.box-1:nth-child(1),
+.box-1:nth-child(2),
+.box-1:nth-child(3),
+.box-1:nth-child(4) {
+       display: inline-block;
+    }
+.box-2:nth-child(1),
+.box-2:nth-child(2),
+.box-2:nth-child(3),
+.box-2:nth-child(4) {
+        display: inline-block;
+    }
+
+.box-3:nth-child(1),
+.box-3:nth-child(2),
+.box-3:nth-child(3),
+.box-3:nth-child(4) {
+        display: inline-block;
+    }
+
+.load-more {
+    margin-top: 40px;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 15px;
+    border: 1px solid #FF2F28;
+    color: #FF2F28;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: flex-end; /*para que el boton se corra a la derecha*/
+}
+
+.load-more: hover {
+    background-color: #FF2F28;
+    color: #FFFFFF;
+}
+
+.content img {
+    width:100%;
+    margin-bottom: 15px;
+}
+
+.content h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.content {
+    color: #CFCFCF;
+    font-size: 20px;
+}
