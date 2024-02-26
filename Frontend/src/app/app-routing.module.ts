@@ -34,7 +34,7 @@ const routes: Routes = [
   { path:'sucursales', component: ListSucursalesComponent},
   { path: 'sucursales/add', component:AddEditSucursalComponent, data: { showSecondNavbar: true } },
   { path: 'sucursales/edit/:id', component: AddEditSucursalComponent, data: { showSecondNavbar: true } },
-  { path: 'login', component: LoginComponent, data: { showSecondNavbar: true }  },
+ // { path: 'login', component: LoginComponent, data: { showSecondNavbar: true }  },
   { path: 'register', component: RegisterComponent, data: { showSecondNavbar: true }  },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }

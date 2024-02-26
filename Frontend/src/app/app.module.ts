@@ -52,7 +52,7 @@ import { AppRoutingModule } from './app-routing.module';
     AddEditSucursalComponent,
     ListUsersComponent,
     EditUserComponent,
-    //CarteleraComponent
+    CarteleraComponent
   ],
   imports: [
     BrowserModule,
