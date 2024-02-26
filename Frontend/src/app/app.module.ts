@@ -1,3 +1,4 @@
+//app.module.ts
 // Importa los módulos necesarios
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -52,7 +53,8 @@ import { AppRoutingModule } from './app-routing.module';
     AddEditSucursalComponent,
     ListUsersComponent,
     EditUserComponent,
-    CarteleraComponent
+    CarteleraComponent,
+   
   ],
   imports: [
     BrowserModule,
