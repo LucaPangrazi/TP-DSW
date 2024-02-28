@@ -1,11 +1,41 @@
 <!-- cartelera.component.html -->
-<div class="d-flex justify-content-between align-items-center">
-  <div>
-    <h1>¡Bienvenido a la Cartelera!</h1>
-    <p>Descubre las últimas películas en exhibición.</p>
+
+<div>
+  <h1>¡Bienvenido a la Cartelera!</h1>
+  <p>Descubre las últimas películas en exhibición.</p>
+</div>
+
+<div>
+  <button routerLink="/login" class="btn btn-primary">Ir a Login</button>
+</div>
+
+<header class="header">
+  <div class="menu container cartelera">
+    <a href="#" class="logo">cinemexican</a>
+    <input type="checkbox" id="menu" />
+    <label for="menu">
+      <img src="menu.png" class="menu-icono" alt="menu">
+    </label>
+
+    <nav class="navbar">
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Nosotros</a></li>
+        <li><a href="#">Peliculas</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </nav>
   </div>
 
-  <div>
-    <button routerLink="/login" class="btn btn-primary">Ir a Login</button>
+  <div class="cartelera">
+    <!-- Utiliza *ngFor para iterar sobre las películas -->
+    <div *ngFor="let pelicula of peliculas" class="pelicula">
+      <h2>{{ pelicula.nombre }}</h2>
+      <p>{{ pelicula.descripcion }}</p>
+      <!-- Asegúrate de que la propiedad 'imagen' tenga la ruta correcta de la imagen -->
+      <!-- <img src="{{ apiUrl }}/ruta/a/la/imagen/{{ pelicula.imagen }}" alt="{{ pelicula.nombre }}">  -->
+    </div>
   </div>
-</div>
+</header>
+
+<script src="cartelera.script.js"></script>

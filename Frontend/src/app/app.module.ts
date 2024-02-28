@@ -25,11 +25,11 @@ import { ListSucursalesComponent } from './components/list-sucursales/list-sucur
 import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { CarteleraComponent } from './components/cartelera/cartelera.component';
-
+import { CarteleraComponent } from './components/cartelera/cartelera.component';  
 // Importa el servicio y el interceptor
 import { SearchService } from './shared/search.service';
 import { AddTokenInterceptor } from './util/add-token.interceptor';
+import { CarteleraService } from './services/cartelera.service';  
 
 // Configuración de rutas
 import { AppRoutingModule } from './app-routing.module';
@@ -52,7 +52,7 @@ import { AppRoutingModule } from './app-routing.module';
     AddEditSucursalComponent,
     ListUsersComponent,
     EditUserComponent,
-    CarteleraComponent
+    CarteleraComponent,  
   ],
   imports: [
     BrowserModule,
@@ -71,8 +71,9 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     SearchService,
-    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
+    CarteleraService,  
+    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
