@@ -32,8 +32,8 @@
     <div *ngFor="let pelicula of peliculas" class="pelicula">
       <h2>{{ pelicula.nombre }}</h2>
       <p>{{ pelicula.descripcion }}</p>
-      <!-- Asegúrate de que la propiedad 'imagen' tenga la ruta correcta de la imagen -->
-      <!-- <img src="{{ apiUrl }}/ruta/a/la/imagen/{{ pelicula.imagen }}" alt="{{ pelicula.nombre }}">  -->
+      <!-- Ajusta la ruta de la imagen según tu estructura -->
+      <img [src]="'http://localhost:3000/' + pelicula.imagen" alt="{{ pelicula.nombre }}">
     </div>
   </div>
 </header>

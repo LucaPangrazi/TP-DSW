@@ -7,9 +7,9 @@ import { CarteleraService } from '../../services/cartelera.service';
   selector: 'app-cartelera',
   templateUrl: './cartelera.component.html',
   styleUrls: ['./cartelera.component.css'],
-
 })
 export class CarteleraComponent implements OnInit {
+  apiUrl = 'http://localhost:3000/api/obtenerPeliculas'; // Ajusta según tu configuración
   peliculas: any[] = [];
 
   constructor(private carteleraService: CarteleraService) {}
