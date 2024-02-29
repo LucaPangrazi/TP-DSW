@@ -1,5 +1,4 @@
 // cartelera.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { CarteleraService } from '../../services/cartelera.service';
 
@@ -9,7 +8,6 @@ import { CarteleraService } from '../../services/cartelera.service';
   styleUrls: ['./cartelera.component.css'],
 })
 export class CarteleraComponent implements OnInit {
-  apiUrl = 'http://localhost:3000/api/obtenerPeliculas'; // Ajusta según tu configuración
   peliculas: any[] = [];
 
   constructor(private carteleraService: CarteleraService) {}
@@ -23,5 +21,9 @@ export class CarteleraComponent implements OnInit {
         console.error('Error al obtener películas:', error);
       }
     );
+  }
+
+  obtenerImagenUrl(nombreImagen: string): string {
+    return this.carteleraService.obtenerImagen(nombreImagen);
   }
 }

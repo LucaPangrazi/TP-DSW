@@ -9,33 +9,15 @@
   <button routerLink="/login" class="btn btn-primary">Ir a Login</button>
 </div>
 
-<header class="header">
-  <div class="menu container cartelera">
-    <a href="#" class="logo">cinemexican</a>
-    <input type="checkbox" id="menu" />
-    <label for="menu">
-      <img src="menu.png" class="menu-icono" alt="menu">
-    </label>
 
-    <nav class="navbar">
-      <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Nosotros</a></li>
-        <li><a href="#">Peliculas</a></li>
-        <li><a href="#">Contacto</a></li>
-      </ul>
-    </nav>
-  </div>
 
-  <div class="cartelera">
-    <!-- Utiliza *ngFor para iterar sobre las películas -->
-    <div *ngFor="let pelicula of peliculas" class="pelicula">
-      <h2>{{ pelicula.nombre }}</h2>
-      <p>{{ pelicula.descripcion }}</p>
-      <!-- Ajusta la ruta de la imagen según tu estructura -->
-      <img [src]="'http://localhost:3000/' + pelicula.imagen" alt="{{ pelicula.nombre }}">
-    </div>
+<div class="cartelera">
+  <div *ngFor="let pelicula of peliculas" class="pelicula">
+    <h2>{{ pelicula.nombre }}</h2>
+    <p>{{ pelicula.descripcion }}</p>
+    <img [src]="obtenerImagenUrl(pelicula.imagen)" alt="{{ pelicula.nombre }}">
   </div>
-</header>
+</div>
+
 
 <script src="cartelera.script.js"></script>
