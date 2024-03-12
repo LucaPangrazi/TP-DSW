@@ -1,3 +1,4 @@
+
 // cartelera.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -17,11 +18,11 @@ export class CarteleraService {
     this.myApiUrl = '/api/movies';
   }
 
-  obtenerPeliculas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.myAppUrl}${this.myApiUrl}`);
-  }
+  //obtenerPeliculas(): Observable<any[]> {
+    //return this.http.get<any[]>(`${this.myAppUrl}${this.myApiUrl}`);
+  //}
 
-  obtenerImagen(nombreImagen: string): string {
-    return `${this.myAppUrl}${this.imagesEndpoint}${nombreImagen}`;
-  }
+ // obtenerImagen(nombreImagen: string): string {
+   // return `${this.myAppUrl}${this.imagesEndpoint}${nombreImagen}`;
+  //}
 }
