@@ -25,22 +25,61 @@ exports.getMovies = getMovies;
 const getMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id_movie = req.params.id;
     const film = yield movie_1.default.findByPk(id_movie);
-    if (film) {
-        res.json(film);
-    }
     /*if(film){
-        const filmDet = {
-            id_movie: film.id_movie,
-            title:  film.title,
-            genre: film.genre,
-            format: film.format,
-            description: film.description,
-            clasification: film.clasification,
-            durationMin: film.durationMin,
-            image: `http://localhost:3000/${film.image}`
-        };
-        res.json(filmDet)
+        res.json(film)
     }*/
+    if (film) {
+        const title = film.get('title');
+        const genre = film.get('genre');
+        const format = film.get('format');
+        const description = film.get('description');
+        const clasification = film.get('clasification');
+        const durationMin = parseInt(film.get('durationMin')); // Dependiendo de cómo se almacenen los minutos, ajusta el tipo aquí
+        const image = `http://localhost:3000/${film.get('image')}`;
+        const filmDet = {
+            title,
+            genre,
+            format,
+            description,
+            clasification,
+            durationMin,
+            image
+        };
+        res.json(filmDet);
+        /*if(film){
+            const filmDet = {
+                id_movie: film.id_movie,
+                title:  film.title,
+                genre: film.genre,
+                format: film.format,
+                description: film.description,
+                clasification: film.clasification,
+                durationMin: film.durationMin,
+                image: `http://localhost:3000/${film.image}`
+            };
+    
+            if(film){
+                const title = film.get('title') as string;
+                const genre = film.get('genre') as string;
+                const format = film.get('format') as string;
+                const description = film.get('description') as string;
+                const clasification = film.get('clasification') as string;
+                const durationMin = parseInt(film.get('durationMin') as string); // Dependiendo de cómo se almacenen los minutos, ajusta el tipo aquí
+                const image = `http://localhost:3000/uploads/${film.get('image')}` as string;
+        
+                const filmDet: MovieRequestBody = {
+                    title,
+                    genre,
+                    format,
+                    description,
+                    clasification,
+                    durationMin,
+                    image
+                };
+    
+            res.json(filmDet)
+        }*/
+    }
     else {
         res.status(404).json({
             msg: `No existe una pelicula con el id ${id_movie}`
@@ -91,7 +130,7 @@ const saveMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: 'No se ha adjuntado una imagen'
         });
     }
-    const image = imageFileName;
+    const image = 'uploads/' + imageFileName;
     try {
         const newMovie = yield movie_1.default.create({
             title,
@@ -129,7 +168,7 @@ const updateMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             msg: 'No se ha adjuntado una imagen'
         });
     }
-    const image = imageFileName;
+    const image = 'uploads/' + imageFileName;
     try {
         const film = yield movie_1.default.findByPk(id_movie);
         if (film) {

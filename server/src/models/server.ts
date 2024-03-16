@@ -43,7 +43,7 @@ routes() {
     //Cors
     this.app.use(cors());
 
-    this.app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+    this.app.use('./uploads', express.static(path.join(__dirname, 'uploads')));
   }
 
  async dbConnect() {

@@ -22,9 +22,29 @@ export const getMovies = async (req: Request, res: Response) => {
 export const getMovie = async (req: Request, res: Response) => {
     const id_movie = req.params.id;
     const film = await Movie.findByPk(id_movie);
-    if(film){
+    /*if(film){
         res.json(film)
-    }
+    }*/
+    if(film){
+        const title = film.get('title') as string;
+        const genre = film.get('genre') as string;
+        const format = film.get('format') as string;
+        const description = film.get('description') as string;
+        const clasification = film.get('clasification') as string;
+        const durationMin = parseInt(film.get('durationMin') as string); // Dependiendo de cómo se almacenen los minutos, ajusta el tipo aquí
+        const image = `http://localhost:3000/${film.get('image')}` as string;
+
+        const filmDet: MovieRequestBody = {
+            title,
+            genre,
+            format,
+            description,
+            clasification,
+            durationMin,
+            image
+        };
+        
+    res.json(filmDet)
     /*if(film){
         const filmDet = {
             id_movie: film.id_movie,
@@ -36,8 +56,29 @@ export const getMovie = async (req: Request, res: Response) => {
             durationMin: film.durationMin,
             image: `http://localhost:3000/${film.image}`
         };
+
+        if(film){
+            const title = film.get('title') as string;
+            const genre = film.get('genre') as string;
+            const format = film.get('format') as string;
+            const description = film.get('description') as string;
+            const clasification = film.get('clasification') as string;
+            const durationMin = parseInt(film.get('durationMin') as string); // Dependiendo de cómo se almacenen los minutos, ajusta el tipo aquí
+            const image = `http://localhost:3000/uploads/${film.get('image')}` as string;
+    
+            const filmDet: MovieRequestBody = {
+                title,
+                genre,
+                format,
+                description,
+                clasification,
+                durationMin,
+                image
+            };
+
         res.json(filmDet)
     }*/
+}
     else {
         res.status(404).json({
             msg: `No existe una pelicula con el id ${id_movie}`
@@ -87,7 +128,7 @@ export const saveMovie = async (req: Request<{}, {}, MovieRequestBody>, res: Res
             msg: 'No se ha adjuntado una imagen'
         });
     }
-    const image = imageFileName;
+    const image = 'uploads/' + imageFileName;
     try {
         const newMovie = await Movie.create({
             title,
@@ -123,7 +164,7 @@ export const updateMovie = async (req: Request, res: Response) => {
             msg: 'No se ha adjuntado una imagen'
         });
     }
-    const image = imageFileName;
+    const image = 'uploads/' + imageFileName;
     try {
         const film = await Movie.findByPk(id_movie);
         if(film){

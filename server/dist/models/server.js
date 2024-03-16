@@ -50,7 +50,7 @@ class Server {
         this.app.use(express_1.default.json());
         //Cors
         this.app.use((0, cors_1.default)());
-        this.app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, 'uploads')));
+        this.app.use('./uploads', express_1.default.static(path_1.default.join(__dirname, 'uploads')));
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
