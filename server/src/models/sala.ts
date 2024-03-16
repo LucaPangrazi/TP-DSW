@@ -3,7 +3,12 @@ import db from '../db/connection'
 import e from 'express';
 
 const Sala = db.define('Sala', {
-  
+
+   id_sala:{
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+  },
   name: {
     type:DataTypes.STRING
   }
@@ -13,5 +18,4 @@ const Sala = db.define('Sala', {
  updatedAt: false
 }
 );
-
 export default Sala;
