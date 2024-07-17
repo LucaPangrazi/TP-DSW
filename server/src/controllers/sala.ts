@@ -2,16 +2,20 @@ import { Request, Response } from "express";
 import Sala from '../models/sala';
 
 export const getSalas = async (req:Request, res:Response) => {   //este getSalas es para obtener todas las salas
-  const listSalas = await Sala.findAll()
-
-  res.json(listSalas)
+  try {
+    const listSalas = await Sala.findAll();
+    res.json(listSalas);
+  } catch (error) {
+    console.error('Error al obtener salas:', error);
+    res.status(500).json({ msg: 'Error interno del servidor' });
+  }
 }
 
 export const getSala = async (req:Request, res:Response) => {  // y este para obtener una sala en particular
   const {id} = req.params;
-  const sala = await Sala.findByPk(id);  //uso async await pq findByPk devuelve una promesa
-if (sala) {
-  res.json(sala)
+  const hall = await Sala.findByPk(id);  //uso async await pq findByPk devuelve una promesa
+if (hall) {                              // use Sala.findByPk(id) para obtener la sala por su clave primaria
+  res.json(hall)
 } else {
   res.status(404).json({
     msg: `No existe una sala con el id ${id}`
@@ -45,7 +49,7 @@ export const postSala = async (req:Request, res:Response) => {
     await Sala.create(body);
 
   res.json({
-    msg:'El producto fue agregado con éxito!'
+    msg:'La sala fue agregada con éxito!'
   })
   } catch (error) {
     console.log(error);

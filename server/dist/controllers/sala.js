@@ -15,15 +15,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateSala = exports.postSala = exports.deleteSala = exports.getSala = exports.getSalas = void 0;
 const sala_1 = __importDefault(require("../models/sala"));
 const getSalas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const listSalas = yield sala_1.default.findAll();
-    res.json(listSalas);
+    try {
+        const listSalas = yield sala_1.default.findAll();
+        res.json(listSalas);
+    }
+    catch (error) {
+        console.error('Error al obtener salas:', error);
+        res.status(500).json({ msg: 'Error interno del servidor' });
+    }
 });
 exports.getSalas = getSalas;
 const getSala = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const sala = yield sala_1.default.findByPk(id); //uso async await pq findByPk devuelve una promesa
-    if (sala) {
-        res.json(sala);
+    const hall = yield sala_1.default.findByPk(id); //uso async await pq findByPk devuelve una promesa
+    if (hall) {
+        res.json(hall);
     }
     else {
         res.status(404).json({
@@ -53,7 +59,7 @@ const postSala = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield sala_1.default.create(body);
         res.json({
-            msg: 'El producto fue agregado con éxito!'
+            msg: 'La sala fue agregada con éxito!'
         });
     }
     catch (error) {

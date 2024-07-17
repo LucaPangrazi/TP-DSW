@@ -1,0 +1,29 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading" class="row mt-1">
+  <div class="col-lg-4 offset-lg-4">
+    <div class="card bg-light mb-3" style="max-width: 25rem;">
+      <div class="card-header text-center">{{operacion}}Editar usuario</div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="editUser()">
+          
+          <input formControlName="userName" type="text" class="form-control mt-2" placeholder="Ingrese nombre de usuario">
+          <input formControlName="password" type="text" class="form-control mt-2" placeholder="Ingrese password">
+          <input formControlName="telefono" type="text" class="form-control mt-2" placeholder="Ingrese telefono">
+          <span *ngIf="form.get('userName')?.hasError('required') || form.get('password')?.hasError('required') && form.get('password')?.touched && form.get('userName')?.touched">
+           Todos los campos son <strong> obligatorios </strong>
+          </span>
+          
+          <div class="row mt-2 text-center">
+            <div class="col-lg-6">
+              <button (click)="navigateToUsers()" type="button" class="btn btn-light">Volver</button>
+            </div>
+            <div class="col-lg-6">
+              <button [disabled]="form.invalid" type="submit" class="btn btn-dark">Aceptar</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,10 +2,11 @@
 <div *ngIf="!loading" class="container">
   <div class="title">
     <h4>Listado de Salas</h4>
-    <button type="button" class="btn btn-light" routerLink="/add">Agregar sala</button>
+    <button type="button" class="btn btn-light" routerLink="add">Agregar sala</button>
   </div>
   <br>
-  <table *ngIf="listSalas.length > 0" class="table table-primary">
+
+  <table *ngIf="filteredSalas.length > 0" class="table table-primary">
     <thead>
       <tr>
         <th scope="col">Id</th>
@@ -16,11 +17,11 @@
     </thead>
     <tbody>
 
-      <tr *ngFor="let item of listSalas" class="table-light">
+      <tr *ngFor="let item of filteredSalas" class="table-light">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>
-          <button routerLink="/edit/{{ item.id }}" type="button" class="btn btn-dark btn-sm">Editar</button>
+          <button routerLink="edit/{{ item.id }}" type="button" class="btn btn-dark btn-sm">Editar</button>
           <button (click)="deleteSala(item.id)" type="button" class="btn btn-danger btn-sm ms-2">Borrar</button>
         </td>
 
