@@ -1,0 +1,16 @@
+<!-- BARRA DE NAVEGACION -->
+<div id="barranav">
+  <div id="titulo">PELÍCULAS EN CARTELERA</div>
+  <a id="acerca" href="#">Login</a>
+</div>
+<!-- FIN BARRA DE NAVEGACION -->
+
+<!-- CONTENIDO DE LA CARTELERA -->
+<div class="gallery">
+  <div class="item" *ngFor="let image of images; let i = index">
+    <a [routerLink]="['/pelicula', i + 1]">
+      <img [src]="image" alt="imagen película">
+    </a>
+  </div>
+</div>
+<!-- FIN CONTENIDO DE LA CARTELERA -->
