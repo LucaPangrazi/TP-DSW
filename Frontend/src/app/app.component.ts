@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { SearchService } from './shared/search.service';
 
 @Component({
@@ -8,21 +7,19 @@ import { SearchService } from './shared/search.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Frontend';
   showSecondNavbar = false;
 
-  constructor(private router: Router,
-    private _http: HttpClient,
-     private activatedRoute: ActivatedRoute,
-     private searchService: SearchService) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private searchService: SearchService
+  ) {}
 
   handleSearch(value: string) {
-    
-    console.log(value);
-  
-   
-    this.searchService.setSearchTerm(value);
+    console.log('Término de búsqueda:', value);
+    this.searchService.setSearchTerm(value); // Asegúrate de que setSearchTerm maneje un string
   }
   
   ngOnInit() {

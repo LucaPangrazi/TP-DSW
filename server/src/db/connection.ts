@@ -1,3 +1,4 @@
+
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize('cine', 'cine', 'cine', {

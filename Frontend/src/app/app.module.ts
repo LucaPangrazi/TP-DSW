@@ -2,16 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { SearchService } from './shared/search.service';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-//Modulos
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
-//Components
+// Componentes
+import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListMoviesComponent } from './components/list-movies/list-movies.component';
 import { AddEditMovieComponent } from './components/add-edit-movie/add-edit-movie.component';
@@ -25,9 +21,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { AddTokenInterceptor } from './util/add-token.interceptor';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { CarteleraComponent } from './components/cartelera/cartelera.component';
+import { DetallesPeliculaComponent } from './components/detalles-pelicula/detalles-pelicula.component';
+
+// Servicios
+import { SearchService } from './shared/search.service';
+import { AddTokenInterceptor } from './util/add-token.interceptor';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -39,12 +41,6 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     ProgressBarComponent,
     ListSalasComponent,
     AddEditSalaComponent,
-    ProgressBarComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    NavbarComponent,
-    SpinnerComponent,
     ListSucursalesComponent,
     AddEditSucursalComponent,
     LoginComponent,
@@ -52,7 +48,9 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     DashboardComponent,
     SpinnerComponent,
     ListUsersComponent,
-    EditUserComponent
+    EditUserComponent,
+    CarteleraComponent,
+    DetallesPeliculaComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +66,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
       preventDuplicates: true,
     }), 
   ],
-  providers: [SearchService, 
+  providers: [
+    SearchService, 
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

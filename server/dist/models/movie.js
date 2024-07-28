@@ -5,11 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
+
 var MovieFormat;
 (function (MovieFormat) {
     MovieFormat["f2D"] = "2D";
     MovieFormat["f3D"] = "3D"; //varchar(10) en bd 
 })(MovieFormat || (MovieFormat = {}));
+
 const Movie = connection_1.default.define('Movie', {
     id_movie: {
         type: sequelize_1.DataTypes.INTEGER,

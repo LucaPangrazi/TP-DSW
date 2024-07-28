@@ -1,0 +1,145 @@
+#menu_modulos {
+  padding: 0;
+}
+
+#menu_modulos li {
+  display: inline;
+}
+
+#menu_modulos li a {
+  font-family: Arial;
+  font-size: 11px;
+  text-decoration: none;
+  float: left;
+  padding: 10px;
+  background-color: #2175bc;
+  color: #fff;
+}
+
+#menu_modulos li a:hover {
+  background-color: #2586d7;
+  margin-top: -2px;
+  padding-bottom: 12px;
+}
+
+#barranav {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  height: 60px;
+}
+
+#barranav a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+#barranav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#barranav div {
+  cursor: pointer;
+}
+
+#titulo {
+  flex: 1;
+  text-align: center;
+  padding: 14px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#barranav a#acerca {
+  margin-left: auto;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 80px;
+}
+
+.gallery .item {
+  flex: 0 0 23%;
+  margin: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  /* Color de fondo DE LAS IMAGENES */
+}
+
+.gallery .item::before {
+  content: '';
+  display: block;
+  padding-top: 150%;
+}
+
+.gallery .item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* cover asegura que todas las imágenes llenen su contenedor */
+}
+
+
+.gallery::after {
+  content: '';
+  flex: 0 0 23%;
+  margin: 1%;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  /* Color de fondo para IMAGEN VACÍA */
+}
+
+@media (max-width: 1200px) {
+  .gallery .item {
+    flex: 0 0 31%;
+  }
+
+  .gallery::after {
+    flex: 0 0 31%;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery .item {
+    flex: 0 0 48%;
+  }
+
+  .gallery::after {
+    flex: 0 0 48%;
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery .item {
+    flex: 0 0 98%;
+  }
+
+  .gallery::after {
+    flex: 0 0 98%;
+  }
+}

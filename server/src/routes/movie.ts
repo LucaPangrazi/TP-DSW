@@ -1,7 +1,6 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { deleteMovie, getMovie, getMovies, saveMovie, updateMovie } from '../controllers/movie';
-import multer, { diskStorage } from 'multer';
-
+import multer from 'multer';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -10,11 +9,13 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
       cb(null, Date.now() + '-' + file.originalname);
     },
-  });
+});
   
-  const upload = multer({ storage });
+const upload = multer({ storage });
 
 const router = Router();
+
+
 router.get('/', getMovies);
 router.get('/:id', getMovie);
 router.delete('/:id', deleteMovie);

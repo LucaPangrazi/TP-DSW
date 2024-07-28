@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Sala from '../models/sala';
 
-export const getSalas = async (req:Request, res:Response) => {   //este getSalas es para obtener todas las salas
+export const getSalas = async (req:Request, res:Response) => {   
   try {
     const listSalas = await Sala.findAll();
     res.json(listSalas);
@@ -11,10 +11,10 @@ export const getSalas = async (req:Request, res:Response) => {   //este getSalas
   }
 }
 
-export const getSala = async (req:Request, res:Response) => {  // y este para obtener una sala en particular
+export const getSala = async (req:Request, res:Response) => {  
   const {id} = req.params;
-  const hall = await Sala.findByPk(id);  //uso async await pq findByPk devuelve una promesa
-if (hall) {                              // use Sala.findByPk(id) para obtener la sala por su clave primaria
+  const hall = await Sala.findByPk(id);  
+if (hall) {                              
   res.json(hall)
 } else {
   res.status(404).json({

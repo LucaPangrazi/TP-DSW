@@ -1,3 +1,4 @@
+// server/dist/models/server.js
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -19,7 +20,9 @@ const movie_1 = __importDefault(require("../routes/movie"));
 const sala_1 = __importDefault(require("../routes/sala"));
 const sucursal_1 = __importDefault(require("../routes/sucursal"));
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
+const cartelera_1 = __importDefault(require("../routes/cartelera"));
 const connection_1 = __importDefault(require("../db/connection"));
+
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -29,11 +32,13 @@ class Server {
         this.routes();
         this.dbConnect();
     }
+
     listen() {
         this.app.listen(this.port, () => {
             console.log(`Aplicación corriendo en el puerto ${this.port}`);
         });
     }
+
     routes() {
         this.app.get('/', (req, res) => {
             res.json({
@@ -44,14 +49,17 @@ class Server {
         this.app.use('/api/salas', sala_1.default);
         this.app.use('/api/sucursales', sucursal_1.default);
         this.app.use('/api/users', user_routes_1.default);
+        this.app.use('/api/cartelera', cartelera_1.default);  
     }
+
     midlewares() {
         //parseamos el body
         this.app.use(express_1.default.json());
         //Cors
         this.app.use((0, cors_1.default)());
-        this.app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, 'uploads')));
+        this.app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../../uploads'))); 
     }
+
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -65,4 +73,5 @@ class Server {
         });
     }
 }
+
 exports.default = Server;

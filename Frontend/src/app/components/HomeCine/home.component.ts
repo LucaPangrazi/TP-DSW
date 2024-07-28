@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   template: `
     <div>
+      <button (click)="navigateToCartelera()">Cartelera</button>
       <button (click)="navigateToMovies()">Películas</button>
       <button (click)="navigateToSalas()">Salas</button>
       <button (click)="navigateToSucursales()">Sucursales</button>
@@ -26,6 +27,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   constructor(private router: Router) {}
+
+ navigateToCartelera() {
+    this.router.navigate(['/cartelera']);
+  }
 
   navigateToMovies() {
     this.router.navigate(['/movies']);

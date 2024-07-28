@@ -1,4 +1,3 @@
-
 import db from '../db/connection.js'
 import { Sequelize, DataTypes } from 'sequelize';
 import e from 'express';

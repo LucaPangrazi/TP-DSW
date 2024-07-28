@@ -1,0 +1,21 @@
+<!-- BARRA DE NAVEGACION -->
+<div id="barranav">
+  <a id="backButton" [routerLink]="['/cartelera']">&larr; Volver</a>
+
+  <a id="acerca" href="#">Login</a>
+</div>
+
+
+<!-- CONTENIDO DE DETALLES DE LA PELÍCULA -->
+<div *ngIf="movie">
+  <h2>{{ movie.title }}</h2>
+  <img *ngIf="imageUrl" [src]="imageUrl" alt="{{ movie.title }}">
+  <p><strong>Género:</strong> {{ movie.genre }}</p>
+  <p><strong>Formato:</strong> {{ movie.format }}</p>
+  <p><strong>Descripción:</strong> {{ movie.description }}</p>
+  <p><strong>Clasificación:</strong> {{ movie.clasification }}</p>
+  <p><strong>Duración:</strong> {{ movie.durationMin }} minutos</p>
+</div>
+<div *ngIf="!movie">
+  <p>Detalles de la película no disponibles.</p>
+</div>

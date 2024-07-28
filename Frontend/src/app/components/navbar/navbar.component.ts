@@ -1,31 +1,46 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { SearchService } from '../../shared/search.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   searchForm: FormGroup | undefined;
   search = new FormControl('');
-  constructor(private searchService: SearchService) {}
- 
+  showNavbar: boolean = true;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private searchService: SearchService
+  ) {}
+
   ngOnInit(): void {
     this.searchForm = new FormGroup({
-      search: new FormControl('') // Agrega 'search' al html
+      search: new FormControl('')
     });
-  
+
     this.searchForm.valueChanges
       .pipe(debounceTime(300))
       .subscribe(value => this.searchEmitter.emit(value.search || ''));
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showNavbar = !event.url.includes('/cartelera');
+      }
+    });
   }
-@Output('search') searchEmitter = new EventEmitter<string>();
-searchMovies(): void {
-  const searchTerm = this.searchForm?.get('search')?.value || '';
-  console.log('Buscando termino:', searchTerm);
-  this.searchService.setSearchTerm(searchTerm);
-}
+
+  @Output() searchEmitter = new EventEmitter<string>();
+
+  searchMovies(): void {
+    const searchTerm = this.searchForm?.get('search')?.value || '';
+    console.log('Buscando término:', searchTerm);
+    this.searchEmitter.emit(searchTerm); // Emitir searchTerm como un string
+  }
 }
