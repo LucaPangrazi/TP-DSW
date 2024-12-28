@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DetallePeliculaService } from '../../services/detalle-pelicula.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Movie } from '../../interfaces/movie';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalles-pelicula',
@@ -17,7 +18,8 @@ export class DetallesPeliculaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private detallePeliculaService: DetallePeliculaService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,4 +38,10 @@ export class DetallesPeliculaComponent implements OnInit {
       );
     }
   }
+  comprarEntrada() {
+    if (this.movie?.id_movie) {
+      this.router.navigate(['/seleccion-asientos', this.movie.id_movie]);
+    }
+  
+}
 }

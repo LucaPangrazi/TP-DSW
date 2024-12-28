@@ -1,0 +1,17 @@
+<div class="sala">
+    <h2>Selecciona tu asiento</h2>
+    <div class="asientos">
+      <div *ngFor="let fila of asientos; let filaIndex = index" class="fila">
+        <div
+          *ngFor="let asiento of fila; let colIndex = index"
+          class="asiento"
+          [ngClass]="asiento.estado"
+          (click)="seleccionarAsiento(filaIndex, colIndex)"
+        >
+          {{ filaIndex + 1 }}{{ colIndex + 1 }}
+        </div>
+      </div>
+    </div>
+    <button [routerLink]="['/formulario']" [disabled]="!haySeleccionados()">Continuar</button>
+  </div>
+  

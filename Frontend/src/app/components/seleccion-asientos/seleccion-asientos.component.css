@@ -1,0 +1,54 @@
+.sala {
+    text-align: center;
+  }
+  
+  .asientos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fila {
+    display: flex;
+  }
+  
+  .asiento {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .asiento.disponible {
+    background-color: #8bc34a;
+  }
+  
+  .asiento.ocupado {
+    background-color: #f44336;
+    cursor: not-allowed;
+  }
+  
+  .asiento.seleccionado {
+    background-color: #ffc107;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

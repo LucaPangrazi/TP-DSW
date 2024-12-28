@@ -30,6 +30,8 @@ import { DetallesPeliculaComponent } from './components/detalles-pelicula/detall
 import { SearchService } from './shared/search.service';
 import { AddTokenInterceptor } from './util/add-token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
+import { ComprarEntradaComponent } from './components/comprar-entrada/comprar-entrada.component';
+import { SeleccionAsientosComponent } from './components/seleccion-asientos/seleccion-asientos.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { AppRoutingModule } from './app-routing.module';
     ListUsersComponent,
     EditUserComponent,
     CarteleraComponent,
-    DetallesPeliculaComponent
+    DetallesPeliculaComponent,
+    ComprarEntradaComponent,
+    SeleccionAsientosComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@
   <p><strong>Descripción:</strong> {{ movie.description }}</p>
   <p><strong>Clasificación:</strong> {{ movie.clasification }}</p>
   <p><strong>Duración:</strong> {{ movie.durationMin }} minutos</p>
+  <button (click)="comprarEntrada()">Comprar entrada</button>
 </div>
 <div *ngIf="!movie">
   <p>Detalles de la película no disponibles.</p>

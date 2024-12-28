@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+
 // Componentes
 import { ListSucursalesComponent } from './components/list-sucursales/list-sucursales.component';
 import { AddEditSucursalComponent } from './components/add-edit-sucursal/add-edit-sucursal.component';
@@ -16,6 +17,8 @@ import { ListUsersComponent } from './components/list-users/list-users.component
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { CarteleraComponent } from './components/cartelera/cartelera.component';
 import { DetallesPeliculaComponent } from './components/detalles-pelicula/detalles-pelicula.component'; 
+import { ComprarEntradaComponent } from './components/comprar-entrada/comprar-entrada.component';
+import { SeleccionAsientosComponent } from './components/seleccion-asientos/seleccion-asientos.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
@@ -36,6 +39,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, data: { showSecondNavbar: true } },
   { path: 'cartelera', component: CarteleraComponent },
   { path: 'pelicula/:id', component: DetallesPeliculaComponent }, 
+  { path: 'comprar-entrada/:id', component: ComprarEntradaComponent },
+  { path: 'seleccion-asientos/:id', component: SeleccionAsientosComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
