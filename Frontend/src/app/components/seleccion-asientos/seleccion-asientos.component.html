@@ -12,6 +12,6 @@
         </div>
       </div>
     </div>
-    <button [routerLink]="['/formulario']" [disabled]="!haySeleccionados()">Continuar</button>
+    <button (click)="continuarAFormulario()" [disabled]="!haySeleccionados()">Continuar</button>
   </div>
   
