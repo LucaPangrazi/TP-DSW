@@ -9,7 +9,7 @@
 <!-- CONTENIDO DE LA CARTELERA -->
 <div class="gallery">
   <div class="item" *ngFor="let image of images; let i = index">
-    <a [routerLink]="['/pelicula', i + 1]">
+    <a [routerLink]="['/pelicula', i + 1]" (click)="seleccionarPelicula(i)">
       <img [src]="image" alt="imagen película">
     </a>
  

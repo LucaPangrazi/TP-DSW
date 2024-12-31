@@ -12,7 +12,15 @@ export class SeleccionAsientosComponent implements OnInit {
   filas = 5;
   columnas = 8;
 
-  constructor(private router: Router, private asientosService: AsientosService) {}
+  // Propiedades necesarias para el HTML
+  fechaSeleccionada: string = ''; // No permitimos que sea null
+  fechaMinima: string; // Representa la fecha mínima permitida para la selección
+
+  constructor(private router: Router, private asientosService: AsientosService) {
+    // Establecer la fecha mínima como la fecha actual
+    const hoy = new Date();
+    this.fechaMinima = hoy.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
+  }
 
   ngOnInit(): void {
     this.generarAsientos();
@@ -60,9 +68,18 @@ export class SeleccionAsientosComponent implements OnInit {
 
   // Navega al formulario de compra con los asientos seleccionados
   continuarAFormulario(): void {
+    if (!this.fechaSeleccionada) {
+      alert('Por favor, selecciona una fecha antes de continuar.');
+      return;
+    }
+
     const seleccionados = this.getAsientosSeleccionados();
     this.asientosService.setAsientosSeleccionados(seleccionados);
     const id = this.obtenerIdDeSeleccion();
+    this.asientosService.setDatosPelicula({
+      pelicula: 'Nombre de la película seleccionada', // Ajusta según tu lógica
+      fecha: this.fechaSeleccionada // Ya no puede ser null
+    });
     this.router.navigate([`/comprar-entrada/${id}`]);
   }
 

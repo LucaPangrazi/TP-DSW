@@ -1,17 +1,35 @@
-<div class="sala">
-    <h2>Selecciona tu asiento</h2>
-    <div class="asientos">
-      <div *ngFor="let fila of asientos; let filaIndex = index" class="fila">
-        <div
-          *ngFor="let asiento of fila; let colIndex = index"
-          class="asiento"
-          [ngClass]="asiento.estado"
-          (click)="seleccionarAsiento(filaIndex, colIndex)"
-        >
-          {{ filaIndex + 1 }}{{ colIndex + 1 }}
-        </div>
-      </div>
-    </div>
-    <button (click)="continuarAFormulario()" [disabled]="!haySeleccionados()">Continuar</button>
+<div>
+  <h3>Selecciona tu asiento</h3>
+
+  <!-- Matriz de asientos -->
+  <div *ngFor="let fila of asientos; let filaIndex = index" class="fila">
+    <button
+      *ngFor="let asiento of fila; let colIndex = index"
+      [ngClass]="asiento.estado"
+      (click)="seleccionarAsiento(filaIndex, colIndex)"
+      [disabled]="asiento.estado === 'ocupado'"
+    >
+      {{ filaIndex + 1 }}-{{ colIndex + 1 }}
+    </button>
   </div>
-  
+
+  <!-- Selector de fecha -->
+  <div class="fecha-selector">
+    <label for="fecha">Selecciona la fecha de la función:</label>
+    <input
+      type="date"
+      id="fecha"
+      [(ngModel)]="fechaSeleccionada"
+      min="{{ fechaMinima }}"
+      required
+    />
+  </div>
+
+  <!-- Botón para continuar -->
+  <button
+    [disabled]="!haySeleccionados() || !fechaSeleccionada"
+    (click)="continuarAFormulario()"
+  >
+    Continuar a la compra
+  </button>
+</div>
