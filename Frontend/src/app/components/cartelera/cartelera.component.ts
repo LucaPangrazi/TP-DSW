@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';  // Importa Router
 import { CarteleraService } from '../../services/cartelera.service';
-import { AsientosService } from '../../shared/asientos.service'; // Importa el servicio
+import { AsientosService } from '../../shared/asientos.service'; 
 
 @Component({
   selector: 'app-cartelera',
@@ -9,9 +10,11 @@ import { AsientosService } from '../../shared/asientos.service'; // Importa el s
 })
 export class CarteleraComponent implements OnInit {
   images: string[] = [];
-  peliculas: string[] = ['Película 1', 'Película 2', 'Película 3', 'Película 4','Película 5','Película 6', 'Película 7'];
+  peliculas: string[] = ['Spiderman 2', 'Intensamente 2', 'Rey León', 'Mulan', 'Encanto', 'Rápidos y furiosos', 'Wish'];
+  fechas: string[] = ['2024-12-30', '2024-12-31', '2024-12-29', '2024-12-28', '2024-12-27', '2024-12-26', '2024-12-25'];
 
   constructor(
+    private router: Router,  // Inyecta Router
     private carteleraService: CarteleraService,
     private asientosService: AsientosService // Inyecta el servicio
   ) {}
@@ -28,8 +31,19 @@ export class CarteleraComponent implements OnInit {
   }
 
   seleccionarPelicula(index: number): void {
-    const peliculaSeleccionada = this.peliculas[index];
-    this.asientosService.setDatosPelicula({ pelicula: peliculaSeleccionada, fecha: '2024-12-30' });
-    console.log('Película seleccionada:', peliculaSeleccionada); // Actualiza la fecha si es necesario
+    if (index < this.peliculas.length) {
+      const pelicula = this.peliculas[index];
+      const fecha = this.fechas[index];
+
+      console.log('Datos enviados al servicio:', { pelicula, fecha });
+      this.asientosService.setDatosPelicula({ pelicula, fecha });
+
+      // Navegamos a la ruta de compra de entrada, pasando el índice de la película (o un id si es necesario)
+      console.log('Navegando con datos:', { pelicula, fecha });
+
+      this.router.navigate(['/seleccion-asientos', pelicula]);
+    }
+    
+    
   }
 }

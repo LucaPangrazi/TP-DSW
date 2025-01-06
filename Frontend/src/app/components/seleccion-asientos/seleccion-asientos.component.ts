@@ -77,7 +77,7 @@ export class SeleccionAsientosComponent implements OnInit {
     this.asientosService.setAsientosSeleccionados(seleccionados);
     const id = this.obtenerIdDeSeleccion();
     this.asientosService.setDatosPelicula({
-      pelicula: 'Nombre de la película seleccionada', // Ajusta según tu lógica
+      pelicula: this.asientosService.obtenerDatosPelicula().pelicula, // Ajusta según tu lógica
       fecha: this.fechaSeleccionada // Ya no puede ser null
     });
     this.router.navigate([`/comprar-entrada/${id}`]);

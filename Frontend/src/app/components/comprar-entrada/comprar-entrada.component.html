@@ -1,12 +1,26 @@
-<h2>Completar Datos de la Compra</h2>
-
 <!-- Formulario -->
 <form *ngIf="!mostrarResumen" (ngSubmit)="verResumen()">
   <label for="email">Ingrese email donde se enviará el QR:</label>
-  <input type="email" id="email" [(ngModel)]="formData.email" name="email" required><br><br>
+  <input
+    type="email"
+    id="email"
+    [(ngModel)]="formData.email"
+    name="email"
+    required
+    placeholder="ejemplo@correo.com"
+  />
+  <br /><br />
 
   <label for="cantidad">Cantidad de Entradas:</label>
-  <input type="number" id="cantidad" [(ngModel)]="formData.cantidad" name="cantidad" min="1" required><br><br>
+  <input
+    type="number"
+    id="cantidad"
+    [(ngModel)]="formData.cantidad"
+    name="cantidad"
+    min="1"
+    required
+  />
+  <br /><br />
 
   <button type="submit">Ver Resumen</button>
 </form>
@@ -16,14 +30,17 @@
   <h2>Resumen de la Compra</h2>
   <p><strong>Película:</strong> {{ resumenCompra?.pelicula }}</p>
   <p><strong>Fecha:</strong> {{ resumenCompra?.fecha }}</p>
-  <p><strong>Asientos Seleccionados:</strong></p>
-  <ul>
+
+  <!-- Asientos seleccionados -->
+  <p *ngIf="hasAsientosSeleccionados()">
+    <strong>Asientos Seleccionados:</strong>
+  </p>
+  <ul *ngIf="hasAsientosSeleccionados()">
     <li *ngFor="let asiento of resumenCompra?.asientos">
-      Fila: {{ asiento.fila }}, Columna: {{ asiento.columna }}
+      Fila: {{ asiento.fila +1 }}, Columna: {{ asiento.columna +1 }}
     </li>
   </ul>
-  <p><strong>Cantidad de Entradas:</strong> {{ resumenCompra?.cantidad }}</p>
-  <p><strong>Email:</strong> {{ resumenCompra?.email }}</p>
-  
-  <button (click)="confirmarCompra()">Confirmar y Generar Entrada</button>
+  <p *ngIf="!hasAsientosSeleccionados()">No se seleccionaron asientos.</p>
+
+  <button (click)="confirmarCompra()">Confirmar Compra</button>
 </div>
