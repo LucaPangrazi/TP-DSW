@@ -1,11 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const sucursal_1 = require("../controllers/sucursal");
-const routerS = (0, express_1.Router)();
-routerS.get('/', sucursal_1.getSucursales);
-routerS.get('/:id', sucursal_1.getSucursal);
-routerS.delete('/:id', sucursal_1.deleteSucursal);
-routerS.post('/', sucursal_1.postSucursal);
-routerS.put('/:id', sucursal_1.updateSucursal);
-exports.default = routerS;
+import { Router } from 'express';
+import { deleteSucursal, getSucursal, getSucursales, postSucursal, updateSucursal } from '../controllers/sucursal';
+const routerS = Router();
+routerS.get('/', getSucursales);
+routerS.get('/:id', getSucursal);
+routerS.delete('/:id', deleteSucursal);
+routerS.post('/', postSucursal);
+routerS.put('/:id', updateSucursal);
+export default routerS;
+//# sourceMappingURL=sucursal.js.map

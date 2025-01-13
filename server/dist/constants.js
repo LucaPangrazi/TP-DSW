@@ -1,17 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.clasificaiones = exports.Formatos = exports.Roles = void 0;
-var Roles;
+export var Roles;
 (function (Roles) {
     Roles["Admin"] = "ADMIN";
     Roles["User"] = "USER";
-})(Roles || (exports.Roles = Roles = {}));
-var Formatos;
+})(Roles || (Roles = {}));
+export var Formatos;
 (function (Formatos) {
     Formatos["DosD"] = "2D";
     Formatos["TresD"] = "3D";
-})(Formatos || (exports.Formatos = Formatos = {}));
-var clasificaiones;
+})(Formatos || (Formatos = {}));
+export var clasificaiones;
 (function (clasificaiones) {
     clasificaiones["Everyone"] = "EVERYONE";
     clasificaiones["Pegi3"] = "PEGI3";
@@ -20,4 +17,5 @@ var clasificaiones;
     clasificaiones["Teen"] = "TEEN";
     clasificaiones["Mature"] = "MATURE";
     clasificaiones["RRated"] = "RRATED";
-})(clasificaiones || (exports.clasificaiones = clasificaiones = {}));
+})(clasificaiones || (clasificaiones = {}));
+//# sourceMappingURL=constants.js.map

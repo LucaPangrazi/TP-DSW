@@ -1,33 +1,17 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateSucursal = exports.postSucursal = exports.deleteSucursal = exports.getSucursal = exports.getSucursales = void 0;
-const sucursal_1 = __importDefault(require("../models/sucursal"));
-const getSucursales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+import Sucursal from '../models/sucursal';
+export const getSucursales = async (req, res) => {
     try {
-        const listSucursales = yield sucursal_1.default.findAll();
+        const listSucursales = await Sucursal.findAll();
         res.json(listSucursales);
     }
     catch (error) {
         console.error('Error al obtener sucursales:', error);
         res.status(500).json({ msg: 'Error interno del servidor' });
     }
-});
-exports.getSucursales = getSucursales;
-const getSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+export const getSucursal = async (req, res) => {
     const { id } = req.params;
-    const sucursal = yield sucursal_1.default.findByPk(id);
+    const sucursal = await Sucursal.findByPk(id);
     if (sucursal) {
         res.json(sucursal);
     }
@@ -36,28 +20,26 @@ const getSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             msg: `No existe una sucursal con el id ${id}`
         });
     }
-});
-exports.getSucursal = getSucursal;
-const deleteSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+export const deleteSucursal = async (req, res) => {
     const { id } = req.params;
-    const sucursal = yield sucursal_1.default.findByPk(id);
+    const sucursal = await Sucursal.findByPk(id);
     if (!sucursal) {
         res.status(404).json({
             msg: `No existe una sucursal con el id ${id}`
         });
     }
     else {
-        yield sucursal.destroy();
+        await sucursal.destroy();
         res.json({
             msg: 'La sucursal fue eliminada con exito!'
         });
     }
-});
-exports.deleteSucursal = deleteSucursal;
-const postSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+export const postSucursal = async (req, res) => {
     const { body } = req;
     try {
-        yield sucursal_1.default.create(body);
+        await Sucursal.create(body);
         res.json({
             msg: `La sucursal fue agregada con exito!`
         });
@@ -68,15 +50,14 @@ const postSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             msg: `Ups ocurrio un error comuniquese con soporte`
         });
     }
-});
-exports.postSucursal = postSucursal;
-const updateSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+export const updateSucursal = async (req, res) => {
     const { body } = req;
     const { id } = req.params;
     try {
-        const sucursal = yield sucursal_1.default.findByPk(id);
+        const sucursal = await Sucursal.findByPk(id);
         if (sucursal) {
-            yield sucursal.update(body);
+            await sucursal.update(body);
             res.json({
                 msg: 'La sucursal fue actualizada con exito'
             });
@@ -93,5 +74,5 @@ const updateSucursal = (req, res) => __awaiter(void 0, void 0, void 0, function*
             msg: `Ups ocurrio un error comuniquese con soporte`
         });
     }
-});
-exports.updateSucursal = updateSucursal;
+};
+//# sourceMappingURL=sucursal.js.map
