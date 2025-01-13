@@ -1,15 +1,31 @@
-import User from '../models/user.entity.js';
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteUser = exports.editUser = exports.loginUser = exports.newUser = exports.getUser = exports.allUsers = void 0;
+const user_entity_js_1 = __importDefault(require("../models/user.entity.js"));
 const jwt = require('jsonwebtoken');
-export const allUsers = async (req, res) => {
-    const users = await User.findAll();
+const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_entity_js_1.default.findAll();
     res.json({
         msg: `get funciona`,
         return: users
     });
-};
-export const getUser = async (req, res) => {
+});
+exports.allUsers = allUsers;
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = yield user_entity_js_1.default.findByPk(id);
     if (user) {
         res.json(user);
     }
@@ -18,17 +34,18 @@ export const getUser = async (req, res) => {
             msg: `No existe un usuario con el id ${id}`
         });
     }
-};
-export const newUser = async (req, res) => {
+});
+exports.getUser = getUser;
+const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, apellido, userName, dni, telefono, password } = req.body;
-    const user = await User.findOne({ where: { userName: userName } });
+    const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (user) {
         return res.status(400).json({
             msg: `Ya existe un usuario con ese nombre de usuario registrado`
         });
     }
     try {
-        await User.create({
+        yield user_entity_js_1.default.create({
             nombre: nombre,
             apellido: apellido,
             userName: userName,
@@ -46,16 +63,18 @@ export const newUser = async (req, res) => {
             error
         });
     }
-};
-export const loginUser = async (req, res) => {
+});
+exports.newUser = newUser;
+const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const { userName, password } = req.body;
-    const user = await User.findOne({ where: { userName: userName } });
+    const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (!user) {
         return res.status(400).json({
             msg: `No existe un usuario con el nombre ${userName} en la base datos`
         });
     }
-    let passwordValid = false;
+    var passwordValid = false;
     if (user.password === password) {
         passwordValid = true;
     }
@@ -66,16 +85,17 @@ export const loginUser = async (req, res) => {
     }
     const token = jwt.sign({
         userName: userName
-    }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+    }, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : 'ClaveSuperSegura1234');
     res.json(token);
-};
-export const editUser = async (req, res) => {
+});
+exports.loginUser = loginUser;
+const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { id } = req.params;
     try {
-        const user = await User.findByPk(id);
+        const user = yield user_entity_js_1.default.findByPk(id);
         if (user) {
-            await user.update(body);
+            yield user.update(body);
             res.json({
                 msg: 'El usuario fue actualizado con exito'
             });
@@ -92,17 +112,18 @@ export const editUser = async (req, res) => {
             msg: `Ups ocurrio un error comuniquese con soporte`
         });
     }
-};
-export const deleteUser = async (req, res) => {
+});
+exports.editUser = editUser;
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = yield user_entity_js_1.default.findByPk(id);
     if (!user) {
         return res.status(400).json({
             msg: `No existe el usuario`
         });
     }
     else {
-        await user.destroy();
+        yield user.destroy();
     }
-};
-//# sourceMappingURL=user.controler.js.map
+});
+exports.deleteUser = deleteUser;

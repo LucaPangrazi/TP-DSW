@@ -1,1 +1,0 @@
-{"version":3,"file":"db.js","sourceRoot":"","sources":["../../src/conexiones/db.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,WAAW,CAAC;AAGtC,MAAM,EAAE,GAAG,IAAI,SAAS,CAAC,MAAM,EAAE,MAAM,EAAE,MAAM,EAAE;IAC7C,IAAI,EAAE,WAAW;IACjB,OAAO,EAAE,OAAO;CACnB,CAAC,CAAC;AAEH,eAAe,EAAE,CAAC"}

@@ -1,18 +1,22 @@
-import { DataTypes } from 'sequelize';
-import db from '../db/connection';
-const Sucursal = db.define('Sucursal', {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
+const connection_1 = __importDefault(require("../db/connection"));
+const Sucursal = connection_1.default.define('Sucursal', {
     nombre: {
-        type: DataTypes.STRING
+        type: sequelize_1.DataTypes.STRING
     },
     localidad: {
-        type: DataTypes.STRING
+        type: sequelize_1.DataTypes.STRING
     },
     email: {
-        type: DataTypes.STRING
+        type: sequelize_1.DataTypes.STRING
     },
 }, {
     createdAt: false,
     updatedAt: false
 });
-export default Sucursal;
-//# sourceMappingURL=sucursal.js.map
+exports.default = Sucursal;
