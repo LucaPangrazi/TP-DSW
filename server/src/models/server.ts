@@ -7,6 +7,7 @@ import sucursalRouter from '../routes/sucursal';
 import userRouter from '../routes/user.routes';
 import detallePeliculaRouter from '../routes/detalle-pelicula'; 
 import db from '../db/connection';
+import emailRouter from '../routes/email.routes'
 
 class Server {
   private app: express.Application;
@@ -38,6 +39,7 @@ class Server {
     this.app.use('/api/sucursales', sucursalRouter);
     this.app.use('/api/users', userRouter);
     this.app.use('/api/movies', detallePeliculaRouter); 
+    this.app.use('/api', emailRouter);
   }
 
   middlewares() {

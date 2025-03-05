@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';  // Importa ActivatedRoute
+import { ActivatedRoute } from '@angular/router';
 import { AsientosService } from '../../shared/asientos.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-comprar-entrada',
@@ -25,35 +26,28 @@ export class ComprarEntradaComponent implements OnInit {
   } | null = null;
 
   constructor(
-    private activatedRoute: ActivatedRoute,  // Inyecta ActivatedRoute
-    private asientosService: AsientosService
+    private activatedRoute: ActivatedRoute,
+    private asientosService: AsientosService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    // Leemos el parámetro de la URL (id)
     const peliculaId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log('ID de la película desde la URL:', peliculaId);
 
     if (peliculaId) {
-      // Aquí puedes usar el ID para obtener los detalles de la película (puedes usar el índice o buscar la película de alguna forma)
-      const pelicula = this.asientosService.obtenerDatosPelicula();  // Ya tienes los datos guardados en el servicio
-      console.log('Datos de la película seleccionada:', pelicula);
+      const pelicula = this.asientosService.obtenerDatosPelicula();
       this.peliculaSeleccionada = pelicula;
     }
 
-    // Suscripción al servicio para obtener los datos de la película
     this.asientosService.obtenerDatosPelicula$.subscribe((datos) => {
-      console.log('Datos recuperados de la película:', datos);
       this.peliculaSeleccionada = datos;
     });
   }
 
   verResumen(): void {
     if (this.peliculaSeleccionada) {
-      const asientosSeleccionados =
-        this.asientosService.obtenerAsientosSeleccionados() || [];
+      const asientosSeleccionados = this.asientosService.obtenerAsientosSeleccionados() || [];
 
-        
       this.resumenCompra = {
         pelicula: this.peliculaSeleccionada.pelicula,
         fecha: this.peliculaSeleccionada.fecha,
@@ -70,15 +64,23 @@ export class ComprarEntradaComponent implements OnInit {
 
   confirmarCompra(): void {
     if (this.resumenCompra) {
-      console.log('Generando QR y enviando correo:', this.resumenCompra);
-      // Lógica para enviar correo o procesar compra
+      console.log('Enviando correo:', this.resumenCompra);
+
+      this.http.post('http://localhost:3000/api/enviar-correo', this.resumenCompra)
+        .subscribe(
+          (response) => {
+            console.log('Correo enviado con éxito:', response);
+            alert('Correo enviado con éxito.');
+          },
+          (error) => {
+            console.error('Error al enviar el correo:', error);
+            alert('Hubo un error al enviar el correo.');
+          }
+        );
     }
   }
 
   hasAsientosSeleccionados(): boolean {
-    return (
-      this.resumenCompra?.asientos != null &&
-      this.resumenCompra.asientos.length > 0
-    );
+    return (this.resumenCompra?.asientos?.length ?? 0) > 0 || false;
   }
 }
