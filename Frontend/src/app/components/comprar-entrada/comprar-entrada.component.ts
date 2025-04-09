@@ -11,7 +11,6 @@ import { HttpClient } from '@angular/common/http';
 export class ComprarEntradaComponent implements OnInit {
   peliculaSeleccionada: { pelicula: string; fecha: string } | null = null;
   formData = {
-    email: '',
     cantidad: 1,
   };
 
@@ -21,7 +20,6 @@ export class ComprarEntradaComponent implements OnInit {
     pelicula: string;
     fecha: string;
     cantidad: number;
-    email: string;
     asientos: { fila: number; columna: number }[];
   } | null = null;
 
@@ -52,7 +50,6 @@ export class ComprarEntradaComponent implements OnInit {
         pelicula: this.peliculaSeleccionada.pelicula,
         fecha: this.peliculaSeleccionada.fecha,
         cantidad: this.formData.cantidad,
-        email: this.formData.email,
         asientos: asientosSeleccionados,
       };
 
@@ -62,24 +59,7 @@ export class ComprarEntradaComponent implements OnInit {
     }
   }
 
-  confirmarCompra(): void {
-    if (this.resumenCompra) {
-      console.log('Enviando correo:', this.resumenCompra);
-
-      this.http.post('http://localhost:3000/api/enviar-correo', this.resumenCompra)
-        .subscribe(
-          (response) => {
-            console.log('Correo enviado con éxito:', response);
-            alert('Correo enviado con éxito.');
-          },
-          (error) => {
-            console.error('Error al enviar el correo:', error);
-            alert('Hubo un error al enviar el correo.');
-          }
-        );
-    }
-  }
-
+  
   hasAsientosSeleccionados(): boolean {
     return (this.resumenCompra?.asientos?.length ?? 0) > 0 || false;
   }

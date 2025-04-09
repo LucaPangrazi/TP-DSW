@@ -1,14 +1,6 @@
 <!-- Formulario -->
 <form *ngIf="!mostrarResumen" (ngSubmit)="verResumen()">
-  <label for="email">Ingrese email donde se enviará el QR:</label>
-  <input
-    type="email"
-    id="email"
-    [(ngModel)]="formData.email"
-    name="email"
-    required
-    placeholder="ejemplo@correo.com"
-  />
+ 
   <br /><br />
 
   <label for="cantidad">Cantidad de Entradas:</label>
@@ -42,5 +34,5 @@
   </ul>
   <p *ngIf="!hasAsientosSeleccionados()">No se seleccionaron asientos.</p>
 
-  <button (click)="confirmarCompra()">Confirmar Compra</button>
+ 
 </div>

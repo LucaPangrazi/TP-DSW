@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import User from '../models/user.entity.js'
-const jwt=require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+
 
 export const allUsers = async (req:Request, res:Response) => {
     const users = await User.findAll();
