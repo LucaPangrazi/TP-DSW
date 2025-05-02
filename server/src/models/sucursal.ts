@@ -6,6 +6,7 @@ import e from 'express';
 
 const Sucursal = db.define('Sucursal', {
 
+
     nombre: {
      type: DataTypes.STRING
     },

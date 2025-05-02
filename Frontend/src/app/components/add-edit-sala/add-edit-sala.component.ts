@@ -49,7 +49,7 @@ export class AddEditSalaComponent implements OnInit {
 
   addSala() {
     const sala: Sala = {
-      id: this.id,
+      id : this.id,
       name: this.form.value.name
     };
 

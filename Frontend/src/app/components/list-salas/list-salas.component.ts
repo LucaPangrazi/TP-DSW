@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-salas.component.css']
 })
 export class ListSalasComponent implements OnInit {
-  searchTerm: string = '';      //Guarda el término de búsqueda para filtrar la lista de salas
+  searchTerm: string = '';     
   listSalas: Sala[] = [];
   loading: boolean = false;
-  filteredSalas: Sala[] = [];   //Guarda las salas que coinciden con el término de búsqueda
+  filteredSalas: Sala[] = [];   
 
   constructor(
     private _salaService: SalaService,

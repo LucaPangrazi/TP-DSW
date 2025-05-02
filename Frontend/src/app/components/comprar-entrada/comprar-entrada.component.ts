@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./comprar-entrada.component.css'],
 })
 export class ComprarEntradaComponent implements OnInit {
-  peliculaSeleccionada: { pelicula: string; fecha: string } | null = null;
+  peliculaSeleccionada: { pelicula: { id: number; nombre: string }; fecha: string; hora?: string } | null = null;
   formData = {
     cantidad: 1,
   };
@@ -47,7 +47,7 @@ export class ComprarEntradaComponent implements OnInit {
       const asientosSeleccionados = this.asientosService.obtenerAsientosSeleccionados() || [];
 
       this.resumenCompra = {
-        pelicula: this.peliculaSeleccionada.pelicula,
+        pelicula: this.peliculaSeleccionada.pelicula.nombre, 
         fecha: this.peliculaSeleccionada.fecha,
         cantidad: this.formData.cantidad,
         asientos: asientosSeleccionados,
@@ -59,7 +59,6 @@ export class ComprarEntradaComponent implements OnInit {
     }
   }
 
-  
   hasAsientosSeleccionados(): boolean {
     return (this.resumenCompra?.asientos?.length ?? 0) > 0 || false;
   }

@@ -1,10 +1,14 @@
-<div>
-  <h3>Selecciona tu asiento</h3>
+<div class="asientos">
+  <h2>Seleccioná tu asiento</h2>
 
-  <!-- Matriz de asientos -->
+  <!-- Pantalla de cine -->
+  <div class="pantalla">Pantalla</div>
+
+  <!-- Asientos -->
   <div *ngFor="let fila of asientos; let filaIndex = index" class="fila">
     <button
       *ngFor="let asiento of fila; let colIndex = index"
+      class="asiento"
       [ngClass]="asiento.estado"
       (click)="seleccionarAsiento(filaIndex, colIndex)"
       [disabled]="asiento.estado === 'ocupado'"
@@ -13,22 +17,11 @@
     </button>
   </div>
 
-  <!-- Selector de fecha -->
-  <div class="fecha-selector">
-    <label for="fecha">Selecciona la fecha de la función:</label>
-    <input
-      type="date"
-      id="fecha"
-      [(ngModel)]="fechaSeleccionada"
-      min="{{ fechaMinima }}"
-      required
-    />
-  </div>
-
-  <!-- Botón para continuar -->
+  <!-- Botón continuar -->
   <button
     [disabled]="!haySeleccionados() || !fechaSeleccionada"
     (click)="continuarAFormulario()"
+    class="boton-continuar"
   >
     Continuar a la compra
   </button>

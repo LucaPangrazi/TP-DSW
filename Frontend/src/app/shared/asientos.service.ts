@@ -7,10 +7,14 @@ import { BehaviorSubject } from 'rxjs';
 export class AsientosService {
   private asientosSeleccionados: { fila: number; columna: number }[] = [];
 
-  // Inicializar BehaviorSubject con un valor predeterminado
-  private datosPeliculaSubject = new BehaviorSubject<{ pelicula: string; fecha: string }>({
-    pelicula: '',
+  private datosPeliculaSubject = new BehaviorSubject<{
+    pelicula: { id: number; nombre: string };
+    fecha: string;
+    hora?: string;
+  }>({
+    pelicula: { id: 0, nombre: '' },
     fecha: '',
+    hora: '',
   });
 
   obtenerDatosPelicula$ = this.datosPeliculaSubject.asObservable();
@@ -25,13 +29,13 @@ export class AsientosService {
     return this.asientosSeleccionados;
   }
 
-  setDatosPelicula(datos: { pelicula: string; fecha: string }): void {
+  setDatosPelicula(datos: { pelicula: { id: number; nombre: string }; fecha: string; hora?: string }): void {
     console.log('Antes de actualizar datos de película:', this.datosPeliculaSubject.getValue());
-    this.datosPeliculaSubject.next(datos); 
+    this.datosPeliculaSubject.next(datos);
     console.log('Datos de la película actualizados:', datos);
   }
 
-  obtenerDatosPelicula(): { pelicula: string; fecha: string } {
+  obtenerDatosPelicula(): { pelicula: { id: number; nombre: string }; fecha: string; hora?: string } {
     return this.datosPeliculaSubject.getValue();
   }
 }

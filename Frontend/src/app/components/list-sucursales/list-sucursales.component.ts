@@ -21,7 +21,7 @@ export class ListSucursalesComponent implements OnInit {
     private _sucursalService: SucursalService,
     private toastr: ToastrService,
     private searchService: SearchService
-    // private router: Router
+    
   ) {}
 
   ngOnInit(): void {

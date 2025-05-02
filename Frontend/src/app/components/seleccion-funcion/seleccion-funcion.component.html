@@ -1,0 +1,47 @@
+<div class="funcion-container">
+  <!-- Selección de función -->
+  <h2>Elegí tu función</h2>
+
+  <!-- Fecha -->
+  <div class="form-group">
+    <label for="fecha">📅 Fecha:</label>
+    <input
+      type="date"
+      id="fecha"
+      [(ngModel)]="fechaSeleccionada"
+      [min]="fechaMinima"
+      required
+    />
+  </div>
+
+  <!-- Hora -->
+  <div class="form-group">
+    <label for="hora">🕒 Hora:</label>
+    <select id="hora" [(ngModel)]="horaSeleccionada" required>
+      <option value="" disabled selected>Seleccioná un horario</option>
+      <option *ngFor="let hora of horariosDisponibles" [value]="hora">
+        {{ hora }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Sucursal -->
+  <div class="form-group">
+    <label for="sucursal">📍 Sucursal:</label>
+    <select id="sucursal" [(ngModel)]="sucursaSeleccionada" required>
+      <option value="" disabled selected>Seleccioná una sucursal</option>
+      <option *ngFor="let sucursal of sucursalesDisponibles" [value]="sucursal.id">
+        {{ sucursal.nombre }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Continuar -->
+  <button
+    class="boton-continuar"
+    [disabled]="!horaSeleccionada || !fechaSeleccionada || !sucursaSeleccionada"
+    (click)="continuarAFormulario()"
+  >
+    Continuar a la selección de asientos
+  </button>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsientosService } from '../../shared/asientos.service';
+import { FuncionesService } from '../../services/funciones.service'; // Asegurate de que la ruta sea correcta
 
 @Component({
   selector: 'app-seleccion-asientos',
@@ -12,34 +13,31 @@ export class SeleccionAsientosComponent implements OnInit {
   filas = 5;
   columnas = 8;
 
-  // Propiedades necesarias para el HTML
-  fechaSeleccionada: string = ''; // No permitimos que sea null
-  fechaMinima: string; // Representa la fecha mínima permitida para la selección
+  fechaSeleccionada: string = '';
+  horaSeleccionada: string = '';
 
-  constructor(private router: Router, private asientosService: AsientosService) {
-    // Establecer la fecha mínima como la fecha actual
-    const hoy = new Date();
-    this.fechaMinima = hoy.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
-  }
+  constructor(
+    private router: Router,
+    private asientosService: AsientosService,
+    private funcionesService: FuncionesService
+  ) {}
 
   ngOnInit(): void {
     this.generarAsientos();
   }
 
-  // Genera la matriz de asientos con algunos ocupados aleatoriamente
-  generarAsientos() {
+  generarAsientos(): void {
     for (let i = 0; i < this.filas; i++) {
       const fila: { estado: 'disponible' | 'ocupado' | 'seleccionado' }[] = [];
       for (let j = 0; j < this.columnas; j++) {
-        const ocupado = Math.random() < 0.2; // 20% de probabilidad de que un asiento esté ocupado
+        const ocupado = Math.random() < 0.2;
         fila.push({ estado: ocupado ? 'ocupado' : 'disponible' });
       }
       this.asientos.push(fila);
     }
   }
 
-  // Cambia el estado de un asiento cuando se selecciona
-  seleccionarAsiento(filaIndex: number, colIndex: number) {
+  seleccionarAsiento(filaIndex: number, colIndex: number): void {
     const asiento = this.asientos[filaIndex][colIndex];
     if (asiento.estado === 'disponible') {
       asiento.estado = 'seleccionado';
@@ -48,12 +46,10 @@ export class SeleccionAsientosComponent implements OnInit {
     }
   }
 
-  // Verifica si hay asientos seleccionados
   haySeleccionados(): boolean {
     return this.asientos.some(fila => fila.some(asiento => asiento.estado === 'seleccionado'));
   }
 
-  // Obtiene una lista de los asientos seleccionados
   getAsientosSeleccionados(): { fila: number; columna: number }[] {
     const seleccionados: { fila: number; columna: number }[] = [];
     this.asientos.forEach((fila, filaIndex) => {
@@ -66,25 +62,41 @@ export class SeleccionAsientosComponent implements OnInit {
     return seleccionados;
   }
 
-  // Navega al formulario de compra con los asientos seleccionados
   continuarAFormulario(): void {
-    if (!this.fechaSeleccionada) {
-      alert('Por favor, selecciona una fecha antes de continuar.');
-      return;
-    }
-
     const seleccionados = this.getAsientosSeleccionados();
+
     this.asientosService.setAsientosSeleccionados(seleccionados);
-    const id = this.obtenerIdDeSeleccion();
+
+    const datosActuales = this.asientosService.obtenerDatosPelicula();
+
     this.asientosService.setDatosPelicula({
-      pelicula: this.asientosService.obtenerDatosPelicula().pelicula, // Ajusta según tu lógica
-      fecha: this.fechaSeleccionada // Ya no puede ser null
+      pelicula: {
+        id: datosActuales.pelicula.id,
+        nombre: datosActuales.pelicula.nombre
+      },
+      fecha: this.fechaSeleccionada,
+      hora: this.horaSeleccionada
     });
-    this.router.navigate([`/comprar-entrada/${id}`]);
+
+    this.obtenerIdDeSeleccion();
   }
 
-  obtenerIdDeSeleccion(): number {
-    // Aquí deberías obtener el id de la película, sala o lo que sea relevante para tu aplicación
-    return 123; // Este valor debería ser dinámico según tu lógica
+  obtenerIdDeSeleccion(): void {
+    const datos = this.asientosService.obtenerDatosPelicula();
+    const peliculaId = datos.pelicula.id;
+    const fecha = datos.fecha;
+    const hora = datos.hora ?? this.horaSeleccionada;
+
+    this.funcionesService.obtenerFuncionPorDatos(peliculaId, fecha, hora)
+      .subscribe({
+        next: (respuesta) => {
+          const idFuncion = respuesta.id_funcion;
+          this.router.navigate([`/comprar-entrada/${idFuncion}`]);
+        },
+        error: (error) => {
+          console.error('Error obteniendo ID de función:', error);
+          alert('No se pudo encontrar la función seleccionada.');
+        }
+      });
   }
 }

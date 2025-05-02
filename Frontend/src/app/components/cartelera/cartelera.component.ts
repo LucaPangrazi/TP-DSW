@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';  // Importa Router
+import { Router } from '@angular/router';
 import { CarteleraService } from '../../services/cartelera.service';
-import { AsientosService } from '../../shared/asientos.service'; 
+import { AsientosService } from '../../shared/asientos.service';
 
 @Component({
   selector: 'app-cartelera',
@@ -14,9 +14,9 @@ export class CarteleraComponent implements OnInit {
   fechas: string[] = ['2024-12-30', '2024-12-31', '2024-12-29', '2024-12-28', '2024-12-27', '2024-12-26', '2024-12-25'];
 
   constructor(
-    private router: Router,  // Inyecta Router
+    private router: Router,
     private carteleraService: CarteleraService,
-    private asientosService: AsientosService // Inyecta el servicio
+    private asientosService: AsientosService
   ) {}
 
   ngOnInit(): void {
@@ -34,16 +34,12 @@ export class CarteleraComponent implements OnInit {
     if (index < this.peliculas.length) {
       const pelicula = this.peliculas[index];
       const fecha = this.fechas[index];
+      const peliculaObj = { id: index, nombre: pelicula }; // 🎯
 
-      console.log('Datos enviados al servicio:', { pelicula, fecha });
-      this.asientosService.setDatosPelicula({ pelicula, fecha });
+      console.log('Datos enviados al servicio:', { pelicula: peliculaObj, fecha });
+      this.asientosService.setDatosPelicula({ pelicula: peliculaObj, fecha });
 
-      // Navegamos a la ruta de compra de entrada, pasando el índice de la película (o un id si es necesario)
-      console.log('Navegando con datos:', { pelicula, fecha });
-
-      this.router.navigate(['/seleccion-asientos', pelicula]);
+      this.router.navigate(['/seleccion-funcion']);
     }
-    
-    
   }
 }

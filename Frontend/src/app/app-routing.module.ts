@@ -19,6 +19,7 @@ import { CarteleraComponent } from './components/cartelera/cartelera.component';
 import { DetallesPeliculaComponent } from './components/detalles-pelicula/detalles-pelicula.component'; 
 import { ComprarEntradaComponent } from './components/comprar-entrada/comprar-entrada.component';
 import { SeleccionAsientosComponent } from './components/seleccion-asientos/seleccion-asientos.component';
+import { SeleccionFuncionComponent } from './components/seleccion-funcion/seleccion-funcion.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'pelicula/:id', component: DetallesPeliculaComponent }, 
   { path: 'comprar-entrada/:id', component: ComprarEntradaComponent },
   { path: 'seleccion-asientos/:id', component: SeleccionAsientosComponent },
+  { path: 'seleccion-funcion', component: SeleccionFuncionComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
