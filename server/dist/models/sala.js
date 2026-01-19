@@ -14,3 +14,4 @@ const Sala = connection_1.default.define('Sala', {
     updatedAt: false
 });
 exports.default = Sala;
+//# sourceMappingURL=sala.js.map

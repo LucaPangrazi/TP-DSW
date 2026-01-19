@@ -20,3 +20,4 @@ const Sucursal = connection_1.default.define('Sucursal', {
     updatedAt: false
 });
 exports.default = Sucursal;
+//# sourceMappingURL=sucursal.js.map

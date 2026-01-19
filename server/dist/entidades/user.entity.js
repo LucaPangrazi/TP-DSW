@@ -1,6 +1,5 @@
-import db from '../db/connection.js';
 import { DataTypes } from 'sequelize';
-export const User = db.define('User', {
+export const User = sequelize.define('User', {
     nombre: {
         type: DataTypes.STRING,
         allowNull: false
@@ -36,5 +35,5 @@ export const User = db.define('User', {
         primaryKey: true
     }
 }, {});
-console.log(User === db.models.User);
+console.log(User === sequelize.models.User);
 //# sourceMappingURL=user.entity.js.map

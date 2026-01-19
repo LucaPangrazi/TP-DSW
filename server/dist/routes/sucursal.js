@@ -9,3 +9,4 @@ routerS.delete('/:id', sucursal_1.deleteSucursal);
 routerS.post('/', sucursal_1.postSucursal);
 routerS.put('/:id', sucursal_1.updateSucursal);
 exports.default = routerS;
+//# sourceMappingURL=sucursal.js.map

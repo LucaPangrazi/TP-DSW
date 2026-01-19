@@ -1,31 +1,22 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.editUser = exports.loginUser = exports.newUser = exports.getUser = exports.allUsers = void 0;
 const user_entity_js_1 = __importDefault(require("../models/user.entity.js"));
-const jwt = require('jsonwebtoken');
-const allUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_entity_js_1.default.findAll();
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const allUsers = async (req, res) => {
+    const users = await user_entity_js_1.default.findAll();
     res.json({
         msg: `get funciona`,
         return: users
     });
-});
+};
 exports.allUsers = allUsers;
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getUser = async (req, res) => {
     const { id } = req.params;
-    const user = yield user_entity_js_1.default.findByPk(id);
+    const user = await user_entity_js_1.default.findByPk(id);
     if (user) {
         res.json(user);
     }
@@ -34,18 +25,18 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: `No existe un usuario con el id ${id}`
         });
     }
-});
+};
 exports.getUser = getUser;
-const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const newUser = async (req, res) => {
     const { nombre, apellido, userName, dni, telefono, password } = req.body;
-    const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
+    const user = await user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (user) {
         return res.status(400).json({
             msg: `Ya existe un usuario con ese nombre de usuario registrado`
         });
     }
     try {
-        yield user_entity_js_1.default.create({
+        await user_entity_js_1.default.create({
             nombre: nombre,
             apellido: apellido,
             userName: userName,
@@ -63,18 +54,17 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             error
         });
     }
-});
+};
 exports.newUser = newUser;
-const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+const loginUser = async (req, res) => {
     const { userName, password } = req.body;
-    const user = yield user_entity_js_1.default.findOne({ where: { userName: userName } });
+    const user = await user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (!user) {
         return res.status(400).json({
             msg: `No existe un usuario con el nombre ${userName} en la base datos`
         });
     }
-    var passwordValid = false;
+    let passwordValid = false;
     if (user.password === password) {
         passwordValid = true;
     }
@@ -83,19 +73,30 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: `Password Incorrecta`
         });
     }
-    const token = jwt.sign({
+    const token = jsonwebtoken_1.default.sign({
         userName: userName
-    }, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : 'ClaveSuperSegura1234');
-    res.json(token);
-});
+    }, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+    res.json({
+        token,
+        user: {
+            id: user.id,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            userName: user.userName,
+            role: user.role || user.rol,
+            dni: user.dni,
+            telefono: user.telefono
+        }
+    });
+};
 exports.loginUser = loginUser;
-const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const editUser = async (req, res) => {
     const { body } = req;
     const { id } = req.params;
     try {
-        const user = yield user_entity_js_1.default.findByPk(id);
+        const user = await user_entity_js_1.default.findByPk(id);
         if (user) {
-            yield user.update(body);
+            await user.update(body);
             res.json({
                 msg: 'El usuario fue actualizado con exito'
             });
@@ -112,18 +113,19 @@ const editUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: `Ups ocurrio un error comuniquese con soporte`
         });
     }
-});
+};
 exports.editUser = editUser;
-const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteUser = async (req, res) => {
     const { id } = req.params;
-    const user = yield user_entity_js_1.default.findByPk(id);
+    const user = await user_entity_js_1.default.findByPk(id);
     if (!user) {
         return res.status(400).json({
             msg: `No existe el usuario`
         });
     }
     else {
-        yield user.destroy();
+        await user.destroy();
     }
-});
+};
 exports.deleteUser = deleteUser;
+//# sourceMappingURL=user.controler.js.map

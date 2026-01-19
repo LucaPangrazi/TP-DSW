@@ -10,3 +10,4 @@ userRouter.post('/login', user_controler_js_1.loginUser);
 userRouter.put('/:id', user_controler_js_1.editUser);
 userRouter.delete('/:id', user_controler_js_1.deleteUser);
 exports.default = userRouter;
+//# sourceMappingURL=user.routes.js.map

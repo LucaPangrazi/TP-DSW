@@ -20,7 +20,7 @@ export class DetallesPeliculaComponent implements OnInit {
     private detallePeliculaService: DetallePeliculaService,
     private sanitizer: DomSanitizer,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -29,7 +29,10 @@ export class DetallesPeliculaComponent implements OnInit {
         (movie: Movie) => {
           this.movie = movie;
           if (this.movie.image) {
-            this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(`http://localhost:3000/uploads/${this.movie.image}`);
+            const imgStr = this.movie.image as unknown as string;
+            // Backend returns full URL in getMovie, so we should trust it or santize it.
+            // If it has spaces, likely the backend didn't encode. We can try to rely on browser or fix it.
+            this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imgStr);
           }
         },
         (error) => {
@@ -42,6 +45,6 @@ export class DetallesPeliculaComponent implements OnInit {
     if (this.movie?.id_movie) {
       this.router.navigate(['/seleccion-asientos', this.movie.id_movie]);
     }
-  
-}
+
+  }
 }

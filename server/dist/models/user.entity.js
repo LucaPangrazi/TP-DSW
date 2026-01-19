@@ -43,3 +43,4 @@ const User = connection_js_1.default.define('User', {
 }, {});
 exports.default = User;
 console.log(User === connection_js_1.default.models.User);
+//# sourceMappingURL=user.entity.js.map

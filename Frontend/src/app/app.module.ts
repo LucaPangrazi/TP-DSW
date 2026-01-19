@@ -23,8 +23,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { CarteleraComponent } from './components/cartelera/cartelera.component';
 import { DetallesPeliculaComponent } from './components/detalles-pelicula/detalles-pelicula.component';
+import { HomeComponent } from './components/HomeCine/home.component';
 
 // Servicios
 import { SearchService } from './shared/search.service';
@@ -52,11 +52,11 @@ import { SeleccionFuncionComponent } from './components/seleccion-funcion/selecc
     SpinnerComponent,
     ListUsersComponent,
     EditUserComponent,
-    CarteleraComponent,
     DetallesPeliculaComponent,
     ComprarEntradaComponent,
     SeleccionAsientosComponent,
-    SeleccionFuncionComponent
+    SeleccionFuncionComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -65,15 +65,15 @@ import { SeleccionFuncionComponent } from './components/seleccion-funcion/selecc
     HttpClientModule,
     CommonModule,
     FormsModule,
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    }), 
+    }),
   ],
   providers: [
-    SearchService, 
+    SearchService,
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

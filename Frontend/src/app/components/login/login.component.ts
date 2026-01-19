@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
   nombre: string = '';
   apellido: string = '';
   userName: string = '';
-  dni:  string = '';
-  telefono:  string = '';
+  dni: string = '';
+  telefono: string = '';
   password: string = '';
   role: string = '';
   id: string = '';
@@ -26,9 +26,9 @@ export class LoginComponent implements OnInit {
     private _userService: UserService,
     private router: Router,
     private _errorService: ErrorService
-    ) { 
-      
-    }
+  ) {
+
+  }
 
   ngOnInit(): void {
   }
@@ -54,9 +54,8 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this._userService.login(user).subscribe({
-      next: (token) => {
-        localStorage.setItem('token', token);
-        this.router.navigate(['home'])
+      next: (response: any) => {
+        this.router.navigate(['home']);
       },
       error: (e: HttpErrorResponse) => {
         this._errorService.msjError(e);

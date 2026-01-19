@@ -15,8 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { CarteleraComponent } from './components/cartelera/cartelera.component';
-import { DetallesPeliculaComponent } from './components/detalles-pelicula/detalles-pelicula.component'; 
+import { DetallesPeliculaComponent } from './components/detalles-pelicula/detalles-pelicula.component';
 import { ComprarEntradaComponent } from './components/comprar-entrada/comprar-entrada.component';
 import { SeleccionAsientosComponent } from './components/seleccion-asientos/seleccion-asientos.component';
 import { SeleccionFuncionComponent } from './components/seleccion-funcion/seleccion-funcion.component';
@@ -24,7 +23,7 @@ import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { showSecondNavbar: true } },
-  { path: 'home', component: HomeComponent, data: { showSecondNavbar: true } },
+  { path: 'home', component: HomeComponent },
   { path: 'movies', component: ListMoviesComponent },
   { path: 'users', component: ListUsersComponent },
   { path: 'users/edit/:id', component: EditUserComponent, data: { showSecondNavbar: true } },
@@ -38,8 +37,7 @@ const routes: Routes = [
   { path: 'sucursales/edit/:id', component: AddEditSucursalComponent, data: { showSecondNavbar: true } },
   { path: 'login', component: LoginComponent, data: { showSecondNavbar: true } },
   { path: 'register', component: RegisterComponent, data: { showSecondNavbar: true } },
-  { path: 'cartelera', component: CarteleraComponent },
-  { path: 'pelicula/:id', component: DetallesPeliculaComponent }, 
+  { path: 'pelicula/:id', component: DetallesPeliculaComponent },
   { path: 'comprar-entrada/:id', component: ComprarEntradaComponent },
   { path: 'seleccion-asientos/:id', component: SeleccionAsientosComponent },
   { path: 'seleccion-funcion', component: SeleccionFuncionComponent },

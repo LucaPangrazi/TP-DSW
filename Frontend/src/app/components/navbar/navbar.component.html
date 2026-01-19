@@ -1,12 +1,62 @@
 <ng-container *ngIf="showNavbar">
-  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/home">Cinetix</a>
+      <a class="navbar-brand" routerLink="/home">
+        <strong>Cinetix</strong>
+      </a>
 
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <form class="d-flex ms-auto" *ngIf="searchForm" [formGroup]="searchForm">
-          <input formControlName="search" class="form-control me-sm-2" type="text" placeholder="Search">
-        </form>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Navigation Links -->
+        <ul class="navbar-nav me-auto">
+          <!-- Common Links (All Users) -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              Cartelera
+            </a>
+          </li>
+
+          <!-- Admin-Only Links -->
+          <!-- Admin-Only Links -->
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link" routerLink="/movies" routerLinkActive="active">
+              Películas
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link" routerLink="/salas" routerLinkActive="active">
+              Salas
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link" routerLink="/sucursales" routerLinkActive="active">
+              Sucursales
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link" routerLink="/users" routerLinkActive="active">
+              Usuarios
+            </a>
+          </li>
+        </ul>
+
+        <!-- Right Side: Search and User Info -->
+        <div class="d-flex align-items-center gap-3">
+          <form class="d-flex" *ngIf="searchForm" [formGroup]="searchForm">
+            <input formControlName="search" class="form-control form-control-sm me-2" type="text"
+              placeholder="Buscar película...">
+          </form>
+
+          <!-- User Info and Logout -->
+          <div class="nav-user-info" *ngIf="userName">
+            <span class="user-name">👤 {{ userName }}</span>
+            <button class="btn btn-sm btn-outline-light" (click)="logout()">Salir</button>
+          </div>
+        </div>
       </div>
     </div>
   </nav>

@@ -9,3 +9,4 @@ router.delete('/:id', sala_1.deleteSala);
 router.post('/', sala_1.postSala);
 router.put('/:id', sala_1.updateSala);
 exports.default = router;
+//# sourceMappingURL=sala.js.map

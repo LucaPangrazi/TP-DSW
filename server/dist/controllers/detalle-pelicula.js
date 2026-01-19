@@ -1,8 +1,14 @@
-import Movie from '../models/movie';
-export const getMovieById = async (req, res) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getMovieById = void 0;
+const movie_1 = __importDefault(require("../models/movie"));
+const getMovieById = async (req, res) => {
     const id_movie = req.params.id;
     try {
-        const film = await Movie.findByPk(id_movie);
+        const film = await movie_1.default.findByPk(id_movie);
         if (film) {
             const filmDet = {
                 id_movie: film.id_movie,
@@ -29,4 +35,5 @@ export const getMovieById = async (req, res) => {
         });
     }
 };
+exports.getMovieById = getMovieById;
 //# sourceMappingURL=detalle-pelicula.js.map

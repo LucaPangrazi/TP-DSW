@@ -3,8 +3,6 @@ import cors from 'cors';
 import userRouter from '../routes/user.routes.js';
 import sequelize from '../db/connection.js';
 class Server {
-    app;
-    port;
     constructor() {
         this.app = express();
         this.port = process.env.PORT || '3000';

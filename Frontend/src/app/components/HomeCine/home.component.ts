@@ -1,50 +1,130 @@
-// home.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { MovieService } from '../../services/movie.service';
+import { UserService } from '../../services/user.service';
+import { Subscription } from 'rxjs';
+
+interface MovieCarousel {
+  genre: string;
+  movies: any[];
+}
 
 @Component({
   selector: 'app-home',
-  template: `
-    <div>
-      <button (click)="navigateToCartelera()">Cartelera</button>
-      <button (click)="navigateToMovies()">Películas</button>
-      <button (click)="navigateToSalas()">Salas</button>
-      <button (click)="navigateToSucursales()">Sucursales</button>
-      <button (click)="navigateToUsers()">Usuarios</button>
-    </div>
-  `,
-  styles: [
-    `
-      div {
-        text-align: center;
-        margin-top: 20px;
-      }
-      button {
-        margin: 0 10px;
-      }
-    `,
-  ],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-  constructor(private router: Router) {}
+export class HomeComponent implements OnInit, OnDestroy {
+  allMovies: any[] = [];
+  moviesByGenre: MovieCarousel[] = [];
+  featuredMovie: any = null;
+  loading = false;
+  isAdmin = false;
+  private adminSub: Subscription | undefined;
 
- navigateToCartelera() {
-    this.router.navigate(['/cartelera']);
+  constructor(
+    private router: Router,
+    private movieService: MovieService,
+    private userService: UserService
+  ) { }
+
+  ngOnInit() {
+    this.adminSub = this.userService.isAdmin$.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
+    this.loadMovies();
   }
 
-  navigateToMovies() {
-    this.router.navigate(['/movies']);
+  ngOnDestroy() {
+    if (this.adminSub) {
+      this.adminSub.unsubscribe();
+    }
   }
 
-  navigateToSalas() {
-    this.router.navigate(['/salas']);
+  // Método para navegar desde los botones
+  navigateTo(route: string) {
+    this.router.navigate([route]);
   }
 
-   navigateToSucursales() {
-    this.router.navigate(['/sucursales']);
+  loadMovies() {
+    this.loading = true;
+    console.log('Loading movies...');
+    this.movieService.getListMovies().subscribe({
+      next: (data: any) => {
+        console.log('Movies loaded:', data);
+        if (Array.isArray(data)) {
+          this.allMovies = data;
+        } else if (data && Array.isArray(data.movies)) {
+          this.allMovies = data.movies;
+        } else if (data && Array.isArray(data.data)) {
+          this.allMovies = data.data;
+        } else {
+          console.warn('Unexpected data format for movies:', data);
+          this.allMovies = [];
+        }
+
+        this.processPeliculas();
+        this.loading = false;
+      },
+      error: (err: any) => {
+        console.error('Error loading movies:', err);
+        this.loading = false;
+        this.allMovies = [];
+        this.moviesByGenre = [];
+      }
+    });
   }
 
-  navigateToUsers() {
-    this.router.navigate(['/users']);
+  processPeliculas() {
+    if (this.allMovies.length > 0) {
+      this.featuredMovie = this.allMovies[0];
+    }
+
+    const genreMap = new Map<string, any[]>();
+
+    this.allMovies.forEach(movie => {
+      const genre = movie.genero || movie.genre || 'Sin Género';
+      if (!genreMap.has(genre)) {
+        genreMap.set(genre, []);
+      }
+      genreMap.get(genre)!.push(movie);
+    });
+
+    this.moviesByGenre = Array.from(genreMap.entries()).map(([genre, movies]) => ({
+      genre,
+      movies: movies.sort((a, b) => {
+        const aHasImg = !!(a.imagen || a.image);
+        const bHasImg = !!(b.imagen || b.image);
+        return (bHasImg ? 1 : 0) - (aHasImg ? 1 : 0);
+      })
+    }));
+
+    console.log('Movies grouped by genre:', this.moviesByGenre);
+  }
+
+  goToMovieDetails(movieId: number) {
+    this.router.navigate(['/pelicula', movieId]);
+  }
+
+  getImageUrl(imagePath: string): string {
+    if (!imagePath) {
+      return 'assets/placeholder-movie.jpg';
+    }
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    // Encode the filename to handle spaces and special characters
+    return `http://localhost:3000/uploads/${encodeURIComponent(imagePath)}`;
+  }
+
+  scrollCarousel(direction: 'left' | 'right', carouselId: string) {
+    const carousel = document.getElementById(carouselId);
+    if (carousel) {
+      const scrollAmount = 300;
+      carousel.scrollBy({
+        left: direction === 'right' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   }
 }
