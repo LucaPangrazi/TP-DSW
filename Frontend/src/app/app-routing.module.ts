@@ -19,6 +19,8 @@ import { DetallesPeliculaComponent } from './components/detalles-pelicula/detall
 import { ComprarEntradaComponent } from './components/comprar-entrada/comprar-entrada.component';
 import { SeleccionAsientosComponent } from './components/seleccion-asientos/seleccion-asientos.component';
 import { SeleccionFuncionComponent } from './components/seleccion-funcion/seleccion-funcion.component';
+import { ListFuncionesComponent } from './components/list-funciones/list-funciones.component';
+import { AddEditFuncionComponent } from './components/add-edit-funcion/add-edit-funcion.component';
 import { AuthGuard } from './util/auth.guard';
 
 const routes: Routes = [
@@ -39,8 +41,11 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, data: { showSecondNavbar: true } },
   { path: 'pelicula/:id', component: DetallesPeliculaComponent },
   { path: 'comprar-entrada/:id', component: ComprarEntradaComponent },
-  { path: 'seleccion-asientos/:id', component: SeleccionAsientosComponent },
+  { path: 'seleccion-asientos', component: SeleccionAsientosComponent },
   { path: 'seleccion-funcion', component: SeleccionFuncionComponent },
+  { path: 'funciones', component: ListFuncionesComponent },
+  { path: 'funciones/add', component: AddEditFuncionComponent, data: { showSecondNavbar: true } },
+  { path: 'funciones/edit/:id', component: AddEditFuncionComponent, data: { showSecondNavbar: true } },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

@@ -12,6 +12,9 @@ const Sucursal = connection_1.default.define('Sucursal', {
     localidad: {
         type: sequelize_1.DataTypes.STRING
     },
+    direccion: {
+        type: sequelize_1.DataTypes.STRING
+    },
     email: {
         type: sequelize_1.DataTypes.STRING
     },

@@ -1,38 +1,38 @@
-<!-- Formulario -->
-<form *ngIf="!mostrarResumen" (ngSubmit)="verResumen()">
- 
-  <br /><br />
-
-  <label for="cantidad">Cantidad de Entradas:</label>
-  <input
-    type="number"
-    id="cantidad"
-    [(ngModel)]="formData.cantidad"
-    name="cantidad"
-    min="1"
-    required
-  />
-  <br /><br />
-
-  <button type="submit">Ver Resumen</button>
-</form>
-
-<!-- Resumen -->
-<div *ngIf="mostrarResumen">
+<!-- Resumen de Compra -->
+<div class="comprar-container" *ngIf="resumenCompra">
   <h2>Resumen de la Compra</h2>
-  <p><strong>Película:</strong> {{ resumenCompra?.pelicula }}</p>
-  <p><strong>Fecha:</strong> {{ resumenCompra?.fecha }}</p>
 
-  <!-- Asientos seleccionados -->
-  <p *ngIf="hasAsientosSeleccionados()">
-    <strong>Asientos Seleccionados:</strong>
-  </p>
-  <ul *ngIf="hasAsientosSeleccionados()">
-    <li *ngFor="let asiento of resumenCompra?.asientos">
-      Fila: {{ asiento.fila +1 }}, Columna: {{ asiento.columna +1 }}
-    </li>
-  </ul>
-  <p *ngIf="!hasAsientosSeleccionados()">No se seleccionaron asientos.</p>
+  <div class="card p-3 mb-3">
+    <p><strong>Película:</strong> {{ resumenCompra.pelicula }}</p>
+    <p><strong>Fecha:</strong> {{ resumenCompra.fecha }}</p>
+    <p><strong>Total de Entradas:</strong> {{ resumenCompra.cantidad }}</p>
 
- 
+    <div *ngIf="resumenCompra.asientos.length > 0">
+      <strong>Asientos:</strong>
+      <ul>
+        <li *ngFor="let asiento of resumenCompra.asientos">
+          Fila {{ asiento.fila + 1 }} - Columna {{ asiento.columna + 1 }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card p-3 mb-3 bg-light">
+    <h4>Detalle de Pago</h4>
+    <p class="text-success" *ngIf="resumenCompra.cant2x1 > 0">
+      🎉 <strong>Promoción 2x1 aplicada:</strong> {{ resumenCompra.cant2x1 }} combos ({{ resumenCompra.cant2x1 * 2 }}
+      entradas)
+    </p>
+    <p *ngIf="resumenCompra.cantNormal > 0">
+      🎫 <strong>Entradas precio regular:</strong> {{ resumenCompra.cantNormal }}
+    </p>
+    <hr>
+    <h3>Total a Pagar: ${{ resumenCompra.total }}</h3>
+  </div>
+
+  <button class="btn btn-primary btn-lg w-100" (click)="confirmarCompra()">Confirmar Compra</button>
+</div>
+
+<div *ngIf="!resumenCompra" class="alert alert-warning">
+  No hay datos de compra. Volvé a seleccionar tu función.
 </div>

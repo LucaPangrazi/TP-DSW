@@ -23,70 +23,73 @@ export class AddEditSucursalComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private aRouter: ActivatedRoute
-    ) {
+  ) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       localidad: ['', Validators.required],
+      direccion: ['', Validators.required],
       email: ['', Validators.required],
     })
-    
+
     this.id = Number(aRouter.snapshot.paramMap.get('id'));
-  
+
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-      if(this.id != 0) {
-        //Es editar
-        this.operacion = 'Editar ';
-        this.getSucursal(this.id);
-        
-      }
+    if (this.id != 0) {
+      //Es editar
+      this.operacion = 'Editar ';
+      this.getSucursal(this.id);
 
-      
     }
 
-    getSucursal(id:number){
-      this.loading = true;
-      this._sucursalService.getSucursal(id).subscribe((data:Sucursal) =>{
-        console.log(data);
-        this.loading = false;
-        this.form.setValue({
-          nombre: data.nombre,
-          localidad: data.localidad,
-          email: data.email 
-        })
-      }) 
-    }
+
+  }
+
+  getSucursal(id: number) {
+    this.loading = true;
+    this._sucursalService.getSucursal(id).subscribe((data: Sucursal) => {
+      console.log(data);
+      this.loading = false;
+      this.form.setValue({
+        nombre: data.nombre,
+        localidad: data.localidad,
+        direccion: data.direccion || '',
+        email: data.email
+      })
+    })
+  }
 
   addSucursal() {
     const sucursal: Sucursal = {
-      nombre:this.form.value.nombre,
-      localidad:this.form.value.localidad,
-      email:this.form.value.email,
-    } 
+      nombre: this.form.value.nombre,
+      localidad: this.form.value.localidad,
+      direccion: this.form.value.direccion,
+      email: this.form.value.email,
+    }
     this.loading = true;
-    if(this.id !==0) {  
-      sucursal.id= this.id;
-      this._sucursalService.updateSucursal(this.id,sucursal).subscribe(() =>{
-      this.toastr.info(`La sucursal ${sucursal.nombre} fue actualizada con exito`, 'Sucursal actualizada');
-      this.loading=false;
-      this.navigateToSucursales();
+    if (this.id !== 0) {
+      sucursal.id = this.id;
+      this._sucursalService.updateSucursal(this.id, sucursal).subscribe(() => {
+        this.toastr.info(`La sucursal ${sucursal.nombre} fue actualizada con exito`, 'Sucursal actualizada');
+        this.loading = false;
+        this.navigateToSucursales();
       });
     } else {
-  
-     
+
+
       this._sucursalService.saveSucursal(sucursal).subscribe(() => {
-      this.toastr.success(`La sucursal ${sucursal.nombre} fue registrada con exito`, 'Sucursal registrada');
-      this.loading=false;
-      this.navigateToSucursales();
+        this.toastr.success(`La sucursal ${sucursal.nombre} fue registrada con exito`, 'Sucursal registrada');
+        this.loading = false;
+        this.navigateToSucursales();
       });
     }
-    }
-
-    navigateToSucursales() {
-      this.router.navigate(['/sucursales']); 
-    }
   }
+
+  navigateToSucursales() {
+    this.router.navigate(['/sucursales']);
+  }
+}
 
 

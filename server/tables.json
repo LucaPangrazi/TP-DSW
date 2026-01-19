@@ -1,0 +1,20 @@
+[
+  {
+    "Tables_in_cine": "funtion"
+  },
+  {
+    "Tables_in_cine": "movies"
+  },
+  {
+    "Tables_in_cine": "salas"
+  },
+  {
+    "Tables_in_cine": "seat_occupied"
+  },
+  {
+    "Tables_in_cine": "sucursals"
+  },
+  {
+    "Tables_in_cine": "users"
+  }
+]

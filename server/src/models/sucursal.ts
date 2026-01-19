@@ -8,10 +8,13 @@ const Sucursal = db.define('Sucursal', {
 
 
     nombre: {
-     type: DataTypes.STRING
+        type: DataTypes.STRING
     },
 
     localidad: {
+        type: DataTypes.STRING
+    },
+    direccion: {
         type: DataTypes.STRING
     },
     email: {
@@ -19,8 +22,8 @@ const Sucursal = db.define('Sucursal', {
     },
 
 }, {
-    createdAt:false,
-    updatedAt:false
+    createdAt: false,
+    updatedAt: false
 
 });
 

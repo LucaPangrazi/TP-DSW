@@ -20,20 +20,53 @@ export class SeleccionAsientosComponent implements OnInit {
     private router: Router,
     private asientosService: AsientosService,
     private funcionesService: FuncionesService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.generarAsientos();
+    const datos = this.asientosService.obtenerDatosPelicula();
+    if (datos.fecha) {
+      this.fechaSeleccionada = datos.fecha;
+    }
+    if (datos.hora) {
+      this.horaSeleccionada = datos.hora;
+    }
+
+    this.generarAsientosVacios();
+    this.cargarAsientosOcupados();
   }
 
-  generarAsientos(): void {
+  generarAsientosVacios(): void {
+    this.asientos = [];
     for (let i = 0; i < this.filas; i++) {
       const fila: { estado: 'disponible' | 'ocupado' | 'seleccionado' }[] = [];
       for (let j = 0; j < this.columnas; j++) {
-        const ocupado = Math.random() < 0.2;
-        fila.push({ estado: ocupado ? 'ocupado' : 'disponible' });
+        fila.push({ estado: 'disponible' });
       }
       this.asientos.push(fila);
+    }
+  }
+
+  cargarAsientosOcupados(): void {
+    const datos = this.asientosService.obtenerDatosPelicula();
+    if (!datos.pelicula || !datos.fecha) return;
+
+    // Use selected time or fall back to stored time
+    const hora = datos.hora || this.horaSeleccionada;
+
+    if (datos.pelicula.id && datos.fecha && hora) {
+      this.funcionesService.obtenerAsientos(datos.pelicula.id, datos.fecha, hora).subscribe(
+        (occupiedCodes: string[]) => {
+          occupiedCodes.forEach(code => {
+            const [rowStr, colStr] = code.split('-');
+            const row = parseInt(rowStr, 10);
+            const col = parseInt(colStr, 10);
+            if (row >= 0 && row < this.filas && col >= 0 && col < this.columnas) {
+              this.asientos[row][col].estado = 'ocupado';
+            }
+          });
+        },
+        error => console.error('Error fetching seats', error)
+      );
     }
   }
 

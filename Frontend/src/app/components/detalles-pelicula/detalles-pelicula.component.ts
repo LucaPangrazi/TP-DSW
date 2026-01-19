@@ -5,6 +5,7 @@ import { DetallePeliculaService } from '../../services/detalle-pelicula.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Movie } from '../../interfaces/movie';
 import { Router } from '@angular/router';
+import { AsientosService } from '../../shared/asientos.service';
 
 @Component({
   selector: 'app-detalles-pelicula',
@@ -19,7 +20,8 @@ export class DetallesPeliculaComponent implements OnInit {
     private route: ActivatedRoute,
     private detallePeliculaService: DetallePeliculaService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private asientosService: AsientosService
   ) { }
 
   ngOnInit(): void {
@@ -43,8 +45,11 @@ export class DetallesPeliculaComponent implements OnInit {
   }
   comprarEntrada() {
     if (this.movie?.id_movie) {
-      this.router.navigate(['/seleccion-asientos', this.movie.id_movie]);
+      this.asientosService.setDatosPelicula({
+        pelicula: { id: this.movie.id_movie, nombre: this.movie.title },
+        fecha: '' // Fecha will be selected in next step
+      });
+      this.router.navigate(['/seleccion-funcion']);
     }
-
   }
 }

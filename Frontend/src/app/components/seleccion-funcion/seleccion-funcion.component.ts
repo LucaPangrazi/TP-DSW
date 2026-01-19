@@ -15,9 +15,8 @@ export class SeleccionFuncionComponent implements OnInit {
   fechaMinima: string;
   horaSeleccionada: string = '';
   horariosDisponibles: string[] = [];
-  sucursalesDisponibles: Sucursal[] = []; 
-  sucursaSeleccionada: string = ''; 
-
+  sucursalesDisponibles: Sucursal[] = [];
+  sucursalSeleccionada: number | null = null;
 
   constructor(
     private router: Router,
@@ -30,30 +29,46 @@ export class SeleccionFuncionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sucursalService.getListSucursales().subscribe(
-      (data: Sucursal[]) => {
-        this.sucursalesDisponibles = data;
-      },
-      (error) => {
-        console.error('Error al cargar las sucursales:', error);
-      }
-    );
+    const pelicula = this.asientosService.obtenerDatosPelicula()?.pelicula;
+
+    if (pelicula?.id) {
+      this.sucursalService.getListSucursales(pelicula.id).subscribe(
+        (data: Sucursal[]) => {
+          this.sucursalesDisponibles = data;
+        },
+        (error) => {
+          console.error('Error al cargar las sucursales:', error);
+        }
+      );
+    } else {
+      console.warn('No movie selected');
+    }
   }
 
-  onFechaSeleccionada(): void {
-    if (!this.fechaSeleccionada) return;
+  buscarHorarios(): void {
+    this.horariosDisponibles = [];
+    this.horaSeleccionada = '';
+
+    console.log('Buscando horarios...', { fecha: this.fechaSeleccionada, sucursal: this.sucursalSeleccionada });
+    if (!this.fechaSeleccionada || !this.sucursalSeleccionada) return;
 
     const pelicula = this.asientosService.obtenerDatosPelicula()?.pelicula;
-    if (!pelicula?.id) return;
+    if (!pelicula?.id) {
+      console.error('No movie ID found in AsientosService');
+      return;
+    }
 
-    this.funcionesService.obtenerHorarios(pelicula.id, this.fechaSeleccionada)
+    this.funcionesService.obtenerHorarios(pelicula.id, this.fechaSeleccionada, this.sucursalSeleccionada)
       .subscribe(horarios => {
+        console.log('Horarios encontrados:', horarios);
         this.horariosDisponibles = horarios;
+      }, error => {
+        console.error('Error fetching horarios:', error);
       });
   }
 
   continuarAFormulario(): void {
-    if (!this.fechaSeleccionada || !this.horaSeleccionada) {
+    if (!this.fechaSeleccionada || !this.horaSeleccionada || !this.sucursalSeleccionada) {
       alert('Por favor, seleccioná fecha y hora antes de continuar.');
       return;
     }

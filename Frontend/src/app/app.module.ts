@@ -33,6 +33,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComprarEntradaComponent } from './components/comprar-entrada/comprar-entrada.component';
 import { SeleccionAsientosComponent } from './components/seleccion-asientos/seleccion-asientos.component';
 import { SeleccionFuncionComponent } from './components/seleccion-funcion/seleccion-funcion.component';
+import { ListFuncionesComponent } from './components/list-funciones/list-funciones.component';
+import { AddEditFuncionComponent } from './components/add-edit-funcion/add-edit-funcion.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { SeleccionFuncionComponent } from './components/seleccion-funcion/selecc
     ComprarEntradaComponent,
     SeleccionAsientosComponent,
     SeleccionFuncionComponent,
+    ListFuncionesComponent,
+    AddEditFuncionComponent,
     HomeComponent
   ],
   imports: [

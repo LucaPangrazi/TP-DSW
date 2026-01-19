@@ -5,10 +5,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateSucursal = exports.postSucursal = exports.deleteSucursal = exports.getSucursal = exports.getSucursales = void 0;
 const sucursal_1 = __importDefault(require("../models/sucursal"));
+const connection_1 = __importDefault(require("../db/connection"));
+const sequelize_1 = require("sequelize");
 const getSucursales = async (req, res) => {
     try {
-        const listSucursales = await sucursal_1.default.findAll();
-        res.json(listSucursales);
+        const { peliculaId } = req.query;
+        if (peliculaId) {
+            const listSucursales = await connection_1.default.query('SELECT DISTINCT s.* FROM sucursals s JOIN funtion f ON s.id = f.sucursal_id WHERE f.movie_id = ?', {
+                replacements: [peliculaId],
+                type: sequelize_1.QueryTypes.SELECT
+            });
+            res.json(listSucursales);
+        }
+        else {
+            const listSucursales = await sucursal_1.default.findAll();
+            res.json(listSucursales);
+        }
     }
     catch (error) {
         console.error('Error al obtener sucursales:', error);

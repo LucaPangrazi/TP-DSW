@@ -1,99 +1,114 @@
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import Sucursal from '../models/sucursal';
 
 
-export const getSucursales = async(req: Request, res:Response) => {
-try {
-  const listSucursales = await Sucursal.findAll()
-res.json(listSucursales);
-} catch (error) {
-    console.error('Error al obtener sucursales:', error);
-    res.status(500).json({ msg: 'Error interno del servidor' });
-  }
+import sequelize from '../db/connection';
+import { QueryTypes } from 'sequelize';
 
+export const getSucursales = async (req: Request, res: Response) => {
+    try {
+        const { peliculaId } = req.query;
+
+        if (peliculaId) {
+            const listSucursales = await sequelize.query(
+                'SELECT DISTINCT s.* FROM sucursals s JOIN funtion f ON s.id = f.sucursal_id WHERE f.movie_id = ?',
+                {
+                    replacements: [peliculaId],
+                    type: QueryTypes.SELECT
+                }
+            );
+            res.json(listSucursales);
+        } else {
+            const listSucursales = await Sucursal.findAll();
+            res.json(listSucursales);
+        }
+    } catch (error) {
+        console.error('Error al obtener sucursales:', error);
+        res.status(500).json({ msg: 'Error interno del servidor' });
+    }
 }
 
-export const getSucursal = async (req: Request, res:Response) => {
+export const getSucursal = async (req: Request, res: Response) => {
 
-    const {id} = req.params;
+    const { id } = req.params;
     const sucursal = await Sucursal.findByPk(id)
 
-    if(sucursal) {
+    if (sucursal) {
         res.json(sucursal)
     } else {
         res.status(404).json({
-            msg:`No existe una sucursal con el id ${id}`
+            msg: `No existe una sucursal con el id ${id}`
         })
     }
 
 }
 
-export const deleteSucursal = async (req: Request, res:Response) => {
+export const deleteSucursal = async (req: Request, res: Response) => {
 
-    const {id} = req.params;
+    const { id } = req.params;
     const sucursal = await Sucursal.findByPk(id);
 
-    if(!sucursal) {
+    if (!sucursal) {
         res.status(404).json({
-            msg:`No existe una sucursal con el id ${id}`
+            msg: `No existe una sucursal con el id ${id}`
         })
     } else {
-       await sucursal.destroy();
-       res.json({
-        msg: 'La sucursal fue eliminada con exito!'
-       })
+        await sucursal.destroy();
+        res.json({
+            msg: 'La sucursal fue eliminada con exito!'
+        })
     }
 
 }
 
-export const postSucursal = async (req: Request, res:Response) => {
+export const postSucursal = async (req: Request, res: Response) => {
 
-    const {body} = req;
+    const { body } = req;
 
     try {
         await Sucursal.create(body);
 
 
         res.json({
-           
+
             msg: `La sucursal fue agregada con exito!`
-            
+
         })
     } catch (error) {
         console.log(error);
         res.json({
-            msg:`Ups ocurrio un error comuniquese con soporte`
+            msg: `Ups ocurrio un error comuniquese con soporte`
         })
     }
 
-   
+
 }
 
-export const updateSucursal = async(req: Request, res:Response) => {
-   
-    const {body} = req;
-    const {id} = req.params;
-    
+export const updateSucursal = async (req: Request, res: Response) => {
+
+    const { body } = req;
+    const { id } = req.params;
+
     try {
         const sucursal = await Sucursal.findByPk(id);
 
-    if(sucursal) {
-     await sucursal.update(body)
-        res.json({
-            msg:'La sucursal fue actualizada con exito'
-        }) 
-    
-    } else {
-        res.status(404).json({
-            msg:`No existe una sucursal con el id ${id}`
-    })
-    }
+        if (sucursal) {
+            await sucursal.update(body)
+            res.json({
+                msg: 'La sucursal fue actualizada con exito'
+            })
+
+        } else {
+            res.status(404).json({
+                msg: `No existe una sucursal con el id ${id}`
+            })
+        }
     } catch (error) {
         console.log(error);
         res.json({
-            msg:`Ups ocurrio un error comuniquese con soporte`
+            msg: `Ups ocurrio un error comuniquese con soporte`
         })
     }
 
-    
+
 }

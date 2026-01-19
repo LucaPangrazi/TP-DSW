@@ -5,17 +5,23 @@
   <!-- Fecha -->
   <div class="form-group">
     <label for="fecha">📅 Fecha:</label>
-    <input
-      type="date"
-      id="fecha"
-      [(ngModel)]="fechaSeleccionada"
-      [min]="fechaMinima"
-      required
-    />
+    <input type="date" id="fecha" [(ngModel)]="fechaSeleccionada" (change)="buscarHorarios()" [min]="fechaMinima"
+      required />
+  </div>
+
+  <!-- Sucursal -->
+  <div class="form-group">
+    <label for="sucursal">📍 Sucursal:</label>
+    <select id="sucursal" [(ngModel)]="sucursalSeleccionada" (change)="buscarHorarios()" required>
+      <option [ngValue]="null" disabled selected>Seleccioná una sucursal</option>
+      <option *ngFor="let sucursal of sucursalesDisponibles" [ngValue]="sucursal.id">
+        {{ sucursal.nombre }}
+      </option>
+    </select>
   </div>
 
   <!-- Hora -->
-  <div class="form-group">
+  <div class="form-group" *ngIf="horariosDisponibles.length > 0">
     <label for="hora">🕒 Hora:</label>
     <select id="hora" [(ngModel)]="horaSeleccionada" required>
       <option value="" disabled selected>Seleccioná un horario</option>
@@ -25,23 +31,9 @@
     </select>
   </div>
 
-  <!-- Sucursal -->
-  <div class="form-group">
-    <label for="sucursal">📍 Sucursal:</label>
-    <select id="sucursal" [(ngModel)]="sucursaSeleccionada" required>
-      <option value="" disabled selected>Seleccioná una sucursal</option>
-      <option *ngFor="let sucursal of sucursalesDisponibles" [value]="sucursal.id">
-        {{ sucursal.nombre }}
-      </option>
-    </select>
-  </div>
-
   <!-- Continuar -->
-  <button
-    class="boton-continuar"
-    [disabled]="!horaSeleccionada || !fechaSeleccionada || !sucursaSeleccionada"
-    (click)="continuarAFormulario()"
-  >
+  <button class="boton-continuar" [disabled]="!horaSeleccionada || !fechaSeleccionada || !sucursalSeleccionada"
+    (click)="continuarAFormulario()">
     Continuar a la selección de asientos
   </button>
 </div>

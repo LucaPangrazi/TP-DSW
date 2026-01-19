@@ -5,7 +5,8 @@ import movieRouter from '../routes/movie';
 import salaRouter from '../routes/sala';
 import sucursalRouter from '../routes/sucursal';
 import userRouter from '../routes/user.routes';
-import detallePeliculaRouter from '../routes/detalle-pelicula'; 
+import detallePeliculaRouter from '../routes/detalle-pelicula';
+import funcionesRouter from '../routes/funciones.routes';
 import db from '../db/connection';
 
 
@@ -38,8 +39,9 @@ class Server {
     this.app.use('/api/salas', salaRouter);
     this.app.use('/api/sucursales', sucursalRouter);
     this.app.use('/api/users', userRouter);
-    this.app.use('/api/movies', detallePeliculaRouter); 
-   
+    this.app.use('/api/movies', detallePeliculaRouter);
+    this.app.use('/api/funciones', funcionesRouter);
+
   }
 
   middlewares() {
@@ -50,7 +52,7 @@ class Server {
 
   async dbConnect() {
     try {
-      await db.sync();
+      await db.sync({ alter: true });
       console.log('Base de Datos conectada');
     } catch (error) {
       console.log('Error al conectarse a la base de datos', error);

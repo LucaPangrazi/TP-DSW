@@ -11,6 +11,7 @@ const sala_1 = __importDefault(require("../routes/sala"));
 const sucursal_1 = __importDefault(require("../routes/sucursal"));
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const detalle_pelicula_1 = __importDefault(require("../routes/detalle-pelicula"));
+const funciones_routes_1 = __importDefault(require("../routes/funciones.routes"));
 const connection_1 = __importDefault(require("../db/connection"));
 class Server {
     constructor() {
@@ -37,6 +38,7 @@ class Server {
         this.app.use('/api/sucursales', sucursal_1.default);
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/movies', detalle_pelicula_1.default);
+        this.app.use('/api/funciones', funciones_routes_1.default);
     }
     middlewares() {
         this.app.use(express_1.default.json());
@@ -45,7 +47,7 @@ class Server {
     }
     async dbConnect() {
         try {
-            await connection_1.default.sync();
+            await connection_1.default.sync({ alter: true });
             console.log('Base de Datos conectada');
         }
         catch (error) {

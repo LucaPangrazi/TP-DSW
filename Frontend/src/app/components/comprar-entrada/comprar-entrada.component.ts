@@ -16,18 +16,13 @@ export class ComprarEntradaComponent implements OnInit {
 
   mostrarResumen = false;
 
-  resumenCompra: {
-    pelicula: string;
-    fecha: string;
-    cantidad: number;
-    asientos: { fila: number; columna: number }[];
-  } | null = null;
+  resumenCompra: ResumenCompra | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private asientosService: AsientosService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const peliculaId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -35,31 +30,58 @@ export class ComprarEntradaComponent implements OnInit {
     if (peliculaId) {
       const pelicula = this.asientosService.obtenerDatosPelicula();
       this.peliculaSeleccionada = pelicula;
+      this.verResumen(); // Auto-calculate summary
     }
 
     this.asientosService.obtenerDatosPelicula$.subscribe((datos) => {
       this.peliculaSeleccionada = datos;
+      if (this.peliculaSeleccionada.pelicula.id) {
+        this.verResumen();
+      }
     });
   }
 
   verResumen(): void {
-    if (this.peliculaSeleccionada) {
+    if (this.peliculaSeleccionada && this.peliculaSeleccionada.pelicula.id) {
       const asientosSeleccionados = this.asientosService.obtenerAsientosSeleccionados() || [];
+      const cantidadAsientos = asientosSeleccionados.length;
+
+      const precioUnitario = 3000;
+      const cant2x1 = Math.floor(cantidadAsientos / 2);
+      const cantNormal = cantidadAsientos % 2;
+
+      const total = (cant2x1 * precioUnitario) + (cantNormal * precioUnitario);
 
       this.resumenCompra = {
-        pelicula: this.peliculaSeleccionada.pelicula.nombre, 
+        pelicula: this.peliculaSeleccionada.pelicula.nombre,
         fecha: this.peliculaSeleccionada.fecha,
-        cantidad: this.formData.cantidad,
+        cantidad: cantidadAsientos,
         asientos: asientosSeleccionados,
+        cant2x1,
+        cantNormal,
+        total
       };
 
       this.mostrarResumen = true;
-    } else {
-      console.error('No hay película seleccionada');
     }
+  }
+
+  confirmarCompra() {
+    alert('¡Compra realizada con éxito! Disfrutá la película.');
+    // Here we would call the backend to save the tickets.
   }
 
   hasAsientosSeleccionados(): boolean {
     return (this.resumenCompra?.asientos?.length ?? 0) > 0 || false;
   }
+}
+
+interface ResumenCompra {
+  pelicula: string;
+  fecha: string;
+  cantidad: number;
+  asientos: { fila: number; columna: number }[];
+  cant2x1: number;
+  cantNormal: number;
+  total: number;
 }
