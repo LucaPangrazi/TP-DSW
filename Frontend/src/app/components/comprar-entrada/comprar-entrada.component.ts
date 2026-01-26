@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AsientosService } from '../../shared/asientos.service';
 import { HttpClient } from '@angular/common/http';
+import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-comprar-entrada',
@@ -66,9 +67,42 @@ export class ComprarEntradaComponent implements OnInit {
     }
   }
 
+  qrData: string = '';
+  compraConfirmada: boolean = false;
+
+  @ViewChild('qrCanvas') qrCanvas!: ElementRef<HTMLCanvasElement>;
+
   confirmarCompra() {
-    alert('¡Compra realizada con éxito! Disfrutá la película.');
-    // Here we would call the backend to save the tickets.
+    if (!this.resumenCompra) return;
+
+    this.compraConfirmada = true;
+
+    // Construct QR Data exactly as requested
+    const asientosStr = this.resumenCompra.asientos
+      .map(a => `Fila ${a.fila + 1} - Columna ${a.columna + 1}`)
+      .join(', ');
+
+    this.qrData = `
+Película: ${this.resumenCompra.pelicula}
+Fecha: ${this.resumenCompra.fecha}
+Total de Entradas: ${this.resumenCompra.cantidad}
+Asientos: ${asientosStr}
+Promoción 2x1 aplicada: ${this.resumenCompra.cant2x1} combos (${this.resumenCompra.cant2x1 * 2} entradas)
+Total a Pagar: $${this.resumenCompra.total}
+    `.trim();
+
+    // Generate QR on the canvas
+    setTimeout(() => {
+      if (this.qrCanvas) {
+        QRCode.toCanvas(this.qrCanvas.nativeElement, this.qrData, {
+          width: 256,
+          errorCorrectionLevel: 'M'
+        }, function (error) {
+          if (error) console.error(error)
+          console.log('QR Code generated success!');
+        });
+      }
+    }, 100); // Small delay to allow ViewChild to init
   }
 
   hasAsientosSeleccionados(): boolean {

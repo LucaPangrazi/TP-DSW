@@ -2,11 +2,12 @@
 <div *ngIf="!loading" class="container">
     <div class="title">
         <h4>Listado de Funciones</h4>
-        <button type="button" class="btn btn-light" routerLink="add">Agregar Función</button>
+        <button type="button" class="btn btn-primary" routerLink="add">Agregar Función</button>
     </div>
+    <br>
     <table class="table table-hover mt-3" *ngIf="listFunciones.length > 0">
         <thead>
-            <tr class="table-primary">
+            <tr class="table table-hover">
                 <th scope="col">ID</th>
                 <th scope="col">ID Película</th>
                 <th scope="col">ID Sala</th>
@@ -17,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listFunciones" class="table-light">
+            <tr *ngFor="let item of listFunciones" class="table-secondary">
                 <td>{{ item.id }}</td>
                 <td>{{ item.movie_id }}</td>
                 <td>{{ item.sala_id }}</td>

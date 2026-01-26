@@ -30,7 +30,20 @@
     <h3>Total a Pagar: ${{ resumenCompra.total }}</h3>
   </div>
 
-  <button class="btn btn-primary btn-lg w-100" (click)="confirmarCompra()">Confirmar Compra</button>
+  <div *ngIf="!compraConfirmada">
+    <button class="btn btn-primary btn-lg w-100" (click)="confirmarCompra()">Confirmar Compra</button>
+  </div>
+
+  <div *ngIf="compraConfirmada" class="text-center mt-4">
+    <h3 class="text-success mb-3">¡Compra Confirmada!</h3>
+    <p>Escaneá este código para ver tu resumen de compra:</p>
+
+    <canvas #qrCanvas></canvas>
+
+    <div class="mt-3">
+      <button class="btn btn-outline-primary" routerLink="/home">Volver al Inicio</button>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="!resumenCompra" class="alert alert-warning">

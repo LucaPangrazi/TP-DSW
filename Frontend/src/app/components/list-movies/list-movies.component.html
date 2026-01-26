@@ -2,11 +2,10 @@
 <div *ngIf="!loading" class="container">
   <div class="title">
     <h4> PELICULAS </h4>
-    <button type="button" class="btn btn-light" routerLink="add">Agregar Pelicula</button>
+    <button type="button" class="btn btn-primary" routerLink="add">Agregar Pelicula</button>
   </div>
   <br>
-  <!-- ... *ngIf="listMovies.length > 0"-->
-  <table *ngIf="filteredMovies.length > 0" class="table table-primary">
+  <table *ngIf="filteredMovies.length > 0" class="table table-hover">
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -21,8 +20,7 @@
 
     </thead>
     <tbody>
-      <!-- ... *ngFor="let item of listMovies"-->
-      <tr *ngFor="let item of filteredMovies" class="table-light">
+      <tr *ngFor="let item of filteredMovies" class="table-secondary">
         <td>{{ item.id_movie }}</td>
         <td>{{ item.title }}</td>
         <td>{{ item.genre }}</td>
@@ -32,7 +30,7 @@
         <td>{{ item.durationMin }}</td>
         <td>{{ item.image }}</td>
         <td>
-          <!-- <button routerLink="/edit/{{ item.id_movie }}" type="button" class="btn btn-dark btn-sm">Editar</button> -->
+
           <button [routerLink]="['edit', item.id_movie]" type="button" class="btn btn-dark btn-sm ">Editar</button>
           <span style="margin-right: 10px;"></span>
           <button (click)="deleteMovie(item.id_movie!)" type="button" class="btn btn-danger btn-sm ms-2">Borrar</button>

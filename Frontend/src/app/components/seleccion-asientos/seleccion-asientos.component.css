@@ -56,7 +56,7 @@
 }
 
 .asiento.ocupado {
-  background-color: #e74c3c;
+  background-color: #3c45e765;
   color: white;
   cursor: not-allowed;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
+import { SearchService } from '../../shared/search.service';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
 
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private movieService: MovieService,
+    private searchService: SearchService,
     private userService: UserService
   ) { }
 
@@ -32,7 +34,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.adminSub = this.userService.isAdmin$.subscribe(isAdmin => {
       this.isAdmin = isAdmin;
     });
+
+    this.searchService.searchTerm$.subscribe(term => {
+      this.filterMovies(term);
+    });
+
     this.loadMovies();
+  }
+
+  filterMovies(term: string) {
+    if (!term.trim()) {
+      this.processPeliculas(this.allMovies);
+      return;
+    }
+    const lowerTerm = term.toLowerCase();
+    const filtered = this.allMovies.filter(movie =>
+      (movie.title || movie.titulo || movie.name || movie.nombre || '').toLowerCase().includes(lowerTerm)
+    );
+    this.processPeliculas(filtered);
   }
 
   ngOnDestroy() {
@@ -63,7 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.allMovies = [];
         }
 
-        this.processPeliculas();
+        this.processPeliculas(this.allMovies);
         this.loading = false;
       },
       error: (err: any) => {
@@ -75,14 +94,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  processPeliculas() {
-    if (this.allMovies.length > 0) {
-      this.featuredMovie = this.allMovies[0];
+  processPeliculas(moviesList: any[] = this.allMovies) {
+    if (moviesList.length > 0) {
+      this.featuredMovie = moviesList[0];
+    } else {
+      this.featuredMovie = null; // Clear if no search results
     }
 
     const genreMap = new Map<string, any[]>();
 
-    this.allMovies.forEach(movie => {
+    moviesList.forEach(movie => {
       const genre = movie.genero || movie.genre || 'Sin Género';
       if (!genreMap.has(genre)) {
         genreMap.set(genre, []);

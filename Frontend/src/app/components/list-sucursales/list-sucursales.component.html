@@ -2,14 +2,13 @@
 <div *ngIf="!loading" class="container">
   <div class="title">
     <h4>Listado de sucursales</h4>
-    <button type="button" class="btn btn-light" routerLink="add">Agregar Sucursal</button>
+    <button type="button" class="btn btn-primary" routerLink="add">Agregar Sucursal</button>
   </div>
   <br>
 
-  <!-- ... *ngIf="listSucursales.length > 0"-->
   <table *ngIf="filteredSucursales.length > 0" class="table table-hover">
     <thead>
-      <tr class="table-primary">
+      <tr class="table table-hover">
         <th scope="col">Nombre</th>
         <th scope="col">Localidad</th>
         <th scope="col">Dirección</th>
@@ -18,8 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <!-- ... *ngFor="let item of listSucursales"-->
-      <tr *ngFor="let item of filteredSucursales" class="table-light">
+      <tr *ngFor="let item of filteredSucursales" class="table-secondary">
         <td>{{ item.nombre }}</td>
         <td>{{ item.localidad }}</td>
         <td>{{ item.direccion }}</td>

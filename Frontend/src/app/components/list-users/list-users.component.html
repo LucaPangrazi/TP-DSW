@@ -4,21 +4,19 @@
     <h4> Usuarios </h4>
   </div>
   <br>
-  <!-- ... *ngIf="listUsers.length > 0"-->
-  <table *ngIf="filteredUsers.length > 0" class="table table-primary">
+  <table *ngIf="filteredUsers.length > 0" class="table table-hover">
     <thead>
       <tr>
         <th scope="col">ID</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Nombre de Usuario</th>
-          <th scope="col">Telefono</th>
-        </tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Nombre de Usuario</th>
+        <th scope="col">Telefono</th>
+      </tr>
 
     </thead>
     <tbody>
-      <!-- ... *ngFor="let item of listUsers"-->
-      <tr *ngFor="let item of filteredUsers" class="table-light">
+      <tr *ngFor="let item of filteredUsers" class="table-secondary">
         <td>{{ item?.id }}</td>
         <td>{{ item?.nombre }}</td>
         <td>{{ item?.apellido }}</td>
@@ -27,7 +25,8 @@
         <td>
           <button [routerLink]="['edit', item.id]" type="button" class="btn btn-dark btn-sm ">Editar</button>
           <span style="margin-right: 10px;"></span>
-          <button (click)="deleteUser(item.id)" onClick= "window.location.reload()" type="button" class="btn btn-danger btn-sm ms-2">Borrar</button>
+          <button (click)="deleteUser(item.id)" onClick="window.location.reload()" type="button"
+            class="btn btn-danger btn-sm ms-2">Borrar</button>
 
         </td>
       </tr>

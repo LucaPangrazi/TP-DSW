@@ -37,7 +37,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.searchForm.valueChanges
       .pipe(debounceTime(300))
-      .subscribe(value => this.searchEmitter.emit(value.search || ''));
+      .subscribe(value => {
+        const term = value.search || '';
+        this.searchEmitter.emit(term);
+        this.searchService.setSearchTerm(term);
+      });
 
     // Mostrar u ocultar navbar según la ruta
     this.router.events.subscribe(event => {
@@ -74,7 +78,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  // ✅ Método que faltaba para navegar desde el navbar
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
@@ -82,5 +85,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchMovies(): void {
     const searchTerm = this.searchForm?.get('search')?.value || '';
     this.searchEmitter.emit(searchTerm);
+    this.searchService.setSearchTerm(searchTerm);
   }
 }
