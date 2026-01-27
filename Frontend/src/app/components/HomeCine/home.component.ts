@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isAdmin = false;
   private adminSub: Subscription | undefined;
 
-  // Banner Edit
+  // editar Banner
   showBannerModal = false;
   bannerForm: FormGroup;
   selectedFile: File | null = null;
@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private bannerService: BannerService,
     private fb: FormBuilder
   ) {
-    // Inicializar el formulario aquí
     this.bannerForm = this.fb.group({
       movie_id: ['', Validators.required]
     });
@@ -54,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.filterMovies(term);
     });
 
-    // Load banner first, THEN load movies to prevent banner being overwritten
+    // primero se carga el banner,despues se carga la pelicula para no sobreescribir
     this.loadBanner().then(() => {
       this.loadMovies();
     });
@@ -65,7 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.bannerService.getBanner().subscribe(data => {
         if (data && data.banner && data.movie) {
           this.featuredMovie = data.movie;
-          // If custom image exists, use it
           if (data.banner.custom_image) {
             this.customBannerImage = `http://localhost:3000/uploads/${data.banner.custom_image}`;
           }
@@ -96,7 +94,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Método para navegar desde los botones
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
@@ -131,8 +128,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   processPeliculas(moviesList: any[] = this.allMovies) {
-    // Only set default featured if NO custom banner image is set
-    // If customBannerImage is set, NEVER override the featured movie
     if (moviesList.length > 0 && !this.customBannerImage && !this.featuredMovie) {
       this.featuredMovie = moviesList[0];
     }
@@ -170,7 +165,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (imagePath.startsWith('http')) {
       return imagePath;
     }
-    // Encode the filename to handle spaces and special characters
     return `http://localhost:3000/uploads/${encodeURIComponent(imagePath)}`;
   }
 
@@ -179,7 +173,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.getImageUrl(this.featuredMovie?.imagen || this.featuredMovie?.image);
   }
 
-  /* Banner Editor Logic */
+ 
   openBannerModal() {
     this.showBannerModal = true;
   }
@@ -196,7 +190,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   saveBanner() {
-    // Validate that both movie and file are present
     if (!this.bannerForm.get('movie_id')?.value) {
       alert('Por favor seleccione una película');
       return;
@@ -215,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.closeBannerModal();
       this.selectedFile = null;
       this.bannerForm.reset();
-      this.loadBanner(); // Refresh banner
+      this.loadBanner(); // Refrescar banner
     }, err => {
       console.error(err);
       alert('Error actualizando banner: ' + (err?.error?.msg || err?.error?.error || 'Error desconocido'));
