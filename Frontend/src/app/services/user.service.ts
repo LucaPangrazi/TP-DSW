@@ -18,6 +18,9 @@ export class UserService {
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   public isAdmin$ = this.isAdminSubject.asObservable();
 
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  public isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/users/';
@@ -41,11 +44,13 @@ export class UserService {
   private checkAdmin(user: User | null) {
     if (!user) {
       this.isAdminSubject.next(false);
+      this.isLoggedInSubject.next(false);
       return;
     }
     const u = user as any;
     const role = u.rol || user.role || '';
     this.isAdminSubject.next(role.toLowerCase() === 'admin');
+    this.isLoggedInSubject.next(true);
   }
 
   register(user: User): Observable<any> {
@@ -82,6 +87,7 @@ export class UserService {
     localStorage.removeItem('user');
     this.userSubject.next(null);
     this.isAdminSubject.next(false);
+    this.isLoggedInSubject.next(false);
   }
 
   deleteUser(id: string): Observable<void> {

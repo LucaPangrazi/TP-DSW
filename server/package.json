@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
@@ -29,7 +30,8 @@
     "rimraf": "^5.0.5",
     "sequelize": "^6.35.1",
     "sequelize-cli": "^6.6.1",
-    "sharp": "^0.32.6"
+    "sharp": "^0.32.6",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -37,7 +39,7 @@
     "@types/express": "^4.17.18",
     "@types/fs-extra": "^11.0.4",
     "@types/jsonwebtoken": "^9.0.3",
-    "@types/multer": "^1.4.9",
+    "@types/multer": "^1.4.13",
     "@types/node": "^20.6.2",
     "@types/nodemailer": "^6.4.17",
     "@types/rimraf": "^4.0.5",

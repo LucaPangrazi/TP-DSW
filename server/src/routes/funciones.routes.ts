@@ -2,6 +2,9 @@ import { Router, Request, Response } from 'express';
 import sequelize from '../db/connection';
 import { QueryTypes } from 'sequelize';
 import Funcion from '../models/funcion';
+import Movie from '../models/movie';
+import Sala from '../models/sala';
+import Sucursal from '../models/sucursal';
 
 const router = Router();
 
@@ -113,7 +116,13 @@ router.get('/test', (req: Request, res: Response) => {
 // CRUD ROUTES
 router.get('/all', async (req: Request, res: Response) => {
   try {
-    const funciones = await Funcion.findAll();
+    const funciones = await Funcion.findAll({
+      include: [
+        { model: Movie, attributes: ['title'] },
+        { model: Sala, attributes: ['name'] },
+        { model: Sucursal, attributes: ['nombre'] }
+      ]
+    });
     res.json(funciones);
   } catch (error) {
     console.error(error);
@@ -144,6 +153,98 @@ router.post('/', async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al crear función' });
+  }
+});
+
+// GUARDAR ASIENTOS OCUPADOS
+router.post('/guardar-asientos', async (req: Request, res: Response) => {
+  const { funtion_id, seat_codes } = req.body;
+
+  console.log('Guardar asientos called with:', { funtion_id, seat_codes });
+
+  // Validar datos
+  if (!funtion_id || !seat_codes || !Array.isArray(seat_codes) || seat_codes.length === 0) {
+    return res.status(400).json({ 
+      msg: 'Datos inválidos',
+      error: 'INVALID_DATA',
+      details: 'Se requiere funtion_id y seat_codes (array no vacío)'
+    });
+  }
+
+  try {
+    // 1. Verificar que la función existe
+    const funcion = await Funcion.findByPk(funtion_id);
+    if (!funcion) {
+      return res.status(404).json({ 
+        msg: 'Función no encontrada',
+        error: 'FUNCTION_NOT_FOUND',
+        funtion_id
+      });
+    }
+
+    console.log('Function found:', funtion_id);
+
+    // 2. Validar formato de seat_codes y verificar que no existan
+    for (const seat_code of seat_codes) {
+      // Validar formato "row-col"
+      if (!/^\d+-\d+$/.test(seat_code)) {
+        return res.status(400).json({ 
+          msg: 'Formato de asiento inválido',
+          error: 'INVALID_SEAT_FORMAT',
+          details: `El asiento debe tener formato "fila-columna" (ej: "1-5"), recibido: ${seat_code}`
+        });
+      }
+
+      // Verificar que el asiento no esté ya ocupado
+      const existingRecord: any = await sequelize.query(
+        'SELECT id FROM seat_occupied WHERE funtion_id = ? AND seat_code = ?',
+        {
+          replacements: [funtion_id, seat_code],
+          type: QueryTypes.SELECT
+        }
+      );
+
+      if (existingRecord.length > 0) {
+        return res.status(409).json({ 
+          msg: 'Asiento ya está ocupado',
+          error: 'SEAT_ALREADY_OCCUPIED',
+          seat_code,
+          funtion_id
+        });
+      }
+    }
+
+    console.log('All seat validations passed, inserting', seat_codes.length, 'seats');
+
+    // 3. Insertar todos los asientos
+    const insertQuery = 'INSERT INTO seat_occupied (funtion_id, seat_code) VALUES (?, ?)';
+    
+    for (const seat_code of seat_codes) {
+      await sequelize.query(
+        insertQuery,
+        {
+          replacements: [funtion_id, seat_code],
+          type: QueryTypes.INSERT
+        }
+      );
+    }
+
+    console.log('Seats saved successfully');
+
+    res.json({ 
+      msg: 'Asientos guardados con éxito',
+      funtion_id,
+      seats_saved: seat_codes.length,
+      seat_codes
+    });
+
+  } catch (error: any) {
+    console.error('Error saving seats:', error);
+    res.status(500).json({ 
+      msg: 'Error al guardar asientos',
+      error: error?.message || 'Unknown error',
+      details: error?.toString?.() || 'No details'
+    });
   }
 });
 

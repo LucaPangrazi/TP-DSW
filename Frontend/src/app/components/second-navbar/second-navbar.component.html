@@ -1,7 +1,58 @@
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Cinextix</a>
-      <div class="collapse navbar-collapse" id="navbarColor01">
+<nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #222427;">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="isLoggedIn ? '/home' : null" (click)="onBrandClick($event)" [style.cursor]="isLoggedIn ? 'pointer' : 'not-allowed'" [style.opacity]="isLoggedIn ? '1' : '0.5'">
+      <strong>Cinetix</strong>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavSecond">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavSecond">
+      <!-- Navigation Links -->
+      <ul class="navbar-nav me-auto">
+        <!-- Common Links (All Users) -->
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="isLoggedIn ? '/home' : null" (click)="onCarteleraClick($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [style.cursor]="isLoggedIn ? 'pointer' : 'not-allowed'" [style.opacity]="isLoggedIn ? '1' : '0.5'">
+            Cartelera
+          </a>
+        </li>
+
+        <!-- Admin-Only Links -->
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/movies" routerLinkActive="active">
+            Películas
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/salas" routerLinkActive="active">
+            Salas
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/sucursales" routerLinkActive="active">
+            Sucursales
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/funciones" routerLinkActive="active">
+            Funciones
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/users" routerLinkActive="active">
+            Usuarios
+          </a>
+        </li>
+      </ul>
+
+      <!-- User Info and Logout (No Search) -->
+      <div class="d-flex align-items-center gap-3">
+        <div class="nav-user-info" *ngIf="userName">
+          <span class="user-name">👤 {{ userName }}</span>
+          <button class="btn btn-sm btn-outline-light" (click)="logout()">Salir</button>
+        </div>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

@@ -1,13 +1,54 @@
 <div class="featured-banner" *ngIf="featuredMovie && !loading">
   <div class="banner-overlay"></div>
-  <img [src]="getImageUrl(featuredMovie.imagen || featuredMovie.image)" alt="Featured Movie" class="banner-image">
-  <div class="banner-content">
-    <h1 class="featured-title">{{ featuredMovie.nombre || featuredMovie.title }}</h1>
-    <p class="featured-description">{{ featuredMovie.descripcion || featuredMovie.description }}</p>
-    <button class="btn btn-primary btn-lg"
-      (click)="goToMovieDetails(featuredMovie.id_pelicula || featuredMovie.id_movie)">
-      Ver Detalles
-    </button>
+  <img [src]="getBannerImage()" alt="Featured Movie" class="banner-image">
+
+  <!-- Edit Banner Icon (Admin Only) -->
+  <button *ngIf="isAdmin" class="edit-banner-icon" (click)="openBannerModal()" title="Editar banner">
+    <i class="bi bi-pencil"></i>
+  </button>
+
+  <div class="banner-content container">
+    <h1>{{ featuredMovie.title || featuredMovie.titulo }}</h1>
+    <p class="description">{{ featuredMovie.description || featuredMovie.descripcion }}</p>
+    <div class="banner-actions">
+      <button class="btn btn-primary btn-lg" (click)="goToMovieDetails(featuredMovie.id_movie || featuredMovie.id)">
+        <i class="bi bi-ticket-perforated"></i> Comprar Entrada
+      </button>
+      <button class="btn btn-outline-light btn-lg ms-3">
+        <i class="bi bi-info-circle"></i> Más Información
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Banner Editor Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': showBannerModal}" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Banner Principal</h5>
+        <button type="button" class="btn-close" (click)="closeBannerModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="bannerForm" (ngSubmit)="saveBanner()">
+          <div class="mb-3">
+            <label>Película Destacada</label>
+            <select formControlName="movie_id" class="form-control">
+              <option value="">-- Seleccionar película --</option>
+              <option *ngFor="let m of allMovies" [value]="m.id_movie || m.id">
+                {{ m.title || m.titulo || m.name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label>Imagen Personalizada (Banner)</label>
+            <input type="file" accept="image/*" (change)="onFileSelected($event)" class="form-control">
+            <small class="text-muted d-block mt-2">Selecciona una imagen para el banner (JPG, PNG, etc.)</small>
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 

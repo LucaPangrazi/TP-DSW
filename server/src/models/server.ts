@@ -7,7 +7,11 @@ import sucursalRouter from '../routes/sucursal';
 import userRouter from '../routes/user.routes';
 import detallePeliculaRouter from '../routes/detalle-pelicula';
 import funcionesRouter from '../routes/funciones.routes';
+import homeBannerRouter from '../routes/home-banner.routes';
 import db from '../db/connection';
+import './associations'; // Register associations
+
+
 
 
 class Server {
@@ -41,9 +45,9 @@ class Server {
     this.app.use('/api/users', userRouter);
     this.app.use('/api/movies', detallePeliculaRouter);
     this.app.use('/api/funciones', funcionesRouter);
+    this.app.use('/api/home-banner', homeBannerRouter);
 
   }
-
   middlewares() {
     this.app.use(express.json());
     this.app.use(cors());

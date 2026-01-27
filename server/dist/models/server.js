@@ -12,7 +12,9 @@ const sucursal_1 = __importDefault(require("../routes/sucursal"));
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const detalle_pelicula_1 = __importDefault(require("../routes/detalle-pelicula"));
 const funciones_routes_1 = __importDefault(require("../routes/funciones.routes"));
+const home_banner_routes_1 = __importDefault(require("../routes/home-banner.routes"));
 const connection_1 = __importDefault(require("../db/connection"));
+require("./associations"); // Register associations
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -39,6 +41,7 @@ class Server {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/movies', detalle_pelicula_1.default);
         this.app.use('/api/funciones', funciones_routes_1.default);
+        this.app.use('/api/home-banner', home_banner_routes_1.default);
     }
     middlewares() {
         this.app.use(express_1.default.json());

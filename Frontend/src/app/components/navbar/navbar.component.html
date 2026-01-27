@@ -1,7 +1,7 @@
 <ng-container *ngIf="showNavbar">
-  <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #222427;">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/home">
+      <a class="navbar-brand" [routerLink]="isLoggedIn ? '/home' : null" (click)="onBrandClick($event)" [style.cursor]="isLoggedIn ? 'pointer' : 'not-allowed'" [style.opacity]="isLoggedIn ? '1' : '0.5'">
         <strong>Cinetix</strong>
       </a>
 
@@ -12,8 +12,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/home" routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" [routerLink]="isLoggedIn ? '/home' : null" (click)="onCarteleraClick($event)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [style.cursor]="isLoggedIn ? 'pointer' : 'not-allowed'" [style.opacity]="isLoggedIn ? '1' : '0.5'">
               Cartelera
             </a>
           </li>
@@ -46,14 +45,14 @@
         </ul>
 
         <div class="d-flex align-items-center gap-3">
-          <form class="d-flex" *ngIf="searchForm" [formGroup]="searchForm">
+          <form class="d-flex" *ngIf="searchForm && isLoggedIn && showSearchInput" [formGroup]="searchForm">
             <input formControlName="search" class="form-control form-control-sm me-2" type="text"
               placeholder="Buscar película...">
           </form>
 
           <div class="nav-user-info" *ngIf="userName">
             <span class="user-name">👤 {{ userName }}</span>
-            <button class="btn btn-sm btn-outline-light" (click)="logout()">Salir</button>
+            <button type="button" class="btn btn-sm btn-outline-info" (click)="logout()">Salir</button>
           </div>
         </div>
       </div>

@@ -15,12 +15,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchForm: FormGroup | undefined;
   search = new FormControl('');
   showNavbar: boolean = true;
+  showSearchInput: boolean = true;
   userRole: string = '';
   userName: string = '';
   isAdmin: boolean = false;
+  isLoggedIn: boolean = false;
 
   private userSub: Subscription | undefined;
   private adminSub: Subscription | undefined;
+  private isLoggedInSub: Subscription | undefined;
 
   @Output() searchEmitter = new EventEmitter<string>();
 
@@ -47,6 +50,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showNavbar = !event.url.includes('/login') && !event.url.includes('/register');
+        // Hide search input for specific routes
+        this.showSearchInput = !event.url.includes('/seleccion-funcion') &&
+                               !event.url.includes('/pelicula/') &&
+                               !event.url.includes('/comprar-entrada/');
       }
     });
 
@@ -66,11 +73,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.adminSub = this.userService.isAdmin$.subscribe(isAdmin => {
       this.isAdmin = isAdmin;
     });
+
+    // Subscribirse a autenticación
+    this.isLoggedInSub = this.userService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
   }
 
   ngOnDestroy(): void {
     if (this.userSub) this.userSub.unsubscribe();
     if (this.adminSub) this.adminSub.unsubscribe();
+    if (this.isLoggedInSub) this.isLoggedInSub.unsubscribe();
   }
 
   logout() {
@@ -79,7 +92,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   navigateTo(route: string) {
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.router.navigate([route]);
+  }
+
+  onCarteleraClick(event: Event) {
+    if (!this.isLoggedIn) {
+      event.preventDefault();
+      this.router.navigate(['/login']);
+    }
+  }
+
+  onBrandClick(event: Event) {
+    if (!this.isLoggedIn) {
+      event.preventDefault();
+      this.router.navigate(['/login']);
+    }
   }
 
   searchMovies(): void {

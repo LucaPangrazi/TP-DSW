@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AsientosService {
   private asientosSeleccionados: { fila: number; columna: number }[] = [];
+  private apiUrl = environment.endpoint + 'api/funciones';
 
   private datosPeliculaSubject = new BehaviorSubject<{
     pelicula: { id: number; nombre: string };
@@ -19,7 +22,7 @@ export class AsientosService {
 
   obtenerDatosPelicula$ = this.datosPeliculaSubject.asObservable();
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   setAsientosSeleccionados(asientos: { fila: number; columna: number }[]): void {
     this.asientosSeleccionados = asientos;
@@ -37,5 +40,14 @@ export class AsientosService {
 
   obtenerDatosPelicula(): { pelicula: { id: number; nombre: string }; fecha: string; hora?: string } {
     return this.datosPeliculaSubject.getValue();
+  }
+
+  // Guardar asientos ocupados en el backend
+  guardarAsientos(funtion_id: number, seat_codes: string[]): Observable<any> {
+    console.log('Saving seats:', { funtion_id, seat_codes });
+    return this.http.post(`${this.apiUrl}/guardar-asientos`, {
+      funtion_id,
+      seat_codes
+    });
   }
 }

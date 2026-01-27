@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { SearchService } from '../../shared/search.service';
 import { UserService } from '../../services/user.service';
+import { BannerService } from '../../services/banner.service';
 import { Subscription } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface MovieCarousel {
   genre: string;
@@ -19,16 +21,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   allMovies: any[] = [];
   moviesByGenre: MovieCarousel[] = [];
   featuredMovie: any = null;
+  customBannerImage: string | null = null;
   loading = false;
   isAdmin = false;
   private adminSub: Subscription | undefined;
+
+  // Banner Edit
+  showBannerModal = false;
+  bannerForm: FormGroup;
+  selectedFile: File | null = null;
 
   constructor(
     private router: Router,
     private movieService: MovieService,
     private searchService: SearchService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private bannerService: BannerService,
+    private fb: FormBuilder
+  ) {
+    // Inicializar el formulario aquí
+    this.bannerForm = this.fb.group({
+      movie_id: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.adminSub = this.userService.isAdmin$.subscribe(isAdmin => {
@@ -39,7 +54,28 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.filterMovies(term);
     });
 
-    this.loadMovies();
+    // Load banner first, THEN load movies to prevent banner being overwritten
+    this.loadBanner().then(() => {
+      this.loadMovies();
+    });
+  }
+
+  loadBanner(): Promise<void> {
+    return new Promise((resolve) => {
+      this.bannerService.getBanner().subscribe(data => {
+        if (data && data.banner && data.movie) {
+          this.featuredMovie = data.movie;
+          // If custom image exists, use it
+          if (data.banner.custom_image) {
+            this.customBannerImage = `http://localhost:3000/uploads/${data.banner.custom_image}`;
+          }
+        }
+        resolve();
+      }, error => {
+        console.error('Error loading banner:', error);
+        resolve();
+      });
+    });
   }
 
   filterMovies(term: string) {
@@ -95,10 +131,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   processPeliculas(moviesList: any[] = this.allMovies) {
-    if (moviesList.length > 0) {
+    // Only set default featured if NO custom banner image is set
+    // If customBannerImage is set, NEVER override the featured movie
+    if (moviesList.length > 0 && !this.customBannerImage && !this.featuredMovie) {
       this.featuredMovie = moviesList[0];
-    } else {
-      this.featuredMovie = null; // Clear if no search results
     }
 
     const genreMap = new Map<string, any[]>();
@@ -136,6 +172,54 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     // Encode the filename to handle spaces and special characters
     return `http://localhost:3000/uploads/${encodeURIComponent(imagePath)}`;
+  }
+
+  getBannerImage(): string {
+    if (this.customBannerImage) return this.customBannerImage;
+    return this.getImageUrl(this.featuredMovie?.imagen || this.featuredMovie?.image);
+  }
+
+  /* Banner Editor Logic */
+  openBannerModal() {
+    this.showBannerModal = true;
+  }
+
+  closeBannerModal() {
+    this.showBannerModal = false;
+  }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+      this.bannerForm.patchValue({ image: this.selectedFile });
+    }
+  }
+
+  saveBanner() {
+    // Validate that both movie and file are present
+    if (!this.bannerForm.get('movie_id')?.value) {
+      alert('Por favor seleccione una película');
+      return;
+    }
+    if (!this.selectedFile) {
+      alert('Por favor seleccione una imagen para el banner');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('movie_id', this.bannerForm.get('movie_id')?.value);
+    formData.append('image', this.selectedFile);
+
+    this.bannerService.updateBanner(formData).subscribe(() => {
+      alert('Banner actualizado con éxito!');
+      this.closeBannerModal();
+      this.selectedFile = null;
+      this.bannerForm.reset();
+      this.loadBanner(); // Refresh banner
+    }, err => {
+      console.error(err);
+      alert('Error actualizando banner: ' + (err?.error?.msg || err?.error?.error || 'Error desconocido'));
+    });
   }
 
   scrollCarousel(direction: 'left' | 'right', carouselId: string) {

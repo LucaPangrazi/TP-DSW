@@ -1,40 +1,22 @@
+/* Bootswatch Superhero Theme - No custom CSS, using Bootstrap defaults */
+
 .navbar {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  padding: 0.75rem 0;
+  /* Superhero navbar styling from Bootswatch */
+  background-color: #222427 !important;
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
   font-weight: bold;
-  margin-right: 2rem;
-  transition: all 0.3s ease;
+  color: #ffffff !important;
 }
 
-.navbar-brand:hover {
-  color: #00adff !important;
-  transform: scale(1.05);
+.nav-link {
+  color: #ffffff !important;
 }
 
-.navbar-nav .nav-link {
-  margin-right: 1.5rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  color: #00adff !important;
-}
-
-.navbar-nav .nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #00adff;
+.nav-link:hover,
+.nav-link.active {
+  color: #59d4f9 !important;
 }
 
 .nav-user-info {
@@ -46,47 +28,28 @@
 }
 
 .user-name {
-  color: #e0e0e0;
+  color: #ffffff;
   font-weight: 500;
   white-space: nowrap;
 }
 
+.btn-outline-light {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
 .btn-outline-light:hover {
-  background-color: #00adff;
-  border-color: #00adff;
-  color: #000 !important;
+  background-color: #59d4f9;
+  border-color: #59d4f9;
+  color: #222427 !important;
 }
 
 @media (max-width: 991px) {
-  .navbar-nav .nav-link {
-    margin-right: 0;
-    padding: 0.5rem 0;
-  }
-
   .nav-user-info {
     border-left: none;
     padding-left: 0;
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .d-flex {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 576px) {
-  .navbar-brand {
-    font-size: 1.2rem;
-    margin-right: 1rem;
-  }
-
-  .form-control-sm {
-    font-size: 0.85rem;
-  }
-
-  .user-name {
-    font-size: 0.9rem;
   }
 }

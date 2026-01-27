@@ -5,4 +5,7 @@ export interface Funcion {
     sucursal_id: number;
     fecha_funcion: string;
     hora_funcion: string;
+    movie?: { title: string };
+    sala?: { name: string };
+    sucursal?: { nombre: string };
 }
