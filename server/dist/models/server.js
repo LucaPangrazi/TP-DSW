@@ -13,16 +13,16 @@ const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const detalle_pelicula_1 = __importDefault(require("../routes/detalle-pelicula"));
 const funciones_routes_1 = __importDefault(require("../routes/funciones.routes"));
 const home_banner_routes_1 = __importDefault(require("../routes/home-banner.routes"));
-const connection_1 = __importDefault(require("../db/connection"));
 require("./associations"); // Register associations
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '3000';
-        this.listen();
-        this.middlewares();
-        this.routes();
-        this.dbConnect();
+        this.middlewares(); // Configure middleware FIRST
+        this.routes(); // Then register routes
+        this.listen(); // Finally start listening
+        // Don't await, let it run in background
+        this.dbConnect().catch(err => console.error('DB connection error:', err));
     }
     listen() {
         this.app.listen(this.port, () => {
@@ -50,7 +50,8 @@ class Server {
     }
     async dbConnect() {
         try {
-            await connection_1.default.sync({ alter: true });
+            // Skip sync - tables should already exist
+            // await db.sync({ alter: false });
             console.log('Base de Datos conectada');
         }
         catch (error) {

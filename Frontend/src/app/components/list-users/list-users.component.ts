@@ -15,6 +15,7 @@ export class ListUsersComponent implements OnInit {
   listUsers: User[] = [];
   loading: boolean = false;
   filteredUsers: User[] = [];
+  isAdmin: boolean = false;
 
   constructor(private _userService: UserService,
     private toastr: ToastrService,
@@ -29,6 +30,7 @@ export class ListUsersComponent implements OnInit {
         this.searchUsers();
       });
       this.getListUsers();
+      this._userService.isAdmin$.subscribe((v) => this.isAdmin = v);
     }
 
     getListUsers(){
@@ -61,9 +63,14 @@ export class ListUsersComponent implements OnInit {
       );
     }
 
-    deleteUser(id: string) {
+    deleteUser(id?: string) {
       console.log(id);
       this.loading = true;
+      if (!id) {
+        this.loading = false;
+        this.toastr.error('ID de usuario inválido');
+        return;
+      }
       this._userService.deleteUser(id).subscribe(() => {
         this.getListUsers();
         this.toastr.warning('El usuario fue eiminado correctamente', 'Usuario eliminado');

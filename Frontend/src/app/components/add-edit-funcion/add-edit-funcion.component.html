@@ -6,8 +6,15 @@
             <div class="card-body">
                 <form [formGroup]="form" (ngSubmit)="addFuncion()">
 
-                    <label>ID Película</label>
-                    <input formControlName="movie_id" type="number" class="form-control" placeholder="ID Película">
+                    <label>Película</label>
+                    <!-- Input con datalist para buscar por título; se sincroniza con movie_id oculto -->
+                    <input [(ngModel)]="movieSearch" (input)="onMovieSearch()" (blur)="checkMovieSelection()"
+                        list="moviesList" [ngModelOptions]="{standalone: true}" class="form-control"
+                        placeholder="Escriba el nombre de la película">
+                    <datalist id="moviesList">
+                        <option *ngFor="let m of movies" [value]="m.title"></option>
+                    </datalist>
+                    <input formControlName="movie_id" type="hidden">
 
                     <label class="mt-2">ID Sala</label>
                     <input formControlName="sala_id" type="number" class="form-control" placeholder="ID Sala">
@@ -26,7 +33,28 @@
                             <button routerLink="/funciones" type="button" class="btn btn-secondary">Volver</button>
                         </div>
                         <div class="col-6">
-                            <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Aceptar</button>
+                            <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Aceptar</button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="form.invalid && form.touched" class="row mt-3">
+                        <div class="col-12 text-center">
+                            <span class="text-danger">Todos los campos son obligatorios.</span>
+                            <div *ngIf="form.get('movie_id')?.invalid && form.get('movie_id')?.touched">
+                                <small class="text-danger">Debe seleccionar una película válida de la lista.</small>
+                            </div>
+                            <div *ngIf="form.get('sala_id')?.invalid && form.get('sala_id')?.touched">
+                                <small class="text-danger">El ID de Sala es requerido.</small>
+                            </div>
+                            <div *ngIf="form.get('sucursal_id')?.invalid && form.get('sucursal_id')?.touched">
+                                <small class="text-danger">El ID de Sucursal es requerido.</small>
+                            </div>
+                            <div *ngIf="form.get('fecha_funcion')?.invalid && form.get('fecha_funcion')?.touched">
+                                <small class="text-danger">La fecha es requerida.</small>
+                            </div>
+                            <div *ngIf="form.get('hora_funcion')?.invalid && form.get('hora_funcion')?.touched">
+                                <small class="text-danger">La hora es requerida.</small>
+                            </div>
                         </div>
                     </div>
                 </form>

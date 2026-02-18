@@ -23,7 +23,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/users/';
+    this.myApiUrl = 'api/users';
     this.loadUserFromStorage();
   }
 
@@ -67,10 +67,10 @@ export class UserService {
         localStorage.setItem('token', token);
 
         if (!userData) {
-          // If backend doesn't return user object, construct a basic one from input
+          // Si el backend no devuelve un objeto de usuario, construye uno básico a partir de la entrada
           userData = {
             ...user,
-            // Ensure consistent property names
+            // Asegura de que los nombres de las propiedades sean consistentes
             userName: user.userName
           };
         }
@@ -91,11 +91,11 @@ export class UserService {
   }
 
   deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`)
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`)
   }
 
   getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.myAppUrl}${this.myApiUrl}${id}`)
+    return this.http.get<User>(`${this.myAppUrl}${this.myApiUrl}/${id}`)
   }
 
   getListUsers(): Observable<User[]> {
@@ -103,6 +103,6 @@ export class UserService {
   }
 
   updateUser(id: string, user: User): Observable<void> {
-    return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, user);
+    return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`, user);
   }
 }

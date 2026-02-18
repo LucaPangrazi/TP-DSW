@@ -35,8 +35,8 @@ const User = connection_js_1.default.define('User', {
         defaultValue: 'User'
     },
     id: {
-        type: sequelize_1.DataTypes.UUID,
-        defaultValue: sequelize_1.DataTypes.UUIDV4,
+        type: sequelize_1.DataTypes.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
     }

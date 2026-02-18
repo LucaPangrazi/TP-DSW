@@ -30,6 +30,13 @@
             <input type="password" [(ngModel)]="confirmarPassword" class="form-control" placeholder="Ingrese password de nuevo">
             <label>Repetir password</label>
         </div>
+        <div *ngIf="isAdminMode" class="form-floating mb-3 mt-3">
+            <select [(ngModel)]="role" class="form-select">
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+            </select>
+            <label>Rol</label>
+        </div>
         <div class="d-grid gap-2 mb-3">
             <button type="button" (click)="addUser()" class="btn btn-primary btn-lg">Aceptar</button>
         </div>

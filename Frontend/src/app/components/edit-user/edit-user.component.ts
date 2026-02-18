@@ -10,7 +10,7 @@ import { UserService } from '../../services/user.service';
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css']
 })
-export class EditUserComponent implements OnInit{
+export class EditUserComponent implements OnInit {
 
   form: FormGroup;
   loading: boolean = false;
@@ -30,7 +30,7 @@ export class EditUserComponent implements OnInit{
       telefono: ['', Validators.required],
       dni: ['', Validators.required],
       userName: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''], // Password not required for edit
       role: ['', Validators.required]
     });
     this.id = String(aRouter.snapshot.paramMap.get('id'));
@@ -42,16 +42,16 @@ export class EditUserComponent implements OnInit{
 
   getUser(id: string) {
     this.loading = true;
-    this._UserService.getUser(id).subscribe((data: User) => {
+    this._UserService.getUser(id).subscribe((data: any) => {
       this.loading = false;
-      this.form.setValue({ 
+      this.form.patchValue({
         nombre: data.nombre,
         apellido: data.apellido,
         dni: data.dni,
         telefono: data.telefono,
         userName: data.userName,
-        password: data.password,
-        role: data.role
+        role: data.role || data.rol || 'User'
+        // Password is not sent back for security, so we don't set it
       });
     });
   }
@@ -59,31 +59,35 @@ export class EditUserComponent implements OnInit{
   editUser() {
     console.log(this.form);
     if (this.form.valid) {
-      const newUser: User = {
+      const newUser: any = {
         userName: this.form.get('userName')?.value || '',
-        password: this.form.get('password')?.value || '',
         nombre: this.form.get('nombre')?.value || '',
         apellido: this.form.get('apellido')?.value || '',
         dni: this.form.get('dni')?.value || '',
         telefono: this.form.get('telefono')?.value || '',
         role: this.form.get('role')?.value || '',
-        id: this.form.get('id')?.value || ''
-        
+        // id is handled by url param, not body usually, but we can leave it if backend expects
+        id: this.id
       };
 
+      const pass = this.form.get('password')?.value;
+      if (pass) {
+        newUser.password = pass;
+      }
+
       this.loading = true;
-      
+
       newUser.id = this.id;
-        this._UserService.updateUser(this.id, newUser).subscribe(() => {
-          this.toastr.info(`Usuario actualizado correctamente`, 'Usuario actualizado');
-          this.loading = false;
-          this.navigateToUsers();
-        });
-      
+      this._UserService.updateUser(this.id, newUser).subscribe(() => {
+        this.toastr.info(`Usuario actualizado correctamente`, 'Usuario actualizado');
+        this.loading = false;
+        this.navigateToUsers();
+      });
+
       console.log(newUser);
     }
 
-  } 
+  }
   navigateToUsers() {
     this.router.navigate(['/users']);
   }

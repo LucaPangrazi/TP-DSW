@@ -104,28 +104,25 @@ const saveMovie = async (req, res) => {
 exports.saveMovie = saveMovie;
 const updateMovie = async (req, res) => {
     const imageFileName = req.file?.filename;
-    console.log('imageFileName:', imageFileName);
+    // console.log('imageFileName:', imageFileName);
     const { title, genre, format, description, clasification, durationMin } = req.body;
     const id_movie = parseInt(req.params.id);
-    console.log('imageFileName:', imageFileName);
-    if (!imageFileName) {
-        return res.status(400).json({
-            msg: 'No se ha adjuntado una imagen'
-        });
-    }
-    const image = imageFileName;
     try {
         const film = await movie_1.default.findByPk(id_movie);
         if (film) {
-            const updatedMovie = await film.update({
+            const updateData = {
                 title,
                 genre,
                 format,
                 description,
                 clasification,
-                durationMin,
-                image,
-            });
+                durationMin
+            };
+            if (imageFileName) {
+                updateData.image = imageFileName;
+                // Optional: Delete old image if needed, but for now just update reference
+            }
+            const updatedMovie = await film.update(updateData);
             res.json({
                 msg: 'La película fue actualizada',
                 data: updatedMovie,

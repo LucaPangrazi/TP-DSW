@@ -13,7 +13,7 @@ import { MovieService } from '../../services/movie.service';
   templateUrl: './add-edit-movie.component.html',
   styleUrls: ['./add-edit-movie.component.css']
 })
-export class AddEditMovieComponent implements OnInit{
+export class AddEditMovieComponent implements OnInit {
   form: FormGroup;
   loading: boolean = false;
   images = '';
@@ -37,7 +37,7 @@ export class AddEditMovieComponent implements OnInit{
       description: ['', Validators.required],
       clasification: ['', Validators.required],
       durationMin: [''],
-      image: null as File | null 
+      image: null as File | null
     });
     this.id_movie = Number(aRouter.snapshot.paramMap.get('id_movie'));
     console.log(this.id_movie);
@@ -55,7 +55,7 @@ export class AddEditMovieComponent implements OnInit{
     this._movieService.getMovie(id_movie).subscribe((data: Movie) => {
       this.loading = false;
       this.form.setValue({
-     //   id_movie: data.id_movie,
+        //   id_movie: data.id_movie,
         title: data.title,
         genre: data.genre,
         format: data.format,
@@ -66,7 +66,7 @@ export class AddEditMovieComponent implements OnInit{
       });
     });
   }
-  
+
   onImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files[0]) {
@@ -83,9 +83,9 @@ export class AddEditMovieComponent implements OnInit{
         format: this.form.get('format')?.value || '',
         description: this.form.get('description')?.value || '',
         clasification: this.form.get('clasification')?.value || '',
-        durationMin: this.form.get('durationMin')?.value || 0 ,
+        durationMin: this.form.get('durationMin')?.value || 0,
         image: this.form.get('image')?.value || '',
-       // image: this.form.get('image')?.value?.name || '',
+        // image: this.form.get('image')?.value?.name || '',
       };
 
       this.loading = true;
@@ -95,18 +95,26 @@ export class AddEditMovieComponent implements OnInit{
           this.toastr.info(`La película ${newMovie.title} fue actualizada correctamente`, 'Película actualizada');
           this.loading = false;
           this.navigateToMovies();
+        }, error => {
+          console.error(error);
+          this.loading = false;
+          this.toastr.error('Error al actualizar la película', 'Error');
         });
       } else {
         this._movieService.saveMovie(newMovie).subscribe(() => {
           this.toastr.success(`La película ${newMovie.title} fue registrada correctamente`, 'Película registrada'); //msj,titulo
           this.loading = false;
           this.navigateToMovies();
+        }, error => {
+          console.error(error);
+          this.loading = false;
+          this.toastr.error('Error al registrar la película', 'Error');
         });
       }
       console.log(newMovie);
     }
 
-  } 
+  }
   navigateToMovies() {
     this.router.navigate(['/movies']);
   }

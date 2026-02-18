@@ -6,14 +6,7 @@ import { User } from '../../interfaces/user';
 import { ErrorService } from '../../services/error.service';
 import { UserService } from '../../services/user.service';
 
-function getUniqueId(parts: number): string{
-  const stringArr = [];
-  for (let i=0; i< parts; i++){
-    const S4 = (((1+Math.random())*0x10000) | 0).toString(16).substring(1);
-    stringArr.push(S4);
-  }
-  return stringArr.join('-');
-}
+
 
 @Component({
   selector: 'app-register',
@@ -30,7 +23,7 @@ export class RegisterComponent implements OnInit {
   password: string = '';
   confirmarPassword: string = '';
   role: string = '';
-  id: string = '';
+  isAdminMode: boolean = false;
   loading: boolean = false;
 
   constructor(private toastr: ToastrService,
@@ -40,6 +33,7 @@ export class RegisterComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.isAdminMode = this.router.url.includes('/users/register');
   }
 
   addUser() {
@@ -64,8 +58,8 @@ export class RegisterComponent implements OnInit {
       dni: this.dni,
       telefono: this.telefono,
       password: this.password,
-      role: this.role,
-      id: getUniqueId(5)
+      role: this.isAdminMode ? (this.role || 'User') : 'User',
+      
     }
 
     this.loading = true;
@@ -73,7 +67,11 @@ export class RegisterComponent implements OnInit {
       next: (v) => {
         this.loading = false;
         this.toastr.success(`El usuario ${this.userName} fue registrado con exito`, 'Usuario registrado');
-        this.router.navigate(['/login']);
+        if (this.isAdminMode) {
+          this.router.navigate(['/users']);
+        } else {
+          this.router.navigate(['/login']);
+        }
       },
       error: (e: HttpErrorResponse) => {
         this.loading = false;

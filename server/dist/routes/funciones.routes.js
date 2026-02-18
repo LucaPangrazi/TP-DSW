@@ -207,6 +207,7 @@ router.post('/guardar-asientos', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { body } = req;
+    console.log(`Updating function ${id} with data:`, body);
     try {
         const funcion = await funcion_1.default.findByPk(id);
         if (funcion) {

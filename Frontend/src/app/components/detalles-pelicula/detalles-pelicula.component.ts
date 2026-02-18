@@ -32,8 +32,8 @@ export class DetallesPeliculaComponent implements OnInit {
           this.movie = movie;
           if (this.movie.image) {
             const imgStr = this.movie.image as unknown as string;
-            // Backend returns full URL in getMovie, so we should trust it or santize it.
-            // If it has spaces, likely the backend didn't encode. We can try to rely on browser or fix it.
+            // El backend devuelve la URL completa en getMovie.
+            // Si tiene espacios, probablemente el backend no la codificó.
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imgStr);
           }
         },
@@ -47,7 +47,7 @@ export class DetallesPeliculaComponent implements OnInit {
     if (this.movie?.id_movie) {
       this.asientosService.setDatosPelicula({
         pelicula: { id: this.movie.id_movie, nombre: this.movie.title },
-        fecha: '' // Fecha will be selected in next step
+        fecha: '' // Fecha se selecciona en el siguiente paso
       });
       this.router.navigate(['/seleccion-funcion']);
     }

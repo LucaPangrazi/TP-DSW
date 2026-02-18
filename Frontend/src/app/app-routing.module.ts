@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: 'movies/edit/:id_movie', component: AddEditMovieComponent, data: { showSecondNavbar: true } },
   // Usuarios - Usa Second Navbar
   { path: 'users', component: ListUsersComponent, canActivate: [AuthGuard], data: { showSecondNavbar: true } },
+  { path: 'users/register', component: RegisterComponent, canActivate: [AuthGuard], data: { showSecondNavbar: true } },
   { path: 'users/edit/:id', component: EditUserComponent, canActivate: [AuthGuard], data: { showSecondNavbar: true } },
 
   // Salas - Usa Second Navbar

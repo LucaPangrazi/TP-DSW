@@ -32,8 +32,8 @@ const User = db.define('User', {
     defaultValue: 'User'
   },
   id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     allowNull: false,
     primaryKey: true
 }

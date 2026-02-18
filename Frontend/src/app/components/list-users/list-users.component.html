@@ -2,6 +2,9 @@
 <div *ngIf="!loading" class="container">
   <div class="title">
     <h4> Usuarios </h4>
+    <div *ngIf="isAdmin" style="float:right; margin-top:-28px;">
+      <button class="btn btn-primary btn-sm" [routerLink]="['/users/register']">Crear Usuario</button>
+    </div>
   </div>
   <br>
   <table *ngIf="filteredUsers.length > 0" class="table table-hover">

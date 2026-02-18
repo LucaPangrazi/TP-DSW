@@ -28,12 +28,39 @@ const getUser = async (req, res) => {
 };
 exports.getUser = getUser;
 const newUser = async (req, res) => {
-    const { nombre, apellido, userName, dni, telefono, password } = req.body;
-    const user = await user_entity_js_1.default.findOne({ where: { userName: userName } });
-    if (user) {
+    console.log('=== newUser called ===');
+    console.log('Request body:', JSON.stringify(req.body));
+    // Extract allowed fields from body
+    const { nombre, apellido, userName, dni, telefono, password, role } = req.body;
+    // Prevent client from supplying arbitrary id; DB will generate UUID
+    const existing = await user_entity_js_1.default.findOne({ where: { userName: userName } });
+    if (existing) {
         return res.status(400).json({
             msg: `Ya existe un usuario con ese nombre de usuario registrado`
         });
+    }
+    // Determine final role: default to 'User'. Allow creating 'Admin' only when
+    // request includes a valid token from an Admin account.
+    let finalRole = 'User';
+    if (role && role === 'Admin') {
+        // Check Authorization header
+        const headerToken = req.headers['authorization'];
+        if (!headerToken || !headerToken.startsWith('Bearer ')) {
+            return res.status(401).json({ msg: 'Se requiere token de administrador para asignar rol Admin' });
+        }
+        try {
+            const bearerToken = headerToken.slice(7);
+            const payload = jsonwebtoken_1.default.verify(bearerToken, process.env.SECRET_KEY ?? 'ClaveSuperSegura1234');
+            // Look up requesting user to verify role
+            const reqUser = await user_entity_js_1.default.findOne({ where: { userName: payload.userName } });
+            if (!reqUser || (reqUser.role || reqUser.rol || '').toLowerCase() !== 'admin') {
+                return res.status(403).json({ msg: 'Solo administradores pueden crear usuarios con rol Admin' });
+            }
+            finalRole = 'Admin';
+        }
+        catch (err) {
+            return res.status(401).json({ msg: 'token no valido' });
+        }
     }
     try {
         await user_entity_js_1.default.create({
@@ -42,13 +69,15 @@ const newUser = async (req, res) => {
             userName: userName,
             dni: dni,
             telefono: telefono,
-            password: password
+            password: password,
+            role: finalRole
         });
         res.json({
             msg: `Usuario ${userName} creado exitosamente!`
         });
     }
     catch (error) {
+        console.error('Error creating user:', error);
         res.status(400).json({
             msg: `Upps ocurrio un error`,
             error
@@ -125,6 +154,7 @@ const deleteUser = async (req, res) => {
     }
     else {
         await user.destroy();
+        res.json({ msg: 'Usuario eliminado' });
     }
 };
 exports.deleteUser = deleteUser;

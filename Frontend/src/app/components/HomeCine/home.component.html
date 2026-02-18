@@ -14,14 +14,15 @@
       <button class="btn btn-primary btn-lg" (click)="goToMovieDetails(featuredMovie.id_movie || featuredMovie.id)">
         <i class="bi bi-ticket-perforated"></i> Comprar Entrada
       </button>
-      <button class="btn btn-outline-light btn-lg ms-3">
+      <button class="btn btn-outline-light btn-lg ms-3"
+        (click)="goToMovieDetails(featuredMovie.id_movie || featuredMovie.id)">
         <i class="bi bi-info-circle"></i> Más Información
       </button>
     </div>
   </div>
 </div>
 
-<!-- Banner Editor Modal -->
+
 <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBannerModal}" style="background: rgba(0,0,0,0.5);">
   <div class="modal-dialog">
     <div class="modal-content">

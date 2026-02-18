@@ -21,10 +21,11 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT || '3000';
-    this.listen();
-    this.middlewares();
-    this.routes();
-    this.dbConnect();
+    this.middlewares();  // Configure middleware FIRST
+    this.routes();       // Then register routes
+    this.listen();       // Finally start listening
+    // Don't await, let it run in background
+    this.dbConnect().catch(err => console.error('DB connection error:', err));
   }
 
   listen() {
@@ -56,7 +57,8 @@ class Server {
 
   async dbConnect() {
     try {
-      await db.sync({ alter: true });
+      // Skip sync - tables should already exist
+      // await db.sync({ alter: false });
       console.log('Base de Datos conectada');
     } catch (error) {
       console.log('Error al conectarse a la base de datos', error);
