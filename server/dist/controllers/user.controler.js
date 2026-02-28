@@ -30,20 +30,20 @@ exports.getUser = getUser;
 const newUser = async (req, res) => {
     console.log('=== newUser called ===');
     console.log('Request body:', JSON.stringify(req.body));
-    // Extract allowed fields from body
+    // Extraer los campos permitidos del body
     const { nombre, apellido, userName, dni, telefono, password, role } = req.body;
-    // Prevent client from supplying arbitrary id; DB will generate UUID
+    // Evitar que el cliente envíe un id arbitrario; la BD generará el UUID
     const existing = await user_entity_js_1.default.findOne({ where: { userName: userName } });
     if (existing) {
         return res.status(400).json({
             msg: `Ya existe un usuario con ese nombre de usuario registrado`
         });
     }
-    // Determine final role: default to 'User'. Allow creating 'Admin' only when
-    // request includes a valid token from an Admin account.
+    // Determinar el rol final: por defecto 'User'. Permitir crear 'Admin' solo cuando
+    // la solicitud incluya un token válido de una cuenta Admin.
     let finalRole = 'User';
     if (role && role === 'Admin') {
-        // Check Authorization header
+        // Verificar el header Authorization
         const headerToken = req.headers['authorization'];
         if (!headerToken || !headerToken.startsWith('Bearer ')) {
             return res.status(401).json({ msg: 'Se requiere token de administrador para asignar rol Admin' });

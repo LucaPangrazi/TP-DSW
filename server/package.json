@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/pdfkit": "^0.17.5",
     "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.0",
@@ -27,6 +28,7 @@
     "mysql2": "^3.6.2",
     "nodemailer": "^6.10.0",
     "path": "^0.12.7",
+    "pdfkit": "^0.17.2",
     "rimraf": "^5.0.5",
     "sequelize": "^6.35.1",
     "sequelize-cli": "^6.6.1",

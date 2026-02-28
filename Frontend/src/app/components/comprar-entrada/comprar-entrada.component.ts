@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
 import { AsientosService } from '../../shared/asientos.service';
 import { FuncionesService } from '../../services/funciones.service';
 import { HttpClient } from '@angular/common/http';
 import * as QRCode from 'qrcode';
-// import { jsPDF } from 'jspdf';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-comprar-entrada',
@@ -22,13 +24,18 @@ export class ComprarEntradaComponent implements OnInit {
   qrData: string = '';
   compraConfirmada: boolean = false;
 
+  mostrarModal: boolean = false;
+  loadingEmail: boolean = false;
+  emailControl = new FormControl('', [Validators.required, Validators.email]);
+
   @ViewChild('qrCanvas') qrCanvas!: ElementRef<HTMLCanvasElement>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private asientosService: AsientosService,
     private funcionesService: FuncionesService,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +44,7 @@ export class ComprarEntradaComponent implements OnInit {
     if (peliculaId) {
       const pelicula = this.asientosService.obtenerDatosPelicula();
       this.peliculaSeleccionada = pelicula;
-      this.verResumen(); // Auto-calculate summary
+      this.verResumen(); // Calculo automatico de la suma
     }
 
     this.asientosService.obtenerDatosPelicula$.subscribe((datos) => {
@@ -76,12 +83,12 @@ export class ComprarEntradaComponent implements OnInit {
   confirmarCompra(): void {
     if (!this.resumenCompra) return;
 
-    // Convertir asientos a formato "fila-columna"
+    // Convierto asientos a formato "fila-columna"
     const seat_codes = this.resumenCompra.asientos.map(a => `${a.fila}-${a.columna}`);
 
     console.log('Confirming purchase with seats:', seat_codes);
 
-    // Obtener el ID de la función
+    // Obtengo ID de la función
     const peliculaId = this.peliculaSeleccionada?.pelicula.id;
     const fecha = this.peliculaSeleccionada?.fecha;
     const hora = this.peliculaSeleccionada?.hora;
@@ -91,7 +98,7 @@ export class ComprarEntradaComponent implements OnInit {
       return;
     }
 
-    // Obtener el ID de la función
+    // Obtengo ID de la función
     this.funcionesService.obtenerFuncionPorDatos(peliculaId, fecha, hora).subscribe({
       next: (respuesta: any) => {
         const funtion_id = respuesta.id_funcion;
@@ -120,7 +127,7 @@ export class ComprarEntradaComponent implements OnInit {
   generarQR(): void {
     if (!this.resumenCompra) return;
 
-    // Construct QR Data exactly as requested
+    // QR
     const asientosStr = this.resumenCompra.asientos
       .map(a => `Fila ${a.fila + 1} - Columna ${a.columna + 1}`)
       .join(', ');
@@ -134,7 +141,7 @@ Promoción 2x1 aplicada: ${this.resumenCompra.cant2x1} combos (${this.resumenCom
 Total a Pagar: $${this.resumenCompra.total}
     `.trim();
 
-    // Generate QR on the canvas
+    // Generar QR
     setTimeout(() => {
       if (this.qrCanvas?.nativeElement) {
         QRCode.toCanvas(this.qrCanvas.nativeElement, this.qrData, {
@@ -148,34 +155,45 @@ Total a Pagar: $${this.resumenCompra.total}
     }, 100);
   }
 
-  descargarPDF(): void {
-    if (!this.resumenCompra || !this.qrCanvas) return;
+  abrirModalEmail(): void {
+    this.emailControl.reset();
+    this.mostrarModal = true;
+  }
 
-    /*
-    const doc = new jsPDF();
+  cerrarModalEmail(): void {
+    this.mostrarModal = false;
+  }
 
-    doc.setFontSize(18);
-    doc.text('Resumen de Compra - Cinetix', 20, 20);
+  enviarResumen(): void {
+    if (this.emailControl.invalid) {
+      this.emailControl.markAsTouched();
+      return;
+    }
 
-    doc.setFontSize(12);
-    doc.text(`Película: ${this.resumenCompra.pelicula}`, 20, 40);
-    doc.text(`Fecha: ${this.resumenCompra.fecha}`, 20, 50);
-    doc.text(`Total Entradas: ${this.resumenCompra.cantidad}`, 20, 60);
+    const peliculaId = this.peliculaSeleccionada?.pelicula.id;
+    if (!peliculaId) return;
 
-    const asientosStr = this.resumenCompra.asientos
-      .map(a => `F ${a.fila + 1} - C ${a.columna + 1}`).join(', ');
-    doc.text(`Asientos: ${asientosStr}`, 20, 70);
+    this.loadingEmail = true;
+    const email = this.emailControl.value;
+    const payload = {
+      email,
+      resumenCompra: this.resumenCompra
+    };
 
-    doc.text(`Total Pagado: $${this.resumenCompra.total}`, 20, 90);
+    console.log('Sending email request with payload:', payload);
 
-    // Add QR
-    const canvas = this.qrCanvas.nativeElement;
-    const imgData = canvas.toDataURL('image/png');
-    doc.addImage(imgData, 'PNG', 20, 100, 50, 50);
-
-    doc.save('Entrada_Cinetix.pdf');
-    */
-    alert('Función PDF temporalmente deshabilitada para mantenimiento.');
+    this.http.post(`${environment.endpoint}api/comprar-entrada/${peliculaId}/enviar-resumen`, payload).subscribe({
+      next: () => {
+        this.toastr.success('Correo enviado correctamente');
+        this.loadingEmail = false;
+        this.cerrarModalEmail();
+      },
+      error: (error) => {
+        console.error('Error enviando correo', error);
+        this.toastr.error('Error al enviar el correo');
+        this.loadingEmail = false;
+      }
+    });
   }
 
   hasAsientosSeleccionados(): boolean {

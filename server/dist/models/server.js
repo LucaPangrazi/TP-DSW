@@ -13,6 +13,7 @@ const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const detalle_pelicula_1 = __importDefault(require("../routes/detalle-pelicula"));
 const funciones_routes_1 = __importDefault(require("../routes/funciones.routes"));
 const home_banner_routes_1 = __importDefault(require("../routes/home-banner.routes"));
+const compra_1 = __importDefault(require("../routes/compra"));
 require("./associations"); // Register associations
 class Server {
     constructor() {
@@ -42,6 +43,7 @@ class Server {
         this.app.use('/api/movies', detalle_pelicula_1.default);
         this.app.use('/api/funciones', funciones_routes_1.default);
         this.app.use('/api/home-banner', home_banner_routes_1.default);
+        this.app.use('/api/comprar-entrada', compra_1.default);
     }
     middlewares() {
         this.app.use(express_1.default.json());

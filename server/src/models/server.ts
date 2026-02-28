@@ -8,10 +8,9 @@ import userRouter from '../routes/user.routes';
 import detallePeliculaRouter from '../routes/detalle-pelicula';
 import funcionesRouter from '../routes/funciones.routes';
 import homeBannerRouter from '../routes/home-banner.routes';
+import compraRouter from '../routes/compra';
 import db from '../db/connection';
-import './associations'; // Register associations
-
-
+import './associations';
 
 
 class Server {
@@ -21,10 +20,9 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT || '3000';
-    this.middlewares();  // Configure middleware FIRST
-    this.routes();       // Then register routes
-    this.listen();       // Finally start listening
-    // Don't await, let it run in background
+    this.middlewares();  // Configuro middleware
+    this.routes();       // Registro rutas
+    this.listen();       // Escucho servidor
     this.dbConnect().catch(err => console.error('DB connection error:', err));
   }
 
@@ -47,6 +45,7 @@ class Server {
     this.app.use('/api/movies', detallePeliculaRouter);
     this.app.use('/api/funciones', funcionesRouter);
     this.app.use('/api/home-banner', homeBannerRouter);
+    this.app.use('/api/comprar-entrada', compraRouter);
 
   }
   middlewares() {
@@ -57,8 +56,6 @@ class Server {
 
   async dbConnect() {
     try {
-      // Skip sync - tables should already exist
-      // await db.sync({ alter: false });
       console.log('Base de Datos conectada');
     } catch (error) {
       console.log('Error al conectarse a la base de datos', error);

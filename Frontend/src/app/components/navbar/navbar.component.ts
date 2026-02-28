@@ -50,10 +50,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showNavbar = !event.url.includes('/login') && !event.url.includes('/register');
-        // Hide search input for specific routes
+        // busca ingresando una ruta especifica
         this.showSearchInput = !event.url.includes('/seleccion-funcion') &&
-                               !event.url.includes('/pelicula/') &&
-                               !event.url.includes('/comprar-entrada/');
+          !event.url.includes('/pelicula/') &&
+          !event.url.includes('/comprar-entrada/');
       }
     });
 
