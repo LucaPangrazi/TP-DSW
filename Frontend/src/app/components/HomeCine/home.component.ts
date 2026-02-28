@@ -4,6 +4,7 @@ import { MovieService } from '../../services/movie.service';
 import { SearchService } from '../../shared/search.service';
 import { UserService } from '../../services/user.service';
 import { BannerService } from '../../services/banner.service';
+import { AsientosService } from '../../shared/asientos.service';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private userService: UserService,
     private bannerService: BannerService,
+    private asientosService: AsientosService,
     private fb: FormBuilder
   ) {
     this.bannerForm = this.fb.group({
@@ -158,6 +160,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/pelicula', movieId]);
   }
 
+  comprarEntradaBanner() {
+    if (this.featuredMovie) {
+      const movieId = this.featuredMovie.id_movie || this.featuredMovie.id;
+      const movieTitle = this.featuredMovie.title || this.featuredMovie.titulo || this.featuredMovie.name || 'Película seleccionada';
+      this.asientosService.setDatosPelicula({
+        pelicula: { id: movieId, nombre: movieTitle },
+        fecha: '' // Fecha se selecciona en el siguiente paso
+      });
+      this.router.navigate(['/seleccion-funcion']);
+    }
+  }
+
   getImageUrl(imagePath: string): string {
     if (!imagePath) {
       return 'assets/placeholder-movie.jpg';
@@ -173,7 +187,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.getImageUrl(this.featuredMovie?.imagen || this.featuredMovie?.image);
   }
 
- 
+
   openBannerModal() {
     this.showBannerModal = true;
   }
