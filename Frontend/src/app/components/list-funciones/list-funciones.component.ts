@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FuncionesService } from '../../services/funciones.service';
 import { MovieService } from '../../services/movie.service';
+import { SearchService } from '../../shared/search.service';
 import { Movie } from '../../interfaces/movie';
 import { ToastrService } from 'ngx-toastr';
 import { Funcion } from '../../interfaces/funcion';
@@ -13,24 +14,32 @@ import { Funcion } from '../../interfaces/funcion';
 })
 export class ListFuncionesComponent implements OnInit {
     listFunciones: Funcion[] = [];
+    filteredFunciones: Funcion[] = [];
     loading: boolean = false;
+    movieMap: Record<number, string> = {};
+    currentSearchTerm: string = '';
 
     constructor(
         private _funcionesService: FuncionesService,
         private _movieService: MovieService,
+        private searchService: SearchService,
         private toastr: ToastrService
     ) { }
 
-    movieMap: Record<number, string> = {};
-
     ngOnInit(): void {
         this.getListFunciones();
+
+        this.searchService.searchTerm$.subscribe(term => {
+            this.currentSearchTerm = term;
+            this.filterFunciones(term);
+        });
     }
 
     getListFunciones() {
         this.loading = true;
         this._funcionesService.getFunciones().subscribe(data => {
             this.listFunciones = data;
+            this.filteredFunciones = [...this.listFunciones];
             this.loading = false;
             // After loading funciones, also load movies to map ids->titles
             this._movieService.getListMovies().subscribe((movies: Movie[]) => {
@@ -40,10 +49,26 @@ export class ListFuncionesComponent implements OnInit {
                         this.movieMap[m.id_movie] = m.title;
                     }
                 });
-            }, () => {});
+
+                // Re-apply filter in case movies loaded after the search term
+                this.filterFunciones(this.currentSearchTerm);
+            }, () => { });
         }, error => {
             console.log(error);
             this.loading = false;
+        });
+    }
+
+    filterFunciones(term: string) {
+        if (!term || !term.trim()) {
+            this.filteredFunciones = [...this.listFunciones];
+            return;
+        }
+
+        const lowerTerm = term.toLowerCase();
+        this.filteredFunciones = this.listFunciones.filter(funcion => {
+            const movieTitle = this.movieMap[funcion.movie_id] || String(funcion.movie_id);
+            return movieTitle.toLowerCase().includes(lowerTerm);
         });
     }
 

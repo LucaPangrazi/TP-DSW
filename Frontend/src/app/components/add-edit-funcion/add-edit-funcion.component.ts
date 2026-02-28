@@ -81,7 +81,7 @@ export class AddEditFuncionComponent implements OnInit {
                 hora_funcion: data.hora_funcion
             });
 
-            // set movieSearch to display the movie title in the input
+            // Establecer movieSearch para mostrar el título de la película en el input
             if (this.movies && this.movies.length > 0) {
                 const m = this.movies.find(x => Number(x.id_movie) === Number(data.movie_id));
                 if (m) {
@@ -89,7 +89,7 @@ export class AddEditFuncionComponent implements OnInit {
                 }
             }
 
-            // If not found in current list (maybe pagination?), try to fetch specific movie
+            // Si no se encuentra en la lista actual, intento obtener la película específica
             if (!this.movieSearch) {
                 this._movieService.getMovie(data.movie_id).subscribe(mv => {
                     this.movieSearch = mv.title;
@@ -100,7 +100,6 @@ export class AddEditFuncionComponent implements OnInit {
 
     onMovieSearch() {
         const searchValue = this.movieSearch?.trim();
-        // console.log('Searching for:', searchValue);
 
         if (!searchValue) {
             this.form.patchValue({ movie_id: null });
@@ -111,7 +110,6 @@ export class AddEditFuncionComponent implements OnInit {
         const found = this.movies.find(m => m.title.toLowerCase() === searchValue.toLowerCase());
 
         if (found && found.id_movie) {
-            // console.log('Movie auto-matched:', found);
             this.form.patchValue({ movie_id: Number(found.id_movie) });
         } else {
             // Si el usuario sigue escribiendo y no hay match exacto, reseteamos el ID
@@ -164,8 +162,6 @@ export class AddEditFuncionComponent implements OnInit {
         console.log('Sending payload:', funcion);
 
         if (this.id !== 0) {
-            // Edit
-            // funcion.id = this.id; // Do not send ID in body for update, it's in the URL
             this._funcionesService.updateFuncion(this.id, funcion).subscribe(() => {
                 this.toastr.info(`La función fue actualizada con éxito`, 'Función actualizada');
                 this.router.navigate(['/funciones']);
@@ -174,7 +170,6 @@ export class AddEditFuncionComponent implements OnInit {
                 this.toastr.error('Error al actualizar la función', 'Error');
             });
         } else {
-            // Add
             this._funcionesService.saveFuncion(funcion).subscribe(() => {
                 this.toastr.success(`La función fue registrada con éxito`, 'Función registrada');
                 this.router.navigate(['/funciones']);
