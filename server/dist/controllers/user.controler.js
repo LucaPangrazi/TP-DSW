@@ -112,7 +112,7 @@ const loginUser = async (req, res) => {
             nombre: user.nombre,
             apellido: user.apellido,
             userName: user.userName,
-            role: user.role || user.rol,
+            role: user.role || user.rol, // Manejar posibles nombres de propiedades
             dni: user.dni,
             telefono: user.telefono
         }

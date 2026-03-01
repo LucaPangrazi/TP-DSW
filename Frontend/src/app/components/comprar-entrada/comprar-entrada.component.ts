@@ -44,7 +44,7 @@ export class ComprarEntradaComponent implements OnInit {
     if (peliculaId) {
       const pelicula = this.asientosService.obtenerDatosPelicula();
       this.peliculaSeleccionada = pelicula;
-      this.verResumen(); // Calculo automatico de la suma
+      this.verResumen(); // Calculo automatico de los asientos
     }
 
     this.asientosService.obtenerDatosPelicula$.subscribe((datos) => {
@@ -86,7 +86,7 @@ export class ComprarEntradaComponent implements OnInit {
     // Convierto asientos a formato "fila-columna"
     const seat_codes = this.resumenCompra.asientos.map(a => `${a.fila}-${a.columna}`);
 
-    console.log('Confirming purchase with seats:', seat_codes);
+    console.log('Confirmacion de compra con asientos:', seat_codes);
 
     // Obtengo ID de la función
     const peliculaId = this.peliculaSeleccionada?.pelicula.id;
@@ -102,17 +102,17 @@ export class ComprarEntradaComponent implements OnInit {
     this.funcionesService.obtenerFuncionPorDatos(peliculaId, fecha, hora).subscribe({
       next: (respuesta: any) => {
         const funtion_id = respuesta.id_funcion;
-        console.log('Function ID:', funtion_id);
+        console.log('ID de la función:', funtion_id);
 
         // Guardar asientos
         this.asientosService.guardarAsientos(funtion_id, seat_codes).subscribe({
           next: (response: any) => {
-            console.log('Seats saved successfully:', response);
+            console.log('Asientos guardados correctamente:', response);
             this.compraConfirmada = true;
             this.generarQR();
           },
           error: (error: any) => {
-            console.error('Error saving seats:', error);
+            console.error('Error al guardar asientos:', error);
             alert('Error al guardar asientos: ' + (error?.error?.msg || error?.error?.error || 'Error desconocido'));
           }
         });
@@ -149,7 +149,7 @@ Total a Pagar: $${this.resumenCompra.total}
           errorCorrectionLevel: 'M'
         }, function (error: any) {
           if (error) console.error('QR Error:', error);
-          else console.log('QR Code generated successfully!');
+          else console.log('Codigo QR generado correctamente');
         });
       }
     }, 100);

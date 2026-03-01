@@ -14,15 +14,14 @@ const detalle_pelicula_1 = __importDefault(require("../routes/detalle-pelicula")
 const funciones_routes_1 = __importDefault(require("../routes/funciones.routes"));
 const home_banner_routes_1 = __importDefault(require("../routes/home-banner.routes"));
 const compra_1 = __importDefault(require("../routes/compra"));
-require("./associations"); // Register associations
+require("./associations");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '3000';
-        this.middlewares(); // Configure middleware FIRST
-        this.routes(); // Then register routes
-        this.listen(); // Finally start listening
-        // Don't await, let it run in background
+        this.middlewares(); // Configuro middleware
+        this.routes(); // Registro rutas
+        this.listen(); // Escucho servidor
         this.dbConnect().catch(err => console.error('DB connection error:', err));
     }
     listen() {
@@ -52,8 +51,6 @@ class Server {
     }
     async dbConnect() {
         try {
-            // Skip sync - tables should already exist
-            // await db.sync({ alter: false });
             console.log('Base de Datos conectada');
         }
         catch (error) {

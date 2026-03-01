@@ -2,7 +2,7 @@
 <div class="comprar-container" *ngIf="resumenCompra">
   <h2>Resumen de la Compra</h2>
 
-  <div class="card p-3 mb-3">
+  <div class="card text-white bg-dark mb-3 mt-4 p-4">
     <p><strong>Película:</strong> {{ resumenCompra.pelicula }}</p>
     <p><strong>Fecha:</strong> {{ resumenCompra.fecha }}</p>
     <p><strong>Total de Entradas:</strong> {{ resumenCompra.cantidad }}</p>
@@ -17,11 +17,11 @@
     </div>
   </div>
 
-  <div class="card p-3 mb-3 bg-light">
+  <div class="card text-white bg-success mb-3 mt-4 p-4">
     <h4>Detalle de Pago</h4>
-    <p class="text-success" *ngIf="resumenCompra.cant2x1 > 0">
-      <strong>Promoción 2x1 aplicada:</strong> {{ resumenCompra.cant2x1 }} combos ({{ resumenCompra.cant2x1 * 2 }}
-      entradas)
+    <p class="text-dark" *ngIf="resumenCompra.cant2x1 > 0">
+      <strong>Promoción 2x1 aplicada:{{ resumenCompra.cant2x1 }} combos ({{ resumenCompra.cant2x1 * 2 }}
+        entradas)</strong>
     </p>
     <p *ngIf="resumenCompra.cantNormal > 0">
       <strong>Entradas precio regular:</strong> {{ resumenCompra.cantNormal }}

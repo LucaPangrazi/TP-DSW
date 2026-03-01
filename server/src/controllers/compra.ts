@@ -19,12 +19,11 @@ export const enviarResumenCompra = async (req: Request, res: Response) => {
         // Validar que la compra exista
         // Verifico haber recibido los datos del frontend ResumenCompra
         if (!resumenCompra) {
-            console.log('[enviarResumenCompra] Error: resumenCompra not found in body');
-            return res.status(404).json({ message: "Purchase not found or missing from request" });
+            console.log('[enviarResumenCompra] Error: no se encontro resumenCompra en la solicitud');
+            return res.status(404).json({ message: "No se encontro la compra" });
         }
 
-        console.log('[enviarResumenCompra] Starting PDF generation...');
-        // Genero el PDF (pdfkit)
+        console.log('[enviarResumenCompra] Genero PDF');
         const doc = new PDFDocument({ margin: 50 });
         const buffers: any[] = [];
 
@@ -38,13 +37,22 @@ export const enviarResumenCompra = async (req: Request, res: Response) => {
         });
 
         // Cabecera
-        doc.fontSize(24).text('CINETIX', { align: 'center' });
-        doc.moveDown(0.5);
-        doc.fontSize(16).text('Resumen de Compra', { align: 'center' });
-        doc.moveDown(2);
+        doc.font('Times-Bold').fontSize(32).text('CINETIX', { align: 'center' });
 
-        // Cuerpo
-        doc.fontSize(12);
+        doc.font('Helvetica').fontSize(18).text('Ticket de Compra', { align: 'center' });
+
+        doc.moveDown(1.5);
+
+        // Línea separadora
+        doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+
+        doc.moveDown(1.5);
+
+        // detalles de funcion
+        doc.font('Times-Bold').fontSize(18).text('Detalles de la función');
+        doc.moveDown(0.8);
+
+        doc.font('Times-Roman').fontSize(14);
         doc.text(`Película: ${resumenCompra.pelicula}`);
         doc.text(`Fecha: ${resumenCompra.fecha}`);
         // Si el frontend no envió sucursal y sala dentro de resumenCompra,
@@ -55,29 +63,45 @@ export const enviarResumenCompra = async (req: Request, res: Response) => {
 
         doc.text(`Total de entradas: ${resumenCompra.cantidad}`);
 
-        doc.moveDown();
-        doc.text('Asientos:');
+        doc.moveDown(1);
+
+        // asientos
+        doc.font('Times-Bold').fontSize(15).text('Asientos');
+        doc.moveDown(0.5);
         if (resumenCompra.asientos && Array.isArray(resumenCompra.asientos)) {
             resumenCompra.asientos.forEach((asiento: any) => {
                 doc.text(`- Fila ${asiento.fila + 1}, Columna ${asiento.columna + 1}`);
             });
         }
 
-        doc.moveDown();
-        doc.text(`Promoción aplicada: ${resumenCompra.cant2x1 || 0} combos (${(resumenCompra.cant2x1 || 0) * 2} entradas)`);
+        doc.moveDown(1);
+
+        doc.font('Times-Bold').fontSize(15).text('Promoción aplicada');
+        doc.font('Times-Roman').fontSize(14);
+        doc.text(`Combos 2x1: ${resumenCompra.cant2x1 || 0} (${(resumenCompra.cant2x1 || 0) * 2} entradas)`);
         doc.text(`Entradas precio regular: ${resumenCompra.cantNormal || 0}`);
 
-        doc.moveDown();
-        doc.fontSize(14).font('Helvetica-Bold').text(`Total a pagar: $${resumenCompra.total}`);
+        doc.moveDown(1.5);
+
+        // Línea separadora antes del total
+        doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+
+        doc.moveDown(1.5);
+
+        doc.font('Times-Bold').fontSize(18).text(`TOTAL A PAGAR: $${resumenCompra.total}`, { align: 'right' });
+
+        doc.moveDown(4);
+
+        // pie de ticket
+        doc.fontSize(12).font('Helvetica-Oblique').text('Gracias por elegir Cinetix', { align: 'center' });
 
         doc.end();
 
         const pdfBuffer = await endPdfPromise;
         console.log('[enviarResumenCompra] PDF generado correctamente, tamaño del Buffer:', pdfBuffer.length);
 
-        console.log('[enviarResumenCompra] Preparando el envío del email con nodemailer');
-        // Envio de email 
-        console.log('[enviarResumenCompra] Verifico credenciales en process.env:');
+
+        // Envio de email, Verifico credenciales en process.env
         console.log(`[enviarResumenCompra] EMAIL_USER loaded: ${!!process.env.EMAIL_USER} (Value: ${process.env.EMAIL_USER || 'undefined'})`);
         console.log(`[enviarResumenCompra] EMAIL_PASS loaded: ${!!process.env.EMAIL_PASS} (Value: ${process.env.EMAIL_PASS ? '***' : 'undefined'})`);
 
