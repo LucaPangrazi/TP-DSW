@@ -59,6 +59,7 @@ const deleteMovie = async (req, res) => {
             else {
                 console.log(`La imagen ${imageName} no existe en el sistema de archivos.`);
             }
+            res.json({ msg: 'Película eliminada correctamente' });
         }
         catch (error) {
             console.error(`Error al eliminar la película ${id_movie}:`, error);

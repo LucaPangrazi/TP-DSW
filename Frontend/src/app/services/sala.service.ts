@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { Sala } from '../interfaces/sala';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class SalaService {
   }
 
   getListSalas(): Observable<Sala[]> {
-   
-   return this.http.get<Sala[]>(this.myAppUrl + this.myApiUrl);
+
+    return this.http.get<Sala[]>(this.myAppUrl + this.myApiUrl);
   }
 
   deleteSala(id: number): Observable<void> {
