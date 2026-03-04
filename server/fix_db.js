@@ -9,11 +9,10 @@ const mysql = require('mysql2/promise');
       database: 'cine'
     });
 
-    // Drop the malformed table and recreate it correctly
-    console.log('Dropping existing Users table...');
+    console.log('Eliminar sie xiste la tabla Users...');
     await connection.execute('DROP TABLE IF EXISTS Users');
 
-    console.log('Creating Users table with correct schema...');
+    console.log('Crecion de usuarios con la estructura correcta...');
     await connection.execute(`
       CREATE TABLE Users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,9 +30,9 @@ const mysql = require('mysql2/promise');
 
     console.log('Users table created successfully!');
 
-    // Verify structure
+    // Verifica estructura
     const [rows] = await connection.execute('DESCRIBE Users');
-    console.log('\nNew Users table structure:');
+    console.log('\nNuevos usuarios:');
     console.table(rows);
 
     await connection.end();

@@ -41,7 +41,7 @@ export class ListFuncionesComponent implements OnInit {
             this.listFunciones = data;
             this.filteredFunciones = [...this.listFunciones];
             this.loading = false;
-            // After loading funciones, also load movies to map ids->titles
+            // Después de cargar las funciones,buscar las películas por id para traer los títulos
             this._movieService.getListMovies().subscribe((movies: Movie[]) => {
                 this.movieMap = {};
                 movies.forEach(m => {
@@ -50,7 +50,7 @@ export class ListFuncionesComponent implements OnInit {
                     }
                 });
 
-                // Re-apply filter in case movies loaded after the search term
+                // Vuelvo a aplicar el filtro por si las películas se terminan de cargar después de haber buscado
                 this.filterFunciones(this.currentSearchTerm);
             }, () => { });
         }, error => {

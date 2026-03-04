@@ -93,7 +93,7 @@ export class AddEditFuncionComponent implements OnInit {
             if (!this.movieSearch) {
                 this._movieService.getMovie(data.movie_id).subscribe(mv => {
                     this.movieSearch = mv.title;
-                }, err => console.error('Error fetching movie details', err));
+                }, err => console.error('Error al obtener los detalles de la película', err));
             }
         });
     }

@@ -30,7 +30,7 @@ export class EditUserComponent implements OnInit {
       telefono: ['', Validators.required],
       dni: ['', Validators.required],
       userName: ['', Validators.required],
-      password: [''], // Password not required for edit
+      password: [''], // La password no es reuqerida a la hora de editar
       role: ['', Validators.required]
     });
     this.id = String(aRouter.snapshot.paramMap.get('id'));
@@ -51,7 +51,7 @@ export class EditUserComponent implements OnInit {
         telefono: data.telefono,
         userName: data.userName,
         role: data.role || data.rol || 'User'
-        // Password is not sent back for security, so we don't set it
+        // Por seguridad, la contraseña no se devuelve
       });
     });
   }
@@ -66,7 +66,7 @@ export class EditUserComponent implements OnInit {
         dni: this.form.get('dni')?.value || '',
         telefono: this.form.get('telefono')?.value || '',
         role: this.form.get('role')?.value || '',
-        // id is handled by url param, not body usually, but we can leave it if backend expects
+        // Mantenemos el id por las dudas de que el backend lo necesite - VER
         id: this.id
       };
 

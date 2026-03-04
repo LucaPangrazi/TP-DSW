@@ -50,7 +50,7 @@ export class SeleccionAsientosComponent implements OnInit {
     const datos = this.asientosService.obtenerDatosPelicula();
     if (!datos.pelicula || !datos.fecha) return;
 
-    // Use selected time or fall back to stored time
+    // Usar hora seleccionada o buscar hora guardada
     const hora = datos.hora || this.horaSeleccionada;
 
     if (datos.pelicula.id && datos.fecha && hora) {
@@ -65,7 +65,7 @@ export class SeleccionAsientosComponent implements OnInit {
             }
           });
         },
-        error => console.error('Error fetching seats', error)
+        error => console.error('Error al encontrar asientos', error)
       );
     }
   }
