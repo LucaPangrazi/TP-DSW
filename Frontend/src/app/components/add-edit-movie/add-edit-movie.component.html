@@ -14,8 +14,14 @@
           <input formControlName="durationMin" type="number" class="form-control mt-2" placeholder="Ingrese duracion">
           <div class="form-group">
             <label for="image">Imagen del Producto:</label>
+            <div *ngIf="id_movie !== 0 && currentImageUrl" class="mb-2">
+              <img [src]="currentImageUrl" alt="Current Movie Image"
+                style="max-height: 150px; display: block; border-radius: 5px;">
+            </div>
             <input type="file" class="form-control-file" id="image" name="image" formControlName="image"
-              accept="image/*" (change)="onImageSelected($event)" required>
+              accept="image/*" (change)="onImageSelected($event)">
+            <small *ngIf="id_movie !== 0" class="text-muted d-block mt-1">Deja este campo vacío si no deseas cambiar la
+              imagen actual.</small>
           </div>
           <div
             *ngIf="form.get('title')?.hasError('required')  || form.get('genre')?.hasError('required') || form.get('clasification')?.hasError('required') || form.get('format')?.hasError('required') || form.get('description')?.hasError('required') || form.get('durationMin')?.hasError('required') && form.get('title')?.touched || form.get('genre')?.touched || form.get('clasification')?.touched || form.get('format')?.touched || form.get('description')?.touched || form.get('durationMin')?.touched">

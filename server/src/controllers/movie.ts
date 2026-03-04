@@ -115,8 +115,19 @@ export const updateMovie = async (req: Request, res: Response) => {
       };
 
       if (imageFileName) {
+        // Delete old image
+        const oldImageFileName = film.get('image') + '';
+        const uploadsPath = path.join(__dirname, '..', '..', 'uploads');
+        const oldImagePath = path.join(uploadsPath, oldImageFileName);
+        try {
+          if (fs.existsSync(oldImagePath)) {
+            await fsExtra.remove(oldImagePath);
+            console.log(`La imagen antigua ${oldImageFileName} fue reemplazada y eliminada.`);
+          }
+        } catch (err) {
+          console.error(`Error al eliminar imagen antigua ${oldImageFileName}:`, err);
+        }
         updateData.image = imageFileName;
-        // Optional: Delete old image if needed, but for now just update reference
       }
 
       const updatedMovie = await film.update(updateData);

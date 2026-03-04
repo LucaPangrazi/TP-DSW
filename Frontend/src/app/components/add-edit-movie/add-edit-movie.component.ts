@@ -23,6 +23,8 @@ export class AddEditMovieComponent implements OnInit {
   id_movie: number;
   operacion: string = 'Agregar ';
 
+  currentImageUrl: string | null = null;
+
   constructor(
     private fb: FormBuilder,
     private _movieService: MovieService,
@@ -30,6 +32,8 @@ export class AddEditMovieComponent implements OnInit {
     private toastr: ToastrService,
     private aRouter: ActivatedRoute
   ) {
+    this.id_movie = Number(aRouter.snapshot.paramMap.get('id_movie'));
+    console.log(this.id_movie);
     this.form = this.fb.group({
       title: ['', Validators.required],
       genre: ['', Validators.required],
@@ -37,10 +41,8 @@ export class AddEditMovieComponent implements OnInit {
       description: ['', Validators.required],
       clasification: ['', Validators.required],
       durationMin: [''],
-      image: null as File | null
+      image: [null, this.id_movie === 0 ? Validators.required : null]
     });
-    this.id_movie = Number(aRouter.snapshot.paramMap.get('id_movie'));
-    console.log(this.id_movie);
   }
 
   ngOnInit(): void {
@@ -54,15 +56,14 @@ export class AddEditMovieComponent implements OnInit {
     this.loading = true;
     this._movieService.getMovie(id_movie).subscribe((data: Movie) => {
       this.loading = false;
-      this.form.setValue({
-        //   id_movie: data.id_movie,
+      this.currentImageUrl = data.image as string;
+      this.form.patchValue({
         title: data.title,
         genre: data.genre,
         format: data.format,
         description: data.description,
         clasification: data.clasification,
-        durationMin: data.durationMin,
-        image: data.image
+        durationMin: data.durationMin
       });
     });
   }
