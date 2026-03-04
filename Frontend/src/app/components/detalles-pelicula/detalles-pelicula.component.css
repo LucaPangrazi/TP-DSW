@@ -4,7 +4,8 @@ h1 {
 }
 
 img {
-  max-width: 100%;
+  max-width: 450px;
+  width: 100%;
   height: auto;
   margin-bottom: 20px;
 }
