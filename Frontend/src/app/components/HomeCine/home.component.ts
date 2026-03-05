@@ -54,11 +54,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.searchService.searchTerm$.subscribe(term => {
       this.filterMovies(term);
     });
-
+    this.loadMovies();
+    this.loadBanner();
     // primero se carga el banner,despues se carga la pelicula para no sobreescribir
-    this.loadBanner().then(() => {
-      this.loadMovies();
-    });
+    /* this.loadBanner().then(() => {
+       this.loadMovies();
+     });*/
   }
 
   loadBanner(): Promise<void> {

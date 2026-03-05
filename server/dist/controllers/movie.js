@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMovie = exports.saveMovie = exports.deleteMovie = exports.getMovie = exports.getMovies = void 0;
+exports.updateMovie = exports.saveMovie = exports.deleteMovie = exports.getMovieById = exports.getMovies = void 0;
 const movie_1 = __importDefault(require("../models/movie"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
@@ -13,29 +13,37 @@ const getMovies = async (req, res) => {
     res.json(listMovies);
 };
 exports.getMovies = getMovies;
-const getMovie = async (req, res) => {
+const getMovieById = async (req, res) => {
     const id_movie = req.params.id;
-    const film = await movie_1.default.findByPk(id_movie);
-    if (film) {
-        const filmDet = {
-            id_movie: film.id_movie,
-            title: film.title,
-            genre: film.genre,
-            format: film.format,
-            description: film.description,
-            clasification: film.clasification,
-            durationMin: film.durationMin,
-            image: `http://localhost:3000/uploads/${film.image}`
-        };
-        res.json(filmDet);
+    try {
+        const film = await movie_1.default.findByPk(id_movie);
+        if (film) {
+            const filmDet = {
+                id_movie: film.id_movie,
+                title: film.title,
+                genre: film.genre,
+                format: film.format,
+                description: film.description,
+                clasification: film.clasification,
+                durationMin: film.durationMin,
+                image: `http://localhost:3000/uploads/${film.image}`
+            };
+            res.json(filmDet);
+        }
+        else {
+            res.status(404).json({
+                msg: `No existe una película con el id ${id_movie}`
+            });
+        }
     }
-    else {
-        res.status(404).json({
-            msg: `No existe una película con el id ${id_movie}`
+    catch (error) {
+        res.status(500).json({
+            msg: 'Error al obtener la película',
+            error
         });
     }
 };
-exports.getMovie = getMovie;
+exports.getMovieById = getMovieById;
 const deleteMovie = async (req, res) => {
     const id_movie = parseInt(req.params.id);
     const film = await movie_1.default.findByPk(id_movie);
@@ -120,8 +128,20 @@ const updateMovie = async (req, res) => {
                 durationMin
             };
             if (imageFileName) {
+                // Delete old image
+                const oldImageFileName = film.get('image') + '';
+                const uploadsPath = path_1.default.join(__dirname, '..', '..', 'uploads');
+                const oldImagePath = path_1.default.join(uploadsPath, oldImageFileName);
+                try {
+                    if (fs_1.default.existsSync(oldImagePath)) {
+                        await fs_extra_1.default.remove(oldImagePath);
+                        console.log(`La imagen antigua ${oldImageFileName} fue reemplazada y eliminada.`);
+                    }
+                }
+                catch (err) {
+                    console.error(`Error al eliminar imagen antigua ${oldImageFileName}:`, err);
+                }
                 updateData.image = imageFileName;
-                // Optional: Delete old image if needed, but for now just update reference
             }
             const updatedMovie = await film.update(updateData);
             res.json({

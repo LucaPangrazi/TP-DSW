@@ -26,7 +26,7 @@ const User = db.define('User', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  role:{
+  role: {
     type: DataTypes.ENUM('User', 'Admin'),
     allowNull: false,
     defaultValue: 'User'
@@ -36,9 +36,9 @@ const User = db.define('User', {
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
-}
+  }
 }, {
-  
+
 });
 export default User;
 console.log(User === db.models.User);

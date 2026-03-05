@@ -27,7 +27,7 @@ const Movie = connection_1.default.define('Movie', {
         type: sequelize_1.DataTypes.STRING
     },
     durationMin: {
-        type: sequelize_1.DataTypes.STRING
+        type: sequelize_1.DataTypes.INTEGER
     },
     image: {
         type: sequelize_1.DataTypes.STRING

@@ -52,9 +52,13 @@ export class MovieService {
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, formData)
   }
 
-  getMovie(id_movie: number): Observable<Movie> {
+  /*getMovie(id_movie: number): Observable<Movie> {
     return this.http.get<Movie>(`${this.myAppUrl}${this.myApiUrl}${id_movie}`)
+  }*/
+  getPeliculaById(id_movie: number): Observable<Movie> {
+    return this.http.get<Movie>(`${this.myAppUrl}${this.myApiUrl}/${id_movie}`);
   }
+
   updateMovie(id_movie: number, movie: Movie): Observable<void> {
     console.log('Movie object before update:', movie);
     const formData: FormData = new FormData();

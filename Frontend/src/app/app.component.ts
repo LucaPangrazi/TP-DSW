@@ -15,17 +15,17 @@ export class AppComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService
-  ) {}
+  ) { }
 
   handleSearch(value: string) {
     console.log('Término de búsqueda:', value);
-    this.searchService.setSearchTerm(value); // Asegúrate de que setSearchTerm maneje un string
+    this.searchService.setSearchTerm(value);
   }
-  
+
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // Leer la propiedad 'data' de la ruta actual para mostrar la segunda barra de navegación
+        // Leo 'data' de la ruta actual para mostrar la segunda barra de navegación
         this.showSecondNavbar = this.activatedRoute.snapshot.firstChild?.data['showSecondNavbar'] || false;
       }
     });

@@ -17,7 +17,7 @@ const storage = multer_1.default.diskStorage({
 const upload = (0, multer_1.default)({ storage });
 const router = (0, express_1.Router)();
 router.get('/', movie_1.getMovies);
-router.get('/:id', movie_1.getMovie);
+router.get('/:id', movie_1.getMovieById);
 router.delete('/:id', movie_1.deleteMovie);
 router.post('/', upload.single('image'), movie_1.saveMovie);
 router.put('/:id', upload.single('image'), movie_1.updateMovie);

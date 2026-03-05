@@ -1,9 +1,8 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 import { MovieAttributes } from '../interfaces/movie-attributes';
-import { MovieModel } from './movie-model';
 
-const Movie = db.define<MovieModel>('Movie', {
+const Movie = db.define('Movie', {
   id_movie: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -16,7 +15,7 @@ const Movie = db.define<MovieModel>('Movie', {
     type: DataTypes.STRING
   },
   format: {
-    type: DataTypes.STRING 
+    type: DataTypes.STRING
   },
   description: {
     type: DataTypes.STRING
@@ -25,7 +24,7 @@ const Movie = db.define<MovieModel>('Movie', {
     type: DataTypes.STRING
   },
   durationMin: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER
   },
   image: {
     type: DataTypes.STRING

@@ -91,7 +91,7 @@ export class AddEditFuncionComponent implements OnInit {
 
             // Si no se encuentra en la lista actual, intento obtener la película específica
             if (!this.movieSearch) {
-                this._movieService.getMovie(data.movie_id).subscribe(mv => {
+                this._movieService.getPeliculaById(data.movie_id).subscribe(mv => {
                     this.movieSearch = mv.title;
                 }, err => console.error('Error al obtener los detalles de la película', err));
             }

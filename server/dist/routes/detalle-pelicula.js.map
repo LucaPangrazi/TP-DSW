@@ -1,1 +1,10 @@
-{"version":3,"file":"detalle-pelicula.js","sourceRoot":"","sources":["../../src/routes/detalle-pelicula.ts"],"names":[],"mappings":";;AAAA,qCAAiC;AACjC,sEAA+D;AAE/D,MAAM,MAAM,GAAG,IAAA,gBAAM,GAAE,CAAC;AAGxB,MAAM,CAAC,GAAG,CAAC,MAAM,EAAE,+BAAY,CAAC,CAAC;AAEjC,kBAAe,MAAM,CAAC"}
+{
+    "version": 3,
+    "file": "movie.js",
+    "sourceRoot": "",
+    "sources": [
+        "../../src/routes/movie.ts"
+    ],
+    "names": [],
+    "mappings": ";;AAAA,qCAAiC;AACjC,sEAA+D;AAE/D,MAAM,MAAM,GAAG,IAAA,gBAAM,GAAE,CAAC;AAGxB,MAAM,CAAC,GAAG,CAAC,MAAM,EAAE,+BAAY,CAAC,CAAC;AAEjC,kBAAe,MAAM,CAAC"
+}

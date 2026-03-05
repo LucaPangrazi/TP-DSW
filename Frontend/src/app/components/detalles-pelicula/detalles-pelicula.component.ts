@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DetallePeliculaService } from '../../services/detalle-pelicula.service';
+import { MovieService } from '../../services/movie.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Movie } from '../../interfaces/movie';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class DetallesPeliculaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private detallePeliculaService: DetallePeliculaService,
+    private MovieService: MovieService,
     private sanitizer: DomSanitizer,
     private router: Router,
     private asientosService: AsientosService
@@ -27,7 +27,7 @@ export class DetallesPeliculaComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.detallePeliculaService.getPeliculaById(parseInt(id)).subscribe(
+      this.MovieService.getPeliculaById(parseInt(id)).subscribe(
         (movie: Movie) => {
           this.movie = movie;
           if (this.movie.image) {

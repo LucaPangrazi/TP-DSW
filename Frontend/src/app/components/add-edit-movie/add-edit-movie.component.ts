@@ -54,7 +54,7 @@ export class AddEditMovieComponent implements OnInit {
 
   getMovie(id_movie: number) {
     this.loading = true;
-    this._movieService.getMovie(id_movie).subscribe((data: Movie) => {
+    this._movieService.getPeliculaById(id_movie).subscribe((data: Movie) => {
       this.loading = false;
       this.currentImageUrl = data.image as string;
       this.form.patchValue({

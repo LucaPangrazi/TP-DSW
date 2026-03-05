@@ -89,9 +89,9 @@ const enviarResumenCompra = async (req, res) => {
         }
         const transporter = nodemailer_1.default.createTransport({
             service: 'gmail',
-            host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+            host: process.env.EMAIL_HOST || 'smtp.gmail.com', /* para hotmail era host: "smtp.office365.com" */
             port: Number(process.env.EMAIL_PORT) || 587,
-            secure: process.env.EMAIL_SECURE === 'true',
+            secure: process.env.EMAIL_SECURE === 'true', /* para hotmail era secure: false   */
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS

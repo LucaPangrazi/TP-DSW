@@ -5,7 +5,6 @@ import movieRouter from '../routes/movie';
 import salaRouter from '../routes/sala';
 import sucursalRouter from '../routes/sucursal';
 import userRouter from '../routes/user.routes';
-import detallePeliculaRouter from '../routes/detalle-pelicula';
 import funcionesRouter from '../routes/funciones.routes';
 import homeBannerRouter from '../routes/home-banner.routes';
 import compraRouter from '../routes/compra';
@@ -42,7 +41,6 @@ class Server {
     this.app.use('/api/salas', salaRouter);
     this.app.use('/api/sucursales', sucursalRouter);
     this.app.use('/api/users', userRouter);
-    this.app.use('/api/movies', detallePeliculaRouter);
     this.app.use('/api/funciones', funcionesRouter);
     this.app.use('/api/home-banner', homeBannerRouter);
     this.app.use('/api/comprar-entrada', compraRouter);

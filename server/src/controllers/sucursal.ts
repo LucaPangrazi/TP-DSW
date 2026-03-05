@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 import Sucursal from '../models/sucursal';
-
-
 import sequelize from '../db/connection';
 import { QueryTypes } from 'sequelize';
 

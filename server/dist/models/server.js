@@ -10,7 +10,6 @@ const movie_1 = __importDefault(require("../routes/movie"));
 const sala_1 = __importDefault(require("../routes/sala"));
 const sucursal_1 = __importDefault(require("../routes/sucursal"));
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
-const detalle_pelicula_1 = __importDefault(require("../routes/detalle-pelicula"));
 const funciones_routes_1 = __importDefault(require("../routes/funciones.routes"));
 const home_banner_routes_1 = __importDefault(require("../routes/home-banner.routes"));
 const compra_1 = __importDefault(require("../routes/compra"));
@@ -39,7 +38,6 @@ class Server {
         this.app.use('/api/salas', sala_1.default);
         this.app.use('/api/sucursales', sucursal_1.default);
         this.app.use('/api/users', user_routes_1.default);
-        this.app.use('/api/movies', detalle_pelicula_1.default);
         this.app.use('/api/funciones', funciones_routes_1.default);
         this.app.use('/api/home-banner', home_banner_routes_1.default);
         this.app.use('/api/comprar-entrada', compra_1.default);

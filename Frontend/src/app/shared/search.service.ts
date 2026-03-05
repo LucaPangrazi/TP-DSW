@@ -10,6 +10,6 @@ export class SearchService {
   searchTerm$: Observable<string> = this.searchTermSubject.asObservable();
 
   setSearchTerm(term: string) {
-    this.searchTermSubject.next(term); // Asegúrate de que term sea un string
+    this.searchTermSubject.next(term);
   }
 }
