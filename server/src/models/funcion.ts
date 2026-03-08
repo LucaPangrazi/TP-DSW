@@ -1,4 +1,3 @@
-
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
@@ -29,8 +28,9 @@ const Funcion = db.define('Funcion', {
         allowNull: false
     }
 }, {
-    tableName: 'funtion',
-    timestamps: false
+    tableName: 'funtion',   
+    timestamps: false,     
+    freezeTableName: true   
 });
 
 export default Funcion;

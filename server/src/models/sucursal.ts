@@ -1,16 +1,11 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
-import e from 'express';
-
-
 
 const Sucursal = db.define('Sucursal', {
-
-
+    // Si tenés una columna 'id' en DBeaver, es mejor definirla aquí
     nombre: {
         type: DataTypes.STRING
     },
-
     localidad: {
         type: DataTypes.STRING
     },
@@ -20,11 +15,11 @@ const Sucursal = db.define('Sucursal', {
     email: {
         type: DataTypes.STRING
     },
-
 }, {
-    createdAt: false,
-    updatedAt: false
-
+    // CONFIGURACIÓN PARA RENDER/RAILWAY
+    tableName: 'sucursals',  
+    timestamps: false,       
+    freezeTableName: true   
 });
 
 export default Sucursal;

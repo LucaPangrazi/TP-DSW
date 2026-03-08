@@ -1,4 +1,3 @@
-
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
@@ -31,8 +30,9 @@ const HomeBanner = db.define('HomeBanner', {
         defaultValue: true
     }
 }, {
-    tableName: 'home_banner',
-    timestamps: false
+    tableName: 'home_banner', 
+    timestamps: false,        
+    freezeTableName: true     
 });
 
 export default HomeBanner;

@@ -30,8 +30,10 @@ const Movie = db.define('Movie', {
     type: DataTypes.STRING
   }
 }, {
-  createdAt: false,
-  updatedAt: false
+  // CONFIGURACIÓN PARA RENDER/RAILWAY
+  tableName: 'movies',      
+  timestamps: false,        
+  freezeTableName: true   
 });
 
 export default Movie;
