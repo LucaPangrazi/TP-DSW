@@ -59,11 +59,9 @@ class Server {
 
   middlewares() {
     this.app.use(express.json());
-    // CORS habilitado para que el Front de Render pueda hablar con este Back
     this.app.use(cors()); 
 
-    // CORRECCIÓN: Ruta absoluta para servir archivos estáticos en Render
-    this.app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+   this.app.use('/uploads', express.static(path.join(process.cwd(), 'server', 'uploads')));
   }
 }
 
