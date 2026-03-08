@@ -28,7 +28,6 @@ class Server {
 
   async dbConnect() {
     try {
-      // Autenticación real con Railway
       await db.authenticate();
       console.log('Base de Datos conectada exitosamente a Railway');
     } catch (error) {
@@ -57,17 +56,15 @@ class Server {
     this.app.use('/api/comprar-entrada', compraRouter);
   }
 
- middlewares() {
+  middlewares() {
     this.app.use(express.json());
     this.app.use(cors()); 
 
-   
-    const publicPath = path.join(process.cwd(), 'server', 'uploads');
     
-    this.app.use('/uploads', express.static(publicPath));
+    const publicPath = path.join(process.cwd(), 'uploads');
     
-  
     console.log("Servidor buscando imágenes en:", publicPath);
+    this.app.use('/uploads', express.static(publicPath));
   }
 }
 
