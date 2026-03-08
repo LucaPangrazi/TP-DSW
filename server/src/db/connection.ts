@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize";
 
-// Esta lógica elige las credenciales de Railway si existen, 
-// o usa las de 'cine' si estás en tu compu (localhost).
+
 const sequelize = new Sequelize(
   process.env.DB_NAME || 'cine', 
   process.env.DB_USER || 'cine', 
@@ -10,7 +9,7 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST || 'localhost',
     port: Number(process.env.DB_PORT) || 3306,
     dialect: "mysql",
-    // Railway y Render suelen requerir configuraciones de pool para no saturar
+    // Railway y Render configuraciones de pool para no saturar
     pool: {
       max: 5,
       min: 0,
