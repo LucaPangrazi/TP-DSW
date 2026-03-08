@@ -60,10 +60,10 @@ class Server {
     this.app.use(express.json());
     this.app.use(cors()); 
 
+    // ARREGLO PARA RENDER: Usamos __dirname para subir desde 'dist/models' hasta la raíz
+    const publicPath = path.resolve(__dirname, '../../uploads');
     
-    const publicPath = path.join(process.cwd(), 'uploads');
-    
-    console.log("Servidor buscando imágenes en:", publicPath);
+    console.log("RUTA FINAL ABSOLUTA (LOG DE CONTROL):", publicPath);
     this.app.use('/uploads', express.static(publicPath));
   }
 }
