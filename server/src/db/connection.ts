@@ -1,10 +1,23 @@
-
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize('cine', 'cine', 'cine', {
-  host: 'localhost', //127.0.0.1
-  dialect: "mysql",
-  //logging:false,  si quiero que no aparezca el SELECT 1+1
-});
+// Esta lógica elige las credenciales de Railway si existen, 
+// o usa las de 'cine' si estás en tu compu (localhost).
+const sequelize = new Sequelize(
+  process.env.DB_NAME || 'cine', 
+  process.env.DB_USER || 'cine', 
+  process.env.DB_PASSWORD || 'cine', 
+  {
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 3306,
+    dialect: "mysql",
+    // Railway y Render suelen requerir configuraciones de pool para no saturar
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  }
+);
 
-export default sequelize
+export default sequelize;
