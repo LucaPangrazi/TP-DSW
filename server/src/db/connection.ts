@@ -18,3 +18,5 @@ const sequelize = new Sequelize(
     }
   }
 );
+
+export default sequelize;
