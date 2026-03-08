@@ -10,7 +10,7 @@ export const getMovies = async (req: Request, res: Response) => {
   res.json(listMovies);
 }
 
-export const getMovieById = async (req: Request, res: Response) => { //getMovie
+export const getMovieById = async (req: Request, res: Response) => { 
   const id_movie = req.params.id;
   try {
     const film: any = await Movie.findByPk(id_movie);
@@ -23,7 +23,8 @@ export const getMovieById = async (req: Request, res: Response) => { //getMovie
         description: film.description,
         clasification: film.clasification,
         durationMin: film.durationMin,
-        image: `http://localhost:3000/uploads/${film.image}`
+        // CORREGIDO: URL de Render para producción
+        image: `https://tp-dsw-0wfq.onrender.com/uploads/${film.image}`
       };
       res.json(filmDet);
     } else {
@@ -74,7 +75,6 @@ export const deleteMovie = async (req: Request, res: Response) => {
 export const saveMovie = async (req: Request<{}, {}, MovieAttributes>, res: Response) => {
   const { title, genre, format, description, clasification, durationMin } = req.body;
   const imageFileName = req.file?.filename;
-  console.log('imageFileName:', imageFileName);
   if (!imageFileName) {
     return res.status(400).json({
       msg: 'No se ha adjuntado una imagen'
@@ -105,7 +105,6 @@ export const saveMovie = async (req: Request<{}, {}, MovieAttributes>, res: Resp
 
 export const updateMovie = async (req: Request, res: Response) => {
   const imageFileName = req.file?.filename;
-  // console.log('imageFileName:', imageFileName);
   const { title, genre, format, description, clasification, durationMin } = req.body;
   const id_movie = parseInt(req.params.id);
 
@@ -122,7 +121,6 @@ export const updateMovie = async (req: Request, res: Response) => {
       };
 
       if (imageFileName) {
-        // Delete old image
         const oldImageFileName = film.get('image') + '';
         const uploadsPath = path.join(__dirname, '..', '..', 'uploads');
         const oldImagePath = path.join(uploadsPath, oldImageFileName);

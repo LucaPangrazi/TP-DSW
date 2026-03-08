@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FuncionesService {
-  private apiUrl = 'http://localhost:3000/api/funciones';
+  // URL de producción en Render
+  private apiUrl = 'https://tp-dsw-0wfq.onrender.com/api/funciones';
 
   constructor(private http: HttpClient) { }
 

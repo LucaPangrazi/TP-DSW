@@ -15,7 +15,7 @@ export class MovieService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/movies/' //'http://localhost:3000/api/movies/';
+    this.myApiUrl = 'api/movies/' 
   }
   getListMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>(this.myAppUrl + this.myApiUrl);

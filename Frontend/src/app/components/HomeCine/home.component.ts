@@ -56,10 +56,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     this.loadMovies();
     this.loadBanner();
-    // primero se carga el banner,despues se carga la pelicula para no sobreescribir
-    /* this.loadBanner().then(() => {
-       this.loadMovies();
-     });*/
   }
 
   loadBanner(): Promise<void> {
@@ -68,7 +64,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (data && data.banner && data.movie) {
           this.featuredMovie = data.movie;
           if (data.banner.custom_image) {
-            this.customBannerImage = `http://localhost:3000/uploads/${data.banner.custom_image}`;
+            //  Apuntando a Render en lugar de localhost
+            this.customBannerImage = `https://tp-dsw-0wfq.onrender.com/uploads/${data.banner.custom_image}`;
           }
         }
         resolve();
@@ -167,7 +164,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       const movieTitle = this.featuredMovie.title || this.featuredMovie.titulo || this.featuredMovie.name || 'Película seleccionada';
       this.asientosService.setDatosPelicula({
         pelicula: { id: movieId, nombre: movieTitle },
-        fecha: '' // Fecha se selecciona en el siguiente paso
+        fecha: '' 
       });
       this.router.navigate(['/seleccion-funcion']);
     }
@@ -180,14 +177,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (imagePath.startsWith('http')) {
       return imagePath;
     }
-    return `http://localhost:3000/uploads/${encodeURIComponent(imagePath)}`;
+    // Apuntando a Render en lugar de localhost
+    return `https://tp-dsw-0wfq.onrender.com/uploads/${encodeURIComponent(imagePath)}`;
   }
 
   getBannerImage(): string {
     if (this.customBannerImage) return this.customBannerImage;
     return this.getImageUrl(this.featuredMovie?.imagen || this.featuredMovie?.image);
   }
-
 
   openBannerModal() {
     this.showBannerModal = true;
@@ -223,7 +220,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.closeBannerModal();
       this.selectedFile = null;
       this.bannerForm.reset();
-      this.loadBanner(); // Refrescar banner
+      this.loadBanner(); 
     }, err => {
       console.error(err);
       alert('Error actualizando banner: ' + (err?.error?.msg || err?.error?.error || 'Error desconocido'));

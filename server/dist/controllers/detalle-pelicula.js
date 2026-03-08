@@ -18,7 +18,7 @@ const getMovieById = async (req, res) => {
                 description: film.description,
                 clasification: film.clasification,
                 durationMin: film.durationMin,
-                image: `http://localhost:3000/uploads/${film.image}`
+               image: `https://tp-dsw-0wfq.onrender.com/uploads/${film.image}`
             };
             res.json(filmDet);
         }
