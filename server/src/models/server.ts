@@ -57,11 +57,17 @@ class Server {
     this.app.use('/api/comprar-entrada', compraRouter);
   }
 
-  middlewares() {
+ middlewares() {
     this.app.use(express.json());
     this.app.use(cors()); 
 
-   this.app.use('/uploads', express.static(path.join(process.cwd(), 'server', 'uploads')));
+   
+    const publicPath = path.join(process.cwd(), 'server', 'uploads');
+    
+    this.app.use('/uploads', express.static(publicPath));
+    
+  
+    console.log("Servidor buscando imágenes en:", publicPath);
   }
 }
 
