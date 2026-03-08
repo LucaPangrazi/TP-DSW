@@ -1,6 +1,5 @@
 import db from '../db/connection.js'
 import { Sequelize, DataTypes } from 'sequelize';
-import e from 'express';
 
 const User = db.define('User', {
   nombre: {
@@ -38,7 +37,10 @@ const User = db.define('User', {
     primaryKey: true
   }
 }, {
-
+  // CONFIGURACIÓN CLAVE PARA RENDER/RAILWAY
+  tableName: 'users',     
+  timestamps: false,       
+  freezeTableName: true    
 });
+
 export default User;
-console.log(User === db.models.User);
