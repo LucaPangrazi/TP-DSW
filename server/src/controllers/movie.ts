@@ -23,7 +23,7 @@ export const getMovieById = async (req: Request, res: Response) => {
         description: film.description,
         clasification: film.clasification,
         durationMin: film.durationMin,
-        // CORREGIDO: URL de Render para producción
+        //URL de Render para producción
         image: `https://tp-dsw-0wfq.onrender.com/uploads/${film.image}`
       };
       res.json(filmDet);
