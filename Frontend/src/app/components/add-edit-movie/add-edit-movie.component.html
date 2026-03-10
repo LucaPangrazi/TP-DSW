@@ -19,7 +19,7 @@
                 style="max-height: 150px; display: block; border-radius: 5px;">
             </div>
             <input type="file" class="form-control-file" id="image" name="image" formControlName="image"
-              accept="image/*" (change)="onImageSelected($event)">
+            accept="image/png, image/jpeg, image/jpg, image/webp" (change)="onImageSelected($event)">
             <small *ngIf="id_movie !== 0" class="text-muted d-block mt-1">Deja este campo vacío si no deseas cambiar la
               imagen actual.</small>
           </div>

@@ -68,10 +68,34 @@ export class AddEditMovieComponent implements OnInit {
     });
   }
 
-  onImageSelected(event: Event) {
+onImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
+    
     if (inputElement.files && inputElement.files[0]) {
-      this.form.get('image')?.setValue(inputElement.files[0]);
+      const file = inputElement.files[0];
+
+      // Validamos tipos permitidos
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+      
+      if (!allowedTypes.includes(file.type)) {
+        this.toastr.error('Solo se permiten imágenes (JPG, PNG o WEBP)', 'Formato no válido');
+        
+        // Limpiamos el input y el formulario
+        inputElement.value = '';
+        this.form.get('image')?.setValue(null);
+        return;
+      }
+
+      // Validamos tamaño (5MB por ejemplo)
+      if (file.size > 5 * 1024 * 1024) {
+        this.toastr.warning('La imagen es demasiado pesada (máximo 5MB)', 'Archivo grande');
+        inputElement.value = '';
+        this.form.get('image')?.setValue(null);
+        return;
+      }
+
+      // Si pasa los filtros, asignamos el archivo al form
+      this.form.get('image')?.setValue(file);
     }
   }
 
