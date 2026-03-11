@@ -195,6 +195,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any) {
+    if (!event.target.files || event.target.files.length === 0) return;
+    
     const file: File = event.target.files[0];
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
 
