@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsientosService } from '../../shared/asientos.service';
-import { FuncionesService } from '../../services/funciones.service'; // Asegurate de que la ruta sea correcta
+import { FuncionesService } from '../../services/funciones.service'; 
 
 @Component({
   selector: 'app-seleccion-asientos',

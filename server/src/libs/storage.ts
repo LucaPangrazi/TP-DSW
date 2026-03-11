@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const filename = uuidv4() + path.extname(file.originalname);
-        console.log('Multer saving file as:', filename, 'to', uploadsDir);
+        console.log('Se guardo la imagen de la película:', filename, 'en', uploadsDir);
         cb(null, filename);
     }
 });

@@ -28,7 +28,7 @@ export class MovieService {
   deleteMovie(id_movie: number): Observable<{ msg: string }> {
     return this.http.delete<{ msg: string }>(
       `${this.myAppUrl}${this.myApiUrl}${id_movie}`,
-      { responseType: 'json' }  // ✅ asegura que Angular parsea el JSON
+      { responseType: 'json' }  // asegura que Angular parsea el JSON
     );
   }
   saveMovie(movie: Movie): Observable<void> {

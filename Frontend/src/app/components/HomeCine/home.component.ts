@@ -195,10 +195,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any) {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-      this.bannerForm.patchValue({ image: this.selectedFile });
+    const file: File = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+    // Validar el tipo de archivo
+    if (!allowedTypes.includes(file.type)) {
+      alert('Solo se permiten imágenes JPG, PNG o WEBP');
+      event.target.value = ''; // limpio input
+      this.bannerForm.get('image')?.setValue(null);
+      this.selectedFile = null;
+      return;
     }
+
+    this.selectedFile = file;
+    this.bannerForm.patchValue({ image: file });
   }
 
   saveBanner() {
