@@ -108,13 +108,18 @@ export const enviarResumenCompra = async (req: Request, res: Response) => {
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
             console.error('[enviarResumenCompra] ERROR: Faltan credenciales en process.env. No se puede autenticar con el servidor SMTP.');
         }
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, 
+        auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+        rejectUnauthorized: false 
+    }
+});
 
         console.log('[enviarResumenCompra] Verificando conexión SMTP');
         try {
