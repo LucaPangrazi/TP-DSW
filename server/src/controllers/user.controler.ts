@@ -131,7 +131,7 @@ export const editUser = async (req: Request, res: Response) => {
     const { body } = req;
     const { id } = req.params
 
-    try {
+    try {   
         const user = await User.findByPk(id);
 
         if (user) {
